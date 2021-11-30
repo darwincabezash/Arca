@@ -1,0 +1,121 @@
+<div class="wrapper">
+    <section class="content">
+        <div class="container-fluid">
+
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>Contactos de Personas</h1>
+                        </div>
+
+                    </div>
+                </div><!-- /.container-fluid -->
+            </section>
+
+
+            <!-- Default box -->
+            <div class="card card-solid">
+                <div class="card-body pb-0">
+                    <div class="row">
+
+
+
+
+                        <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column"
+                            *ngFor="let p of personas">
+                            <div class="card bg-light d-flex flex-fill">
+                                <div class="card-header text-muted border-bottom-0">
+                                    Miembro
+                                </div>
+                                <div class="card-body pt-0">
+                                    <div class="row">
+                                        <div class="col-7">
+
+                                            <h2 class="lead"><b>{{p.datoBasicoPersona?.primerNombre}} &nbsp; {{p.datoBasicoPersona?.primerApellido}}</b></h2>
+
+                                            <p class="text-muted text-sm"><b>Grupos: </b> Jovenes /Caballeros / Alabanza
+                                            </p>
+                                            <ul class="ml-4 mb-0 fa-ul text-muted">
+                                                <li class="small"><span class="fa-li"><i
+                                                            class="fas fa-lg fa-building"></i></span> Address: Flor de
+                                                    Bastion Blq10</li>
+                                                <li class="small"><span class="fa-li"><i
+                                                            class="fas fa-lg fa-phone"></i></span> Phone #: {{p.datoBasicoPersona?.telefono}}
+                                                </li>
+                                                <li class="small"><span class="fa-li"><i
+                                                    class="fas fa-lg fa-phone"></i></span> Phone #: {{p.datoBasicoPersona?.celular}}
+                                        </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-5 text-center">
+                                            
+
+
+
+
+
+
+
+
+                                                <div *ngIf="p.datoBasicoPersona?.foto  !== undefined && p.datoBasicoPersona?.foto  !== '' && p.datoBasicoPersona?.foto !== null ; else elseBlock">
+                                                    <img src="{{p.datoBasicoPersona?.foto}}" alt="Avatar" style="vertical-align: middle;width: 90px;height: 90px;border-radius: 50%;">
+                                                    
+                                                  </div>
+                                                  <ng-template #elseBlock>
+                                
+                                                    <div *ngIf="p.datoBasicoPersona?.sexo==='H' ; else elseBlock1">
+                                                      <img src="../../../../assets/images/H.jpg" alt="Avatar"  style="vertical-align: middle;width: 90px;height: 90px;border-radius: 50%;">
+                                                      
+                                                    </div>
+                                
+                                                    <ng-template #elseBlock1>
+                                                      <img src="../../../../assets/images/M.jpg" alt="Avatar"  style="vertical-align: middle;width: 90px;height: 90px;border-radius: 50%;">
+                                
+                                                    </ng-template>
+                                
+                                
+                                                  </ng-template>
+                                
+
+
+
+
+
+
+
+
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="text-right">
+                                        <!--<a href="#" class="btn btn-sm bg-teal">
+                  <i class="fas fa-comments"></i>
+                </a>-->
+                                        <a href="#" class="btn btn-sm btn-primary">
+                                            <i class="fas fa-user"></i> Ver Perfil
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</div>

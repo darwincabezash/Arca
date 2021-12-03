@@ -21,6 +21,7 @@ import { ContactsPersonComponent } from './pages/person/contacts-person/contacts
 import { TipoPersonaComponent } from './pages/configuraciones/catalogos/tipo-persona/tipo-persona.component';
 import { NgLetModule } from 'ng-let';
 import { TipoProcesoComponent } from './pages/configuraciones/catalogos/tipo-proceso/tipo-proceso.component';
+import { GrupoComponent } from './pages/configuraciones/catalogos/grupo/grupo.component';
 
 
 
@@ -56,6 +57,9 @@ const routes: Route[]=[
       },
       {
         path:'tipoProceso',component:TipoProcesoComponent
+      },
+      {
+        path:'grupo',component:GrupoComponent
       }
     ] 
   },
@@ -81,7 +85,8 @@ const routes: Route[]=[
     ViewPersonsComponent,
     ContactsPersonComponent,
     TipoPersonaComponent,
-    TipoProcesoComponent
+    TipoProcesoComponent,
+    GrupoComponent
   ],
   imports: [
     BrowserModule,

@@ -28,6 +28,7 @@ import { EscuelaComponent } from './pages/configuraciones/catalogos/escuela/escu
 
 
 
+
 /*const routes: Route[]=[
   { path: '', component: DashboardComponent },
   { path:"test",component:TestComponent},

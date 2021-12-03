@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {PersonaService} from "../../services/persona/persona.service";
+import {PersonaService} from "src/app/services/persona/persona/persona.service";
 import { Persona, DatoBasicoPersona } from '../../dataModels/persona';
 
 declare var tableUtil: any;

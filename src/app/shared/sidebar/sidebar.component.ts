@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PersonaService } from 'src/app/services/persona/persona.service';
+import { PersonaService } from 'src/app/services/persona/persona/persona.service';
 
 
 @Component({
@@ -7,6 +7,7 @@ import { PersonaService } from 'src/app/services/persona/persona.service';
   templateUrl: './sidebar.component.html',
   styleUrls: []
 })
+
 export class SidebarComponent implements OnInit {
 
 

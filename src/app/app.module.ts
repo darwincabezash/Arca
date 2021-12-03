@@ -18,6 +18,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { ContactsPersonComponent } from './pages/person/contacts-person/contacts-person.component';
+import { TipoPersonaComponent } from './pages/configuraciones/catalogos/tipo-persona/tipo-persona.component';
+import { NgLetModule } from 'ng-let';
+import { TipoProcesoComponent } from './pages/configuraciones/catalogos/tipo-proceso/tipo-proceso.component';
 
 
 
@@ -47,6 +50,12 @@ const routes: Route[]=[
       },
       {
         path:'ver-contacto-personas',component:ContactsPersonComponent
+      },
+      {
+        path:'tipoPersona',component:TipoPersonaComponent
+      },
+      {
+        path:'tipoProceso',component:TipoProcesoComponent
       }
     ] 
   },
@@ -70,7 +79,9 @@ const routes: Route[]=[
     PagesRoutingComponent,
     RegisterPersonComponent,
     ViewPersonsComponent,
-    ContactsPersonComponent
+    ContactsPersonComponent,
+    TipoPersonaComponent,
+    TipoProcesoComponent
   ],
   imports: [
     BrowserModule,
@@ -79,6 +90,7 @@ const routes: Route[]=[
     RouterModule.forRoot(routes,{useHash:true}),
     BrowserAnimationsModule,
     ToastrModule.forRoot(), 
+    NgLetModule
   
      // required animations module
 

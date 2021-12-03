@@ -37,13 +37,13 @@
         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
-               <!--@@@@@@@@@@@@@@@@@@@  AQUI VA DASHBOARD-->
+        <!--@@@@@@@@@@@@@@@@@@@  AQUI VA DASHBOARD-->
 
 
         <!--PERSONAS-->
         <li class="nav-item">
           <a href="#" class="nav-link">
-            
+
             <i class="nav-icon fas fa-users"></i>
             <p>
               Personas
@@ -54,6 +54,112 @@
 
           <ul class="nav nav-treeview">
             <!--REGISTRAR PERSONA-->
+            <li class="nav-item">
+              <a routerLink="/dashboard/registrar-persona" class="nav-link">
+                <i class="fas fa-user-plus nav-icon " style="margin-left: 10px;"></i>
+                <p>Registrar Persona</p>
+              </a>
+            </li>
+            <!--VER PERSONAS-->
+            <li class="nav-item">
+              <a routerLink="/dashboard/ver-personas" class="nav-link">
+                <!--<i class="fas fa-user-plus nav-icon"></i>-->
+                <i class="fas fa-list-alt nav-icon" style="margin-left: 10px;"></i>
+                <p>Ver Personas</p>
+                <span class="badge badge-info right">{{totalPersonas}}</span>
+              </a>
+            </li>
+            <!--VER CONTACTOS DE PERSONAS-->
+            <li class="nav-item">
+              <a routerLink="/dashboard/ver-contacto-personas" class="nav-link">
+                <!--<i class="fas fa-user-plus nav-icon"></i>-->
+                <i class="fas fa-list-alt nav-icon " style="margin-left: 10px;"></i>
+                <p>Ver Contactos</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!--FIN PERSONAS-->
+
+
+
+        <!--CONFIGURACIONES-->
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-wrench"></i>
+            <p>
+              Configuraciones
+                            <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+
+          <ul class="nav nav-treeview">
+           
+            <li class="nav-item">
+
+              <a href="#" class="nav-link">
+                <i class="fas fa-list nav-icon" style="margin-left: 10px;">
+                </i>
+                
+                <p>
+                  Catálogos
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+
+              <ul class="nav nav-treeview">
+
+                <li class="nav-item">
+
+                  <a routerLink="/dashboard/tipoPersona" class="nav-link">
+                    <i class="fas fa-user-tag nav-icon " style="margin-left: 20px;"></i>
+                    <p>Tipo de Persona</p>
+                  </a>
+                </li>
+
+                <li class="nav-item">
+
+                  <a routerLink="/dashboard/tipoProceso" class="nav-link">
+                    <i class="fas fa-user-clock nav-icon " style="margin-left: 20px;"></i>
+                    <p>Tipo de Proceso</p>
+                  </a>
+                </li>
+                
+              </ul>
+            </li>
+            
+          </ul>
+        </li>
+
+
+
+
+
+
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+
+            <i class="nav-icon fas fa-wrench"></i>
+            <p>
+              Configuraciones
+              <i class="right fas fa-angle-left"></i>
+              <span class="right badge badge-danger">New</span>
+            </p>
+          </a>
+
+          <ul class="nav nav-treeview">
+            <!--CATALOGOS-->
+
+          
+
+
+
+
+
+
+            <!-- FIN CATALOGOS-->
+
+
             <li class="nav-item">
               <a routerLink="/dashboard/registrar-persona" class="nav-link">
                 <i class="fas fa-user-plus nav-icon ml-3"></i>
@@ -77,12 +183,11 @@
                 <p>Ver Contactos</p>
               </a>
             </li>
-           
           </ul>
-
         </li>
+        <!--FIN CONFIGURACIONES-->
 
-               <!--@@@@@@@@@@@@@@@@@@@  AQUI VA EL RESTO DEL CODIGO-->
+        <!--@@@@@@@@@@@@@@@@@@@  AQUI VA EL RESTO DEL CODIGO-->
 
 
       </ul>

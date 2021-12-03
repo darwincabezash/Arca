@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { DatoBasicoPersona, Persona } from 'src/app/dataModels/persona';
-import { PersonaService } from 'src/app/services/persona/persona.service';
+import { PersonaService } from 'src/app/services/persona/persona/persona.service';
 
 
 @Component({

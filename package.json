@@ -21,6 +21,7 @@
     "admin-lte": "^3.1.0",
     "icheck-bootstrap": "^3.0.1",
     "jquery": "^3.6.0",
+    "ng-let": "^2.0.1",
     "ngx-toastr": "^14.2.1",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",

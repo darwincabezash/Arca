@@ -1,7 +1,8 @@
+import { TipoPersona } from './../../../dataModels/tipoPersona';
 import { Injectable } from '@angular/core';
 import { concatMapTo, Observable, Subject } from 'rxjs';
 import { PublicInfo } from 'src/app/shared/data/publicInfo';
-import { Persona, DatoBasicoPersona } from '../../dataModels/persona';
+import { Persona, DatoBasicoPersona } from '../../../dataModels/persona';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,8 @@ export class PersonaService {
 
   serverLocal:RequestInfo ="http://localhost:3000/graphql";
   serverPro:RequestInfo="https://arca-server.vercel.app/graphql";
+  
+  //PERSONA
   private personas: Persona[];
   private personas$: Subject<Persona[]>;
 
@@ -18,22 +21,16 @@ export class PersonaService {
   constructor() {
     this.personas = [];
     this.personas$ = new Subject();
-   
   }
 
-  obtenerPersonas(): Observable<Persona[]> {
-    return this.personas$.asObservable();
-  }
+  //PERSONA
 
-
-
-
+  
+  //CONSULTAR
   async consultarPersonas() {
-
     this.personas = [];
 
     try {
-
       await fetch(this.serverLocal, {
 
         method: 'POST',
@@ -41,9 +38,6 @@ export class PersonaService {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
-
-
-
         body: JSON.stringify({
           query: `{
             persona{
@@ -68,8 +62,6 @@ export class PersonaService {
         .then((res) => res.json())
         .then((result) => {
           result.data.persona.map((el: any) => {
-
-
             let datoBasicoPersona: DatoBasicoPersona = new DatoBasicoPersona();
             datoBasicoPersona.cedula = el.cedula;
             datoBasicoPersona.primerNombre = el.primerNombre;
@@ -90,22 +82,15 @@ export class PersonaService {
             this.personas.push(persona);
           });
         });
-      this.personasListas();
+      this.personas$.next(this.personas);
 
     } catch (e) {
       console.log("ERROR: "+e);
     }
   }
 
-  personasListas() {
-    this.personas$.next(this.personas);
-  }
-
-
-
+  //AGREGAR
   async agregarPersonas(persona:Persona) {
-
-
     try {
 
       await fetch(this.serverLocal, {
@@ -115,9 +100,6 @@ export class PersonaService {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
-
-
-
         body: JSON.stringify({
           
           query: `mutation{
@@ -134,7 +116,6 @@ export class PersonaService {
               email:"${persona.datoBasicoPersona?.email}"
               sexo:"${persona.datoBasicoPersona?.sexo}"
               foto:"${persona.datoBasicoPersona?.foto}"
-            
             }){
              _id
               cedula
@@ -153,4 +134,10 @@ export class PersonaService {
       console.log("ERROR: "+e);
     }
   }
+
+
+  obtenerPersonas(): Observable<Persona[]> {
+    return this.personas$.asObservable();
+  }
+
 }

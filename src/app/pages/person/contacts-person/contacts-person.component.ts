@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Persona } from 'src/app/dataModels/persona';
-import { PersonaService } from 'src/app/services/persona/persona.service';
+import { PersonaService } from 'src/app/services/persona/persona/persona.service';
 
 @Component({
   selector: 'app-contacts-person',

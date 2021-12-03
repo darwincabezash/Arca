@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Grupo } from 'src/app/dataModels/grupo';
-import { GrupoService } from 'src/app/services/catalogos/grupos.service';
+import { GrupoService } from 'src/app/services/catalogos/grupo.service';
 
 @Component({
   selector: 'app-grupo',

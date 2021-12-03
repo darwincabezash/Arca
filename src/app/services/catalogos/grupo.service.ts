@@ -1,4 +1,4 @@
-import { Grupo } from './../../dataModels/grupo';
+import { Grupo } from '../../dataModels/grupo';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
@@ -165,4 +165,6 @@ export class GrupoService {
 
   obtenerGrupos$(): Observable<Grupo[]> {
     return this.grupos$.asObservable();
-  }}
+  }
+
+}

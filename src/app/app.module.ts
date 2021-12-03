@@ -21,8 +21,9 @@ import { ContactsPersonComponent } from './pages/person/contacts-person/contacts
 import { TipoPersonaComponent } from './pages/configuraciones/catalogos/tipo-persona/tipo-persona.component';
 import { NgLetModule } from 'ng-let';
 import { TipoProcesoComponent } from './pages/configuraciones/catalogos/tipo-proceso/tipo-proceso.component';
-import { EscuelaComponent } from './pages/configuraciones/catalogos/escuela/escuela.component';
+
 import { GrupoComponent } from './pages/configuraciones/catalogos/grupo/grupo.component';
+import { EscuelaComponent } from './pages/configuraciones/catalogos/escuela/escuela.component';
 
 
 

@@ -24,6 +24,8 @@ import { TipoProcesoComponent } from './pages/configuraciones/catalogos/tipo-pro
 
 import { GrupoComponent } from './pages/configuraciones/catalogos/grupo/grupo.component';
 import { EscuelaComponent } from './pages/configuraciones/catalogos/escuela/escuela.component';
+import { EtapaComponent } from './pages/configuraciones/catalogos/etapa/etapa.component';
+
 
 
 
@@ -67,6 +69,9 @@ const routes: Route[]=[
       },
       {
         path:'escuela',component:EscuelaComponent
+      },
+      {
+        path:'etapa',component:EtapaComponent
       }
 
     ] 
@@ -95,7 +100,8 @@ const routes: Route[]=[
     TipoPersonaComponent,
     TipoProcesoComponent,
     GrupoComponent,
-    EscuelaComponent
+    EscuelaComponent,
+    EtapaComponent
   ],
   imports: [
     BrowserModule,

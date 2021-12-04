@@ -91,7 +91,8 @@ export class EscuelaComponent implements OnInit {
   refrescarEscuela(){
     this.escuelaService.consultarEscuela();
   }
-  si(event: MouseEvent,color:String){
+
+  cargarEditarColor(event: MouseEvent,color:String){
     event.preventDefault();
     this.colorBoton=color;
     console.log("SI, INFO ES:"+color );

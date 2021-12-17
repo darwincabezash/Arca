@@ -1,3 +1,4 @@
+import { GlobalDataService } from '../login/globalDataServices';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, concatMapTo } from 'rxjs';
 import { Escuela } from 'src/app/dataModels/escuela';
@@ -7,9 +8,7 @@ import { Escuela } from 'src/app/dataModels/escuela';
 })
 export class EscuelaService {
 
-
-  serverLocal: RequestInfo = "http://localhost:3000/graphql";
-  serverPro: RequestInfo = "https://arca-server.vercel.app/graphql";
+  server:RequestInfo=GlobalDataService.getServer();
 
   //ESCUELA
   private escuelas: Escuela[];
@@ -28,7 +27,7 @@ export class EscuelaService {
     console.log("color es: "+escuela.color);
     try {
 
-      await fetch(this.serverLocal, {
+      await fetch(this.server, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -47,13 +46,13 @@ export class EscuelaService {
       })
         .then((res) => res.json())
         .then((result) => {    
-
-          this.escuelas$.next(this.escuelas);
+          this.consultarEscuela();
 
         });
     } catch (e) {
       console.log("ERROR: " + e);
     }
+
   }
 
   //CONSULTAR
@@ -63,7 +62,7 @@ export class EscuelaService {
 
     try {
 
-      await fetch(this.serverLocal, {
+      await fetch(this.server, {
 
         method: 'POST',
         headers: {
@@ -104,7 +103,7 @@ export class EscuelaService {
   async eliminarEscuela(_id: any) {
     try {
 
-      await fetch(this.serverLocal, {
+      await fetch(this.server, {
 
         method: 'POST',
         headers: {
@@ -124,8 +123,9 @@ export class EscuelaService {
       })
         .then((res) => res.json())
         .then((result) => {
+          this.consultarEscuela();
+
         });
-      this.escuelas$.next(this.escuelas);
 
     } catch (e) {
       console.log("ERROR: " + e);
@@ -136,7 +136,7 @@ export class EscuelaService {
   async actualizarEscuela(_id:any,escuela:Escuela) {
     try {
 
-      await fetch(this.serverLocal, {
+      await fetch(this.server, {
 
         method: 'POST',
         headers: {
@@ -159,9 +159,9 @@ export class EscuelaService {
       })
         .then((res) => res.json())
         .then((result) => {
-          
+          this.consultarEscuela();
+
         });
-      this.escuelas$.next(this.escuelas);
 
     } catch (e) {
       console.log("ERROR: " + e);

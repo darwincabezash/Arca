@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,19 +12,22 @@ import { TestComponent } from './pages/test/test.component';
 import { BreadcrumbsComponent } from './shared/breadcrumbs/breadcrumbs.component';
 import { PagesComponent } from './pages/pages/pages.component';
 import { PagesRoutingComponent } from './pages/pages-routing/pages-routing.component';
-import { RegisterPersonComponent } from './pages/register-person/register-person.component';
-import { ViewPersonsComponent } from './pages/view-persons/view-persons.component';
+import { RegisterPersonComponent } from './pages/menu/personas/registrarPersona/registrarPersona.component';
+import { ViewPersonsComponent } from './pages/menu/personas/verPersona/verPersona.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-import { ContactsPersonComponent } from './pages/person/contacts-person/contacts-person.component';
-import { TipoPersonaComponent } from './pages/configuraciones/catalogos/tipo-persona/tipo-persona.component';
+import { ContactsPersonComponent } from './pages/menu/personas/contactoPersona/contactoPersona.component';
+import { TipoPersonaComponent } from './pages/menu/configuraciones/catalogos/tipo-persona/tipo-persona.component';
 import { NgLetModule } from 'ng-let';
-import { TipoProcesoComponent } from './pages/configuraciones/catalogos/tipo-proceso/tipo-proceso.component';
+import { TipoProcesoComponent } from './pages/menu/configuraciones/catalogos/proceso/proceso.component';
 
-import { GrupoComponent } from './pages/configuraciones/catalogos/grupo/grupo.component';
-import { EtapaComponent } from './pages/configuraciones/catalogos/etapa/etapa.component';
-import { EscuelaComponent } from './pages/configuraciones/catalogos/escuela/escuela.component';
+import { GrupoComponent } from './pages/menu/configuraciones/catalogos/grupo/grupo.component';
+import { EtapaComponent } from './pages/menu/configuraciones/catalogos/etapa/etapa.component';
+import { EscuelaComponent } from './pages/menu/configuraciones/catalogos/escuela/escuela.component';
+import { Page404Component } from './shared/page404/page404.component';
+import { LoginComponent } from './shared/login/login.component';
+import { PermisoComponent } from './pages/menu/configuraciones/catalogos/permiso/permiso.component';
 
 
 
@@ -50,19 +53,19 @@ const routes: Route[]=[
         path:'test',component:TestComponent
       },
       {
-        path:'registrar-persona',component:RegisterPersonComponent
+        path:'registrarPersona',component:RegisterPersonComponent
       },
       {
-        path:'ver-personas',component:ViewPersonsComponent
+        path:'verPersonas',component:ViewPersonsComponent
       },
       {
-        path:'ver-contacto-personas',component:ContactsPersonComponent
+        path:'contactoPersonas',component:ContactsPersonComponent
       },
       {
         path:'tipoPersona',component:TipoPersonaComponent
       },
       {
-        path:'tipoProceso',component:TipoProcesoComponent
+        path:'proceso',component:TipoProcesoComponent
       },
       {
         path:'grupo',component:GrupoComponent
@@ -72,11 +75,22 @@ const routes: Route[]=[
       },
       {
         path:'etapa',component:EtapaComponent
+      },
+      {
+        path:'permiso',component:PermisoComponent
       }
 
     ] 
+  },{ 
+    path: 'login', component: LoginComponent,
+    children:[
+      
+      {
+        path:'login',component:LoginComponent
+      }
+    ] 
   },
- 
+  {path:'login',redirectTo:'/login',pathMatch:'full'},
   {path:'',redirectTo:'/dashboard',pathMatch:'full'},
   {path:'**',redirectTo:'/dashboard',pathMatch:'full'}
 
@@ -101,7 +115,10 @@ const routes: Route[]=[
     TipoProcesoComponent,
     GrupoComponent,
     EscuelaComponent,
-    EtapaComponent
+    EtapaComponent,
+    Page404Component,
+    LoginComponent,
+    PermisoComponent,
   ],
   imports: [
     BrowserModule,
@@ -120,5 +137,13 @@ const routes: Route[]=[
 })
 export class AppModule { 
 
+  ngOnInit(){
+console.log(" paso 1 ")
+  }
+
+  OnInit(){
+    console.log(" paso 2 ")
+
+  }
   
 }

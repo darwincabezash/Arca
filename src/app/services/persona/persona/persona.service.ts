@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { concatMapTo, Observable, Subject } from 'rxjs';
 import { PublicInfo } from 'src/app/shared/data/publicInfo';
 import { Persona, DatoBasicoPersona } from '../../../dataModels/persona';
+import { GlobalDataService } from '../../login/globalDataServices';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,8 @@ import { Persona, DatoBasicoPersona } from '../../../dataModels/persona';
 
 export class PersonaService {
 
-  serverLocal:RequestInfo ="http://localhost:3000/graphql";
-  serverPro:RequestInfo="https://arca-server.vercel.app/graphql";
+  server:RequestInfo=GlobalDataService.getServer();
+
   
   //PERSONA
   private personas: Persona[];
@@ -31,7 +32,7 @@ export class PersonaService {
     this.personas = [];
 
     try {
-      await fetch(this.serverLocal, {
+      await fetch(this.server, {
 
         method: 'POST',
         headers: {
@@ -93,7 +94,7 @@ export class PersonaService {
   async agregarPersonas(persona:Persona) {
     try {
 
-      await fetch(this.serverLocal, {
+      await fetch(this.server, {
 
         method: 'POST',
         headers: {

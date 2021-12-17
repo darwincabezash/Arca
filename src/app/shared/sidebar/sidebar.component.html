@@ -55,14 +55,14 @@
           <ul class="nav nav-treeview">
             <!--REGISTRAR PERSONA-->
             <li class="nav-item">
-              <a routerLink="/dashboard/registrar-persona" class="nav-link">
+              <a routerLink="/dashboard/registrarPersona" class="nav-link" >
                 <i class="fas fa-user-plus nav-icon " style="margin-left: 10px;"></i>
                 <p>Registrar Persona</p>
               </a>
             </li>
             <!--VER PERSONAS-->
             <li class="nav-item">
-              <a routerLink="/dashboard/ver-personas" class="nav-link">
+              <a routerLink="/dashboard/verPersonas" class="nav-link" >
                 <!--<i class="fas fa-user-plus nav-icon"></i>-->
                 <i class="fas fa-list-alt nav-icon" style="margin-left: 10px;"></i>
                 <p>Ver Personas</p>
@@ -71,7 +71,7 @@
             </li>
             <!--VER CONTACTOS DE PERSONAS-->
             <li class="nav-item">
-              <a routerLink="/dashboard/ver-contacto-personas" class="nav-link">
+              <a routerLink="/dashboard/contactoPersonas" class="nav-link" >
                 <!--<i class="fas fa-user-plus nav-icon"></i>-->
                 <i class="fas fa-list-alt nav-icon " style="margin-left: 10px;"></i>
                 <p>Ver Contactos</p>
@@ -121,16 +121,23 @@
                 <!--TIPO PROCESO-->
 
                 <li class="nav-item">
-                  <a routerLink="/dashboard/tipoProceso" class="nav-link">
+                  <a routerLink="/dashboard/proceso" class="nav-link" >
                     <i class="fas fa-tasks nav-icon " style="margin-left: 20px;"></i>
-                    <p>Tipo de Procesos</p>
+                    <p>Procesos</p>
                   </a>
                 </li>
 
                 <!--GRUPO-->
 
+               <!-- <li class="nav-item">
+                  <a routerLink="/dashboard/grupo" class="nav-link"  data-widget="pushmenu">
+                    <i class="fas  fa-street-view nav-icon " style="margin-left: 20px;"></i>
+                    <p>Grupos</p>
+                  </a>
+                </li>-->
+
                 <li class="nav-item">
-                  <a routerLink="/dashboard/grupo" class="nav-link">
+                  <a routerLink="/dashboard/grupo" class="nav-link" >
                     <i class="fas  fa-street-view nav-icon " style="margin-left: 20px;"></i>
                     <p>Grupos</p>
                   </a>
@@ -139,7 +146,7 @@
                 <!--ESCUELA-->
 
                 <li class="nav-item">
-                  <a routerLink="/dashboard/escuela" class="nav-link">
+                  <a routerLink="/dashboard/escuela" class="nav-link" >
                     <i class="fas  fa-graduation-cap nav-icon " style="margin-left: 20px;"></i>
                     <p>Escuelas</p>
                   </a>
@@ -148,12 +155,31 @@
                 <!--ETAPA-->
 
                 <li class="nav-item">
-                  <a routerLink="/dashboard/etapa" class="nav-link">
+                  <a routerLink="/dashboard/etapa" class="nav-link" >
                     <i class="fas  fa-hiking nav-icon " style="margin-left: 20px;"></i>
                     <p>Etapas</p>
                   </a>
                 </li>
 
+
+                 <!--PERMISO-->
+
+                 <li class="nav-item">
+                  <a routerLink="/dashboard/permiso" class="nav-link" >
+                    <i class="fas  fa-hiking nav-icon " style="margin-left: 20px;"></i>
+                    <p>Permisos</p>
+                  </a>
+                </li>
+
+
+                <!--ETAPA-->
+
+                <li class="nav-item">
+                  <a routerLink="/dashboard/pagina404" class="nav-link" >
+                    <i class="fas  fa-hiking nav-icon " style="margin-left: 20px;"></i>
+                    <p>Pagina 404 (no hacer nada aquí)=</p>
+                  </a>
+                </li>
 
 
 
@@ -165,58 +191,6 @@
 
 
 
-
-
-
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-
-            <i class="nav-icon fas fa-wrench"></i>
-            <p>
-              Configuraciones
-              <i class="right fas fa-angle-left"></i>
-              <span class="right badge badge-danger">New</span>
-            </p>
-          </a>
-
-          <ul class="nav nav-treeview">
-            <!--CATALOGOS-->
-
-
-
-
-
-
-
-
-            <!-- FIN CATALOGOS-->
-
-
-            <li class="nav-item">
-              <a routerLink="/dashboard/registrar-persona" class="nav-link">
-                <i class="fas fa-user-plus nav-icon ml-3"></i>
-                <p>Registrar Persona</p>
-              </a>
-            </li>
-            <!--VER PERSONAS-->
-            <li class="nav-item">
-              <a routerLink="/dashboard/ver-personas" class="nav-link">
-                <!--<i class="fas fa-user-plus nav-icon"></i>-->
-                <i class="fas fa-list-alt nav-icon ml-3"></i>
-                <p>Ver Personas</p>
-                <span class="badge badge-info right">{{totalPersonas}}</span>
-              </a>
-            </li>
-            <!--VER CONTACTOS DE PERSONAS-->
-            <li class="nav-item">
-              <a routerLink="/dashboard/ver-contacto-personas" class="nav-link">
-                <!--<i class="fas fa-user-plus nav-icon"></i>-->
-                <i class="fas fa-list-alt nav-icon ml-3"></i>
-                <p>Ver Contactos</p>
-              </a>
-            </li>
-          </ul>
-        </li>
         <!--FIN CONFIGURACIONES-->
 
         <!--@@@@@@@@@@@@@@@@@@@  AQUI VA EL RESTO DEL CODIGO-->

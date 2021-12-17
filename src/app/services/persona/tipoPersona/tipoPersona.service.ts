@@ -1,6 +1,7 @@
 import { TipoPersona } from './../../../dataModels/tipoPersona';
 import { Injectable } from '@angular/core';
 import { concatMapTo, Observable, Subject } from 'rxjs';
+import { GlobalDataService } from '../../login/globalDataServices';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +9,8 @@ import { concatMapTo, Observable, Subject } from 'rxjs';
 
 export class TipoPersonaService {
 
-  serverLocal: RequestInfo = "http://localhost:3000/graphql";
-  serverPro: RequestInfo = "https://arca-server.vercel.app/graphql";
+  server:RequestInfo=GlobalDataService.getServer();
+
 
   //TIPO PERSONA
   private tipoPersonas: TipoPersona[];
@@ -27,7 +28,7 @@ export class TipoPersonaService {
   async agregarTipoPersonas(tipoPersona: TipoPersona) {
     try {
 
-      await fetch(this.serverLocal, {
+      await fetch(this.server, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,8 +46,7 @@ export class TipoPersonaService {
       })
         .then((res) => res.json())
         .then((result) => {    
-
-          this.tipoPersonas$.next(this.tipoPersonas);
+          this.consultarTipoPersonas();
 
         });
     } catch (e) {
@@ -61,7 +61,7 @@ export class TipoPersonaService {
 
     try {
 
-      await fetch(this.serverLocal, {
+      await fetch(this.server, {
 
         method: 'POST',
         headers: {
@@ -90,9 +90,10 @@ export class TipoPersonaService {
             tipoPersona.tipo = tp.tipo;
             this.tipoPersonas.push(tipoPersona);
           });
+          this.tipoPersonas$.next(this.tipoPersonas);
+
         });
       //this.personasListas();
-      this.tipoPersonas$.next(this.tipoPersonas);
 
     } catch (e) {
       console.log("ERROR: " + e);
@@ -103,7 +104,7 @@ export class TipoPersonaService {
   async eliminarTipoPersonas(_id: any) {
     try {
 
-      await fetch(this.serverLocal, {
+      await fetch(this.server, {
 
         method: 'POST',
         headers: {
@@ -123,6 +124,7 @@ export class TipoPersonaService {
       })
         .then((res) => res.json())
         .then((result) => {
+          this.consultarTipoPersonas();
         });
       this.tipoPersonas$.next(this.tipoPersonas);
 
@@ -135,7 +137,7 @@ export class TipoPersonaService {
   async actualizarTipoPersonas(_id:any,tipoPersona:TipoPersona) {
     try {
 
-      await fetch(this.serverLocal, {
+      await fetch(this.server, {
 
         method: 'POST',
         headers: {
@@ -157,7 +159,7 @@ export class TipoPersonaService {
       })
         .then((res) => res.json())
         .then((result) => {
-          
+          this.consultarTipoPersonas();
         });
       //this.personasListas();
       this.tipoPersonas$.next(this.tipoPersonas);

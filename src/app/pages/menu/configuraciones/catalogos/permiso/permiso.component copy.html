@@ -1,0 +1,253 @@
+<section class="content">
+    <div class="container-fluid">
+
+        <div class="row mt-4">
+            <div class="col-12">
+
+                <form [formGroup]="grupoForm">
+
+                    <!-- Custom Tabs -->
+                    <div class="card">
+                        <div class="card-header d-flex p-0">
+                            <h3 class="mt-4 mb-2 pl-4">Catálogo Grupos</h3>
+
+                        </div><!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab_1">
+
+                                    <!-- general form elements -->
+                                    <div class="card card-primary">
+                                        <div class="card-header">
+                                            <h3 class="card-title"><span class="text-light">Registra los grupos que vas
+                                                    a usar en el sistema Ej. Damas, Caballeros, Alabanza, Etc.</span>
+                                            </h3>
+
+                                        </div>
+                                        <!-- /.card-header -->
+                                        <!-- form start -->
+
+                                        <div class="card-body">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            <div class="class row">
+                                                <div class="class col-lg-6 col-md-6 col-sm-12">
+
+
+
+
+                                                    <div class="card-body">
+                                                        <div class="tab-content">
+                                                            <div class="tab-pane active" id="tab_1">
+
+                                                                <!-- general form elements -->
+                                                                <div class="card card-primary">
+                                                                    <div class="card-header">
+                                                                        <h3 class="card-title"><span
+                                                                                class="text-light">Grupos</span></h3>
+
+                                                                    </div>
+                                                                    <!-- /.card-header -->
+                                                                    <!-- form start -->
+
+                                                                    <div class="card-body">
+
+
+
+
+
+
+                                                                        <div class="list-group"
+                                                                            *ngFor="let g of grupos">
+                                                                            <div class="class row">
+
+                                                                                <button type="button"
+                                                                                    class="list-group-item list-group-item-action"
+                                                                                    (click)="seleccionarGrupo(g._id)"
+                                                                                    [ngStyle]="{'background-color':g.color}">{{g.tipo}}</button>
+
+                                                                            </div>
+
+
+
+
+                                                                        </div>
+
+
+
+
+
+
+                                                                    </div>
+                                                                    <!-- /.card-body -->
+
+                                                                </div>
+                                                                <!-- /.card -->
+
+                                                            </div>
+
+                                                        </div>
+                                                        <!-- /.tab-content -->
+
+                                                    </div><!-- /.card-body -->
+
+                                                </div>
+
+                                                <div class="class col-lg-6 col-md-6 col-sm-12">
+                                                    <div class="card-body">
+                                                        <div class="tab-content">
+                                                            <div class="tab-pane active" id="tab_1">
+
+                                                                <!-- general form elements -->
+                                                                <div class="card card-primary">
+                                                                    <div class="card-header">
+                                                                        <h3 class="card-title"><span
+                                                                                class="text-light">Permisos</span></h3>
+
+                                                                    </div>
+                                                                    <!-- /.card-header -->
+                                                                    <!-- form start -->
+
+                                                                    <div class="card-body">
+
+
+
+
+
+
+
+                                                                        <div *ngFor="let p of permisos">
+
+                                                                            <div class="form-group">
+
+                                                                                <div
+                                                                                    class="custom-control custom-switch">
+                                                                                    <input type="checkbox"
+                                                                                        class="custom-control-input"
+                                                                                        id="{{p._id}}"
+                                                                                        (click)="agregarPermiso($event,p._id)">
+                                                                                    <label class="custom-control-label"
+                                                                                        for="{{p._id}}">{{p.nombre}}</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+
+
+
+                                                                    </div>
+                                                                    <!-- /.card-body -->
+
+                                                                </div>
+                                                                <!-- /.card -->
+
+                                                            </div>
+
+                                                        </div>
+                                                        <!-- /.tab-content -->
+
+                                                    </div><!-- /.card-body -->
+
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                                        </div>
+                                        <!-- /.card-body -->
+
+                                    </div>
+                                    <!-- /.card -->
+
+                                </div>
+
+                            </div>
+                            <!-- /.tab-content -->
+
+
+                        </div><!-- /.card-body -->
+                        <div class="row">
+                            <div class="col-12">
+                                <!-- Custom Tabs -->
+                                <div class="card ml-3 mr-3">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- ./card -->
+
+                </form>
+
+            </div>
+            <!-- /.col -->
+
+        </div>
+        <!-- /.row -->
+
+
+    </div>
+</section>

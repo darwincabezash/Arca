@@ -1,0 +1,1285 @@
+<section class="content">
+  <div class="container-fluid">
+
+    <div class="row mt-4">
+      <div class="col-12">
+
+        <form [formGroup]="personaForm" (ngSubmit)="agregarPersona()">
+
+
+          <!-- Custom Tabs -->
+          <div class="card">
+            <div class="card-header d-flex p-0">
+              <h3 class="mt-4 mb-2 pl-4">Registrar Persona</h3>
+              <!--<h3 class="card-title p-3">Tipo de Información <span class="text-muted">&nbsp;
+                                &nbsp;(Información básica es requerida.)</span> </h3>-->
+              <ul class="nav nav-pills ml-auto p-2">
+                <li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">Información Básica</a>
+                </li>
+                <li class="nav-item"><a class="nav-link " href="#tab_2" data-toggle="tab">Información
+                    Espiritual</a></li>
+                <li class="nav-item"><a class="nav-link" href="#tab_3" data-toggle="tab">Información
+                    Espiritual</a></li>
+
+
+                <li class="nav-item"><a class="nav-link" href="#tab_4" data-toggle="tab">Información
+                    Familiar</a></li>
+
+
+
+              </ul>
+            </div><!-- /.card-header -->
+            <div class="card-body">
+              <div class="tab-content">
+                <div class="tab-pane active" id="tab_1">
+
+                  <!-- general form elements -->
+                  <div class="card card-primary">
+                    <div class="card-header">
+                      <h3 class="card-title"><span class="text-light">Almenos debe completar la
+                          información básica para registrar a la persona.</span></h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+
+                    <div class="card-body">
+
+                      <!--CEDULA-->
+                      <div class="form-group">
+                        <label class="col-form-label">*Cédula</label>
+
+                        <input type="text" class="form-control form-control-lg" id="cedula"
+                          placeholder="Ingresa la cédula" formControlName="cedula">
+
+                        <div class="text-danger"
+                          *ngIf="personaForm.get('cedula')?.hasError('required') && personaForm.get('cedula')?.touched">
+                          <span>La cédula es <strong>obligatoria</strong></span>
+                        </div>
+                      </div>
+
+                      <!--PRIMER NOMBRE-->
+
+                      <div class="form-group">
+                        <label class="col-form-label">*Primer Nombre</label>
+
+                        <input type="text" class="form-control form-control-lg" id="primerNombre"
+                          placeholder="Ingresa el primer nombre" formControlName="primerNombre">
+
+
+                        <div class="text-danger"
+                          *ngIf="personaForm.get('primerNombre')?.hasError('required') && personaForm.get('primerNombre')?.touched">
+                          <span>El primer nombre es <strong>obligatorio</strong></span>
+                        </div>
+                      </div>
+
+
+                      <!--SEGUNDO NOMBRE-->
+                      <div class="form-group">
+                        <label class="col-form-label">Segundo Nombre</label>
+                        <input type="text" class="form-control form-control-lg" id="segundoNombre"
+                          placeholder="Ingresa el segundo nombre" formControlName="segundoNombre">
+                      </div>
+
+
+
+                      <!--PRIMER APELLIDO-->
+
+                      <div class="form-group">
+                        <label class="col-form-label">*Primer Apellido</label>
+
+                        <input type="text" class="form-control form-control-lg" id="primerApellido"
+                          placeholder="Ingresa el primer apellido" formControlName="primerApellido">
+
+                        <div class="text-danger"
+                          *ngIf="personaForm.get('primerApellido')?.hasError('required') && personaForm.get('primerApellido')?.touched">
+                          <span>El primer apellido es <strong>obligatorio</strong></span>
+                        </div>
+                      </div>
+
+                      <!--SEGUNDO APELLIDO-->
+                      <div class="form-group">
+                        <label class="col-form-label">Segundo Apellido</label>
+                        <input type="text" class="form-control form-control-lg" id="segundoApellido"
+                          placeholder="Ingresa el segundo apellido" formControlName="segundoApellido">
+                      </div>
+
+                      <!--FECHA DE NACIMIENTO-->
+                      <div class="form-group">
+                        <label class="col-form-label">Fecha de Nacimiento</label>
+                        <input type="date" class="form-control form-control-lg" id="fechaNacimiento"
+                          formControlName="fechaNacimiento">
+                      </div>
+
+                      <!--TELÉFONO-->
+                      <div class="form-group">
+                        <label class="col-form-label">Teléfono</label>
+                        <input type="text" class="form-control form-control-lg" id="telefono"
+                          placeholder="Ingresa el teléfono" formControlName="telefono">
+                      </div>
+
+                      <!--CELULAR-->
+
+                      <div class="form-group">
+                        <label class="col-form-label">Celular</label>
+
+                        <input type="text" class="form-control form-control-lg" id="celular"
+                          placeholder="Ingresa el celular" formControlName="celular">
+
+                      </div>
+
+
+                      <!--DIRECCIÓN-->
+
+                      <div class="form-group">
+                        <label class="col-form-label">Dirección</label>
+
+                        <input type="text" class="form-control form-control-lg" id="email"
+                          placeholder="Ingresa la dirección" formControlName="direccion">
+                      </div>
+
+                      <!--EMAIL-->
+
+                      <div class="form-group">
+                        <label class="col-form-label">Email</label>
+
+                        <input type="email" class="form-control form-control-lg" id="email"
+                          placeholder="Ingresa el email" formControlName="email">
+                      </div>
+
+
+
+
+                      <!--SEXO-->
+                      <div class="form-group">
+                        <label class="col-form-label">Sexo</label>
+                        <div class="icheck-primary">
+                          <input type="radio" id="sexoH" name="sexo" value="H" formControlName="sexo" checked />
+                          <label for="sexoH">Hombre</label>
+                        </div>
+                        <div class="icheck-primary">
+                          <input type="radio" id="sexoM" name="sexo" value="M" formControlName="sexo" />
+                          <label for="sexoM">Mujer</label>
+                        </div>
+                      </div>
+
+                      <!--FOTO-->
+                      <!--<div class="form-group">
+                                                <label for="exampleInputFile">Foto</label>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input "
+                                                            id="foto" formControlName="foto">
+                                                        <label class="custom-file-label"
+                                                            for="exampleInputFile">Selecciona el archivo</label>
+                                                    </div>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">Subir</span>
+                                                    </div>
+                                                </div>
+                                            </div>-->
+
+                      <!--FOTO-->
+
+                      <div class="form-group">
+                        <label class="col-form-label">Foto (Url) </label>
+
+                        <input type="text" class="form-control form-control-lg" id="foto"
+                          placeholder="Link de fotografía" formControlName="foto">
+                        <p class="text-muted"> Ej. https://sitio-web.com/tu-foto.jpg</p>
+                      </div>
+
+
+                      <!--BLOQUE DE CODIGO PARA USARLO COMO CAMPO CON ERROR-->
+                      <!--<div class="form-group">
+                                                <label class="col-form-label" for="exampleInputEmail1">Primer Nombre</label>
+                                                <input type="email" class="form-control form-control-lg is-invalid"
+                                                    id="exampleInputEmail1" placeholder="Nombre">
+                                            </div>-->
+                      <!--FIN-->
+
+
+                    </div>
+                    <!-- /.card-body -->
+
+
+                  </div>
+                  <!-- /.card -->
+
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="tab_2">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  <!-- general form elements -->
+                  <div class="card card-primary">
+                    <div class="card-header">
+                      <h3 class="card-title"><span class="text-light">Almenos debe completar la
+                          información básica para registrar a la persona.</span></h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+
+                    <div class="card-body">
+
+                      <!--CEDULA-->
+                      <div class="form-group">
+
+
+
+
+
+
+
+
+                        <!-- CARD ORIGEN -------------------------------------------------------------------------------->
+                        <div class="card ">
+                          <div class="card-header" style="background-color: #d2d6de;">
+                            <div class="text-right mt-0 mb-0 pl-4 ">
+                              <h3 class="card-title pt-2">Origen de la persona</h3>
+
+                              <button type="button" class=" align-middle btn-lg" style="background-color: #6c757d; margin:0px;border: 2px white;color:white
+                                ;font-size:12px" data-toggle="modal" data-target="#modal-origen">
+                                Editar
+                              </button>
+
+                            </div>
+                          </div>
+
+                          <!-- /.card-header -->
+                          <div class="card-body" *ngIf="origenPersona.nombreIglesiaOrigen?.length">
+                            <strong><i class="fas fa-place-of-worship mr-1"></i>{{origenPersona.nombreIglesiaOrigen}}
+                            </strong>
+
+
+                            <p class="text-muted mt-3">
+                              Cargo Ejercido: &nbsp; {{origenPersona.cargoEjercido}}
+                            </p>
+                            <p class="text-muted mt-0">
+                              Tiempo de permanencia: &nbsp;
+                              {{origenPersona.tiempoPermanencia==1 ? origenPersona.tiempoPermanencia +  " Año" : origenPersona.tiempoPermanencia+ " Años"}}
+                            </p>
+
+                            <hr>
+
+                            <!--<strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
+
+                          <p class="text-muted">Malibu, California</p>
+
+                          <hr>
+
+                          <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
+
+                          <p class="text-muted">
+                            <span class="tag tag-danger">UI Design</span>
+                            <span class="tag tag-success">Coding</span>
+                            <span class="tag tag-info">Javascript</span>
+                            <span class="tag tag-warning">PHP</span>
+                            <span class="tag tag-primary">Node.js</span>
+                          </p>
+
+                          <hr>
+
+                          <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
+
+                          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum
+                            enim neque.</p>-->
+                          </div>
+                          <!-- /.card-body -->
+                        </div>
+                        <!-- /.FIN CARD ORIGEN  -->
+
+
+                        <!-- CARD DATOS DE LLEGADA A LA IGLESIA -------------------------------------------------------------------------------->
+                        <div class="card ">
+                          <div class="card-header" style="background-color: #d2d6de;">
+                            <div class="text-right mt-0 mb-0 pl-4 ">
+                              <h3 class="card-title pt-2">Datos de Llegada</h3>
+
+                              <button type="button" class=" align-middle btn-lg" style="background-color: #6c757d; margin:0px;border: 2px white;color:white
+                                ;font-size:12px" data-toggle="modal" data-target="#modal-datos-llegada">
+                                Editar
+                              </button>
+
+                            </div>
+                          </div>
+
+                          <div class="card-body" *ngIf="datosLlegada.fechaLlegada?.toString()?.length">
+                            <strong><i class="fas fa-child mr-1"></i>{{datosLlegada.InvitadoPor}}
+                            </strong>
+
+                            <p class="text-muted mt-3">
+                              fecha: &nbsp; {{datosLlegada.fechaLlegada}}
+                            </p>
+                            <p class="text-muted mt-0">
+                              Actividad: &nbsp; {{datosLlegada.actividadLlegada}}
+                            </p>
+
+                            <hr>
+
+                            <!--<strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
+
+                          <p class="text-muted">Malibu, California</p>
+
+                          <hr>
+
+                          <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
+
+                          <p class="text-muted">
+                            <span class="tag tag-danger">UI Design</span>
+                            <span class="tag tag-success">Coding</span>
+                            <span class="tag tag-info">Javascript</span>
+                            <span class="tag tag-warning">PHP</span>
+                            <span class="tag tag-primary">Node.js</span>
+                          </p>
+
+                          <hr>
+
+                          <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
+
+                          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum
+                            enim neque.</p>-->
+                          </div>
+                          <!-- /.card-body -->
+                        </div>
+                        <!-- /.FIN CARD ORIGEN  -->
+
+
+
+                        <!-- CARD ORACION DE FE ------------------------------------------------------------------------>
+                        <div class="card ">
+                          <div class="card-header" style="background-color: #d2d6de;">
+                            <div class="text-right mt-0 mb-0 pl-4 ">
+                              <h3 class="card-title pt-2">Oración de fe</h3>
+
+                              <button type="button" class=" align-middle btn-lg" style="background-color: #6c757d; margin:0px;border: 2px white;color:white
+                                ;font-size:12px" data-toggle="modal" data-target="#modal-oracion-fe">
+                                Editar
+                              </button>
+
+                            </div>
+                          </div>
+
+                          <!-- /.card-header -->
+                          <div class="card-body" *ngIf="oracionFe.oracionFe">
+                            <strong><i class="fas fa-cross mr-1"></i>{{oracionFe.lugar}}
+                            </strong>
+
+                            <p class="text-muted mt-3">
+                              fecha: &nbsp; {{oracionFe.fecha}}
+                            </p>
+                            <p class="text-muted mt-0">
+                              Responsable: &nbsp; {{oracionFe.responsable}}
+                            </p>
+
+                            <hr>
+
+
+                            <!--<strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
+
+                          <p class="text-muted">Malibu, California</p>
+
+                          <hr>
+
+                          <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
+
+                          <p class="text-muted">
+                            <span class="tag tag-danger">UI Design</span>
+                            <span class="tag tag-success">Coding</span>
+                            <span class="tag tag-info">Javascript</span>
+                            <span class="tag tag-warning">PHP</span>
+                            <span class="tag tag-primary">Node.js</span>
+                          </p>
+
+                          <hr>
+
+                          <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
+
+                          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum
+                            enim neque.</p>-->
+                          </div>
+                          <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+
+
+                        <!-- CARD BAUTIZMO ------------------------------------------------------------------------>
+                        <div class="card ">
+                          <div class="card-header" style="background-color: #d2d6de;">
+                            <div class="text-right mt-0 mb-0 pl-4 ">
+                              <h3 class="card-title pt-2">Bautizmo</h3>
+
+                              <button type="button" class=" align-middle btn-lg" style="background-color: #6c757d; margin:0px;border: 2px white;color:white
+                                ;font-size:12px" data-toggle="modal" data-target="#modal-bautizmo">
+                                Editar
+                              </button>
+
+                            </div>
+                          </div>
+                          <!-- /.card-header -->
+                          <div class="card-body" *ngIf="bautizmo.bautizmo">
+                            <strong><i class="fas fa-water mr-1"></i>{{bautizmo.lugar}}
+                            </strong>
+
+                            <p class="text-muted mt-3">
+                              fecha: &nbsp; {{bautizmo.fecha}}
+                            </p>
+                            <p class="text-muted mt-0">
+                              Responsable: &nbsp; {{bautizmo.responsable}}
+                            </p>
+
+                            <hr>
+
+                            <!--<strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
+
+                          <p class="text-muted">Malibu, California</p>
+
+                          <hr>
+
+                          <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
+
+                          <p class="text-muted">
+                            <span class="tag tag-danger">UI Design</span>
+                            <span class="tag tag-success">Coding</span>
+                            <span class="tag tag-info">Javascript</span>
+                            <span class="tag tag-warning">PHP</span>
+                            <span class="tag tag-primary">Node.js</span>
+                          </p>
+
+                          <hr>
+
+                          <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
+
+                          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum
+                            enim neque.</p>-->
+                          </div>
+                          <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+
+
+
+                        <!-- CARD PROCESOS ------------------------------------------------------------------------>
+                        <div class="card ">
+                          <div class="card-header" style="background-color: #d2d6de;">
+                            <div class="text-right mt-0 mb-0 pl-4 ">
+                              <h3 class="card-title pt-2">Procesos</h3>
+
+
+
+
+
+                              <button type="button" class=" align-middle btn-lg" style="background-color: #6c757d; margin:0px;border: 2px white;color:white
+                                ;font-size:12px" data-toggle="modal" data-target="#modal-procesos">
+                                Editar
+                              </button>
+
+
+                            </div>
+                          </div>
+
+                          <!-- /.card-header   *ngIf="bautizmo.bautizmo" -->
+                          <div class="card-body"
+                            *ngIf="listaEscuelasSeleccion.length || listaProcesosSeleccion.length || listaGruposSelecion.length">
+
+                            <div *ngIf="listaEscuelasSeleccion.length">
+                              <strong><i class="fas fa-graduation-cap mr-1"></i>Escuelas
+                              </strong>
+
+                              <p class="text-muted mt-3" *ngFor="let e of listaEscuelasSeleccion">
+                                <i class="fas fa-angle-right mr-1"></i>
+                                &nbsp; {{e.tipo}}
+                              </p>
+                              <hr>
+
+                            </div>
+
+
+
+                            <div *ngIf="listaProcesosSeleccion.length">
+
+                              <strong><i class="fas fa-biking mr-1"></i>Procesos</strong>
+
+                              <p class="text-muted mt-3" *ngFor="let p of listaProcesosSeleccion">
+                                <i class="fas fa-angle-right mr-1"></i>
+                                &nbsp; {{p.tipo}}
+                              </p>
+                              <hr>
+
+                            </div>
+
+
+
+                            <div *ngIf="listaGruposSelecion.length">
+
+                              <strong><i class="fas fa-users mr-1"></i>Grupos
+                              </strong>
+
+                              <p class="text-muted mt-3" *ngFor="let g of listaGruposSelecion">
+                                <i class="fas fa-angle-right mr-1"></i>
+                                &nbsp; {{g.tipo}}
+                              </p>
+                            </div>
+
+                            <!--<strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
+
+                          <p class="text-muted">Malibu, California</p>
+
+                          <hr>
+
+                          <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
+
+                          <p class="text-muted">
+                            <span class="tag tag-danger">UI Design</span>
+                            <span class="tag tag-success">Coding</span>
+                            <span class="tag tag-info">Javascript</span>
+                            <span class="tag tag-warning">PHP</span>
+                            <span class="tag tag-primary">Node.js</span>
+                          </p>
+
+                          <hr>
+
+                          <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
+
+                          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum
+                            enim neque.</p>-->
+                          </div>
+                          <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+
+
+
+
+
+
+                        <!-- Modal Origen  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
+
+                        <div class="modal fade" id="modal-origen">
+                          <form [formGroup]="origenPersonaForm">
+
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h4 class="modal-title">Origen de la persona</h4>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="card-body">
+
+                                    <!-- IGLESIA ORIGEN -->
+                                    <section>
+                                      <label class="col-form-label">Iglesia de origen</label>
+                                      <div class="form-group">
+                                        <select class=" form-control form-control-lg"
+                                          (change)="onChangeIglesiaOrigen($event.target)" id="exampleSelectBorder">
+                                          <option> Selecciona una opción</option>
+                                          <option> Sendas de Justicia</option>
+                                          <option>Otra</option>
+                                        </select>
+                                      </div>
+
+                                      <!-- NOMBRE DENOMINACION / IGLESIA -->
+
+                                      <div class="form-group" *ngIf="origenIglesiaSeleccionado==='Otra'">
+                                        <label class="col-form-label">Nombre Denominación / Iglesia</label>
+                                        <input type="text" class="form-control form-control-lg" id="nombreIglesiaOrigen"
+                                          placeholder="Ingresa el nombre de la iglesia de origen"
+                                          formControlName="nombreIglesiaOrigen">
+                                      </div>
+
+                                      <!-- CARGO EJERCIDO -->
+
+                                      <div class="form-group" *ngIf="origenIglesiaSeleccionado==='Otra'">
+                                        <label class="col-form-label">Cargo ejercido</label>
+                                        <input type="text" class="form-control form-control-lg" id="cargoEjercido"
+                                          placeholder="Ingresa el cargo ejercido" formControlName="cargoEjercido">
+                                      </div>
+
+                                      <!-- TIEMPO DE PERMANENCIA -->
+                                      <div *ngIf="origenIglesiaSeleccionado==='Otra'">
+                                        <label class="col-form-label">Tiempo de permanencia</label>
+                                        <div class="form-group">
+                                          <select class=" form-control form-control-lg"
+                                            (change)="onChangeIglesiaOrigenTiempoPermanencia($event.target)"
+                                            id="tiempoPermanencia">
+                                            <option *ngFor="let t of tiempoPermanencia" value="{{t}}">{{t}} años
+                                            </option>
+                                          </select>
+                                        </div>
+                                      </div>
+
+                                    </section>
+
+
+                                  </div>
+
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+                                  <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                    (click)="generarBloqueOrigenPersona()">Guardar</button>
+                                </div>
+                              </div>
+                              <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                          </form>
+                        </div>
+                        <!-- /.modal-origen -->
+
+
+
+                        <!-- Modal Datos de llegada @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
+
+                        <div class="modal fade" id="modal-datos-llegada">
+                          <form [formGroup]="datosLlegadaForm">
+
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h4 class="modal-title">Datos de Llegada</h4>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="card-body">
+
+
+                                    <section>
+                                      <!--FECHA DE LLEGADA-->
+                                      <div class="form-group">
+                                        <label class="col-form-label">Fecha de llegada</label>
+                                        <input type="date" class="form-control form-control-lg" id="fechaLlegada"
+                                          formControlName="fechaLlegada">
+                                      </div>
+
+                                      <!--INVITADO POR-->
+
+                                      <label class="col-form-label">Invitado por</label>
+                                      <select class=" form-control form-control-lg"
+                                        (change)="onChangeIglesiaInvitadoPorDatoLlegada($event.target)"
+                                        id="InvitadoPor">
+                                        <option value="Nombres de Miembros"> Selecciona un Persona</option>
+                                        <option value="Nombres de Miembros"> Nombres de Miembros</option>
+                                        <option value="Otro">Otro</option>
+                                      </select>
+
+                                      <!-- ACTIVIDAD DE LLEGADA -->
+
+                                      <div class="form-group">
+                                        <label class="col-form-label">Actividad de llegada</label>
+                                        <input type="text" class="form-control form-control-lg" id="actividadLlegada"
+                                          placeholder="Ingresa la actividad de llegada"
+                                          formControlName="actividadLlegada">
+                                      </div>
+
+
+                                    </section>
+
+                                  </div>
+
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+                                  <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                    (click)="generarBloqueDatosLlegada()">Guardar</button>
+                                </div>
+                              </div>
+                              <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                          </form>
+                        </div>
+                        <!-- /.modal-origen -->
+
+
+
+                        <!-- Modal Oracion de Fe @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
+
+                        <div class="modal fade" id="modal-oracion-fe">
+                          <form [formGroup]="oracionFeForm">
+
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h4 class="modal-title">Oración de fe</h4>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="card-body">
+
+
+
+
+                                    <!--<div class="form-check pl-0">
+                                    <input id="{{p._id}}" #chk class="form-check-input" type="checkbox"
+                                      data-toggle="toggle" [checked]="p.estado"
+                                      (change)="onChangeHizoOracionFe(chk.checked)">
+                                    <label for="{{p._id}}" class="form-check-label">{{p.nombre}} </label>
+                                  </div>-->
+
+
+                                    <div class="form-check pl-0">
+                                      <input (change)="onChangeHizoOracionFe($event)" value="angular" type="checkbox" />
+                                      &nbsp;&nbsp; <label class="form-check-label"> Hizo la oración de fe</label>
+                                    </div>
+
+
+
+                                    <section *ngIf="hizoOracionFe">
+                                      <!--FECHA DE ORACION DE FE-->
+                                      <div class="form-group mt-3">
+                                        <label class="col-form-label">Fecha de Oración de fe</label>
+                                        <input type="date" class="form-control form-control-lg" id="fecha"
+                                          formControlName="fecha">
+                                      </div>
+
+                                      <label class="col-form-label">Selecciona un lugar</label>
+                                      <select class=" form-control form-control-lg"
+                                        (change)="onChangeOracionFeLugar($event.target)" id="lugarOption">
+                                        <option> Selecciona una opción</option>
+                                        <option> Sendas de Justicia</option>
+                                        <option>Otra</option>
+                                      </select>
+
+                                      <!-- CARGO PASTOR / LIDER  (SI NO ES DE LA IGLESIA)-->
+
+                                      <div class="form-group" *ngIf="oracionFeLugar==='Otra'">
+                                        <label class="col-form-label">Nombre Denominación / Iglesia</label>
+                                        <input type="text" class="form-control form-control-lg" id="lugar"
+                                          placeholder="Ingresa la denominación o Iglesia" formControlName="lugar">
+                                      </div>
+
+                                      <!-- CARGO PASTOR / LIDER (SI ES DE LA IGLESIA)-->
+
+                                      <div class="form-group">
+                                        <label class="col-form-label">Pastor / Lider / Miembro (Responsable)</label>
+                                        <input type="text" class="form-control form-control-lg" id="responsable"
+                                          placeholder="Ingresa el nombre del Pastor o líder"
+                                          formControlName="responsable">
+                                      </div>
+
+                                    </section>
+
+
+                                  </div>
+
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+                                  <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                    (click)="generarBloqueOracionFe()">Guardar</button>
+                                </div>
+                              </div>
+                              <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                          </form>
+                        </div>
+                        <!-- /.modal-origen -->
+
+
+                        <!-- Bautizmo @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
+
+                        <div class="modal fade" id="modal-bautizmo">
+                          <form [formGroup]="bautizmoForm">
+
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h4 class="modal-title">Bautizmo</h4>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="card-body">
+
+
+
+                                    <!--<div class="form-check pl-0">
+                                    <input id="{{p._id}}" #chk class="form-check-input" type="checkbox"
+                                      data-toggle="toggle" [checked]="p.estado"
+                                      (change)="onChangeHizoOracionFe(chk.checked)">
+                                    <label for="{{p._id}}" class="form-check-label">{{p.nombre}} </label>
+                                  </div>-->
+
+
+                                    <div class="form-check pl-0">
+                                      <input (change)="onChangeHizoBautizmo($event)" value="angular" type="checkbox" />
+                                      &nbsp;&nbsp; <label class="form-check-label"> Hizo el bautizmo</label>
+                                    </div>
+
+
+
+                                    <section *ngIf="hizoBautizmo">
+                                      <!--FECHA DE BAUTIZMO-->
+                                      <div class="form-group mt-3">
+                                        <label class="col-form-label">Fecha de Bautizmo</label>
+                                        <input type="date" class="form-control form-control-lg" id="fecha"
+                                          formControlName="fecha">
+                                      </div>
+
+                                      <label class="col-form-label">Selecciona un lugar</label>
+                                      <select class=" form-control form-control-lg"
+                                        (change)="onChangeBautizmoIglesia($event.target)" id="exampleSelectBorder">
+                                        <option> Selecciona una opción</option>
+                                        <option> Sendas de Justicia</option>
+                                        <option>Otra</option>
+                                      </select>
+
+                                      <!-- CARGO PASTOR / LIDER  (SI NO ES DE LA IGLESIA)-->
+
+                                      <div class="form-group" *ngIf="bautizmoLugar==='Otra'">
+                                        <label class="col-form-label">Nombre Denominación / Iglesia</label>
+                                        <input type="text" class="form-control form-control-lg" id="lugar"
+                                          placeholder="Ingresa el nombre de la denominación o iglesia"
+                                          formControlName="lugar">
+                                      </div>
+
+                                      <!-- CARGO PASTOR / LIDER  (SI NO ES DE LA IGLESIA)-->
+
+                                      <div class="form-group">
+                                        <label class="col-form-label">Pastor / Lider / Miembro (Responsable)</label>
+                                        <input type="text" class="form-control form-control-lg" id="responsable"
+                                          placeholder="Ingresa el pastor o líder" formControlName="responsable">
+                                      </div>
+
+
+
+                                    </section>
+
+
+                                  </div>
+
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+                                  <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                    (click)="generarBloqueBautizmo()">Guardar</button>
+                                </div>
+                              </div>
+                              <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                          </form>
+                        </div>
+                        <!-- /.modal-origen -->
+
+
+                        <!-- Modal 3 Seleccionar Color-->
+
+
+                        <div class="modal fade" id="modal-seleccionarColor">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h4 class="modal-title">Seleccionar color</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="card-body">
+                                  <ul class="list-group">
+                                    <li class="list-group-item">
+
+                                      <!-- Info Boxes Style 2 -->
+                                      <div class="info-box mb-5 " [ngStyle]="{'background-color': '#f20589'}">
+                                        <span class="info-box-icon"></span>
+
+                                        <div class="info-box-content">
+                                          <span class="info-box-text"> &nbsp;</span>
+                                          <span class="info-box-number">&nbsp;</span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                      </div>
+
+                                      <a *ngFor="let e of listaEscuelasTodas" class="badge  badge-pill badge-primary"
+                                        [ngStyle]="{'background-color': '#E6B0AA'}"
+                                        style="font-size:1rem; margin:3px; background-color: #E6B0AA; cursor: pointer;"
+                                        (click)="temp($event,'#E6B0AA') ">Nivel 1</a>
+
+
+                                    </li>
+
+
+                                  </ul>
+                                </div>
+
+                              </div>
+                              <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Listo</button>
+                              </div>
+                            </div>
+                            <!-- /.modal-content -->
+                          </div>
+                          <!-- /.modal-dialog -->
+                        </div>
+
+
+                        <!-- Procesos @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
+
+                        <div class="modal fade" id="modal-procesos">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h4 class="modal-title">Procesos</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="card-body">
+
+
+
+
+                                  <!--<div class="form-check pl-0">
+                                    <input id="{{p._id}}" #chk class="form-check-input" type="checkbox"
+                                      data-toggle="toggle" [checked]="p.estado"
+                                      (change)="onChangeHizoOracionFe(chk.checked)">
+                                    <label for="{{p._id}}" class="form-check-label">{{p.nombre}} </label>
+                                  </div>-->
+                                  <label class="col-form-label">Tipo de persona</label>
+
+                                  <label class="col-form-label">Soy...</label>
+                                  <select class=" form-control form-control-lg"
+                                    (change)="onChangeTipoPersona($event.target)" id="exampleSelectBorder">
+                                    <option> Tipos de Personas</option>
+                                    <option>Otra</option>
+                                  </select>
+
+
+
+
+
+
+                                  <!-- Escuelas -->
+
+
+                                  <label class="col-form-label  mt-5">Selecciona las escuelas </label>
+
+                                  <ul class="list-group">
+                                    <li class="list-group-item">
+
+                                      <a *ngFor="let e of listaEscuelasTodas" class="badge  badge-pill badge-primary"
+                                        [ngStyle]="{'background-color': e.color}"
+                                        style="font-size:1rem; margin:3px; cursor: pointer;"
+                                        (click)="marcarEscuelas(e._id!) ">{{e.tipo}}</a>
+
+                                    </li>
+
+                                  </ul>
+
+                                  <div *ngIf="listaEscuelasSeleccion.length>0">
+                                    <label class="col-form-label">Escuelas seleccionadas</label>
+
+                                    <ul class="list-group">
+                                      <li class="list-group-item">
+
+                                        <a *ngFor="let e of listaEscuelasSeleccion"
+                                          class="badge  badge-pill badge-primary"
+                                          [ngStyle]="{'background-color': e.color}"
+                                          style="font-size:1rem; margin:3px; cursor: pointer;"
+                                          (click)="desmarcarEscuelas(e._id!) ">{{e.tipo}}</a>
+
+                                      </li>
+
+                                    </ul>
+                                  </div>
+
+
+
+                                  <!-- Procesos -->
+
+
+                                  <label class="col-form-label  mt-5">Selecciona los procesos </label>
+
+                                  <ul class="list-group">
+                                    <li class="list-group-item">
+
+                                      <a *ngFor="let p of listaProcesosTodos" class="badge  badge-pill badge-primary"
+                                        [ngStyle]="{'background-color':'#DCE5C2'}"
+                                        style="font-size:1rem; margin:3px; cursor: pointer;color:black;"
+                                        (click)="marcarTipoProcesos(p._id!) ">{{p.tipo}}</a>
+
+                                    </li>
+
+                                  </ul>
+
+                                  <div *ngIf="listaProcesosSeleccion.length>0">
+                                    <label class="col-form-label">Procesos seleccionados</label>
+
+                                    <ul class="list-group">
+                                      <li class="list-group-item">
+
+                                        <a *ngFor="let p of listaProcesosSeleccion"
+                                          class="badge  badge-pill badge-primary"
+                                          [ngStyle]="{'background-color':'#DCE5C2'}"
+                                          style="font-size:1rem; margin:3px; cursor: pointer;color:black;"
+                                          (click)="desmarcarTipoProceso(p._id!) ">{{p.tipo}}</a>
+
+                                      </li>
+
+                                    </ul>
+                                  </div>
+
+
+
+                                  <!-- Grupos -->
+
+                                  <label class="col-form-label  mt-5">Selecciona los Grupos </label>
+
+                                  <ul class="list-group">
+                                    <li class="list-group-item">
+
+                                      <a *ngFor="let g of listaGruposTodos" class="badge  badge-pill badge-primary"
+                                        [ngStyle]="{'background-color':'#31B0BA'}"
+                                        style="font-size:1rem; margin:3px; cursor: pointer;color:white;"
+                                        (click)="marcarGrupos(g._id!) ">{{g.tipo}}</a>
+
+                                    </li>
+
+                                  </ul>
+
+                                  <div *ngIf="listaGruposSelecion.length>0">
+
+                                    <label class="col-form-label">Grupos seleccionados</label>
+
+                                    <ul class="list-group">
+                                      <li class="list-group-item">
+
+                                        <a *ngFor="let g of listaGruposSelecion" class="badge  badge-pill badge-primary"
+                                          [ngStyle]="{'background-color':'#31B0BA'}"
+                                          style="font-size:1rem; margin:3px; cursor: pointer;color:black;"
+                                          (click)="desmarcarGrupos(g._id!) ">{{g.tipo}}</a>
+
+                                      </li>
+
+                                    </ul>
+                                  </div>
+
+
+
+
+
+
+
+
+
+                                  <section *ngIf="hizoBautizmo">
+                                    <!--FECHA DE BAUTIZMO-->
+                                    <div class="form-group mt-3">
+                                      <label class="col-form-label">Fecha de Bautizmo</label>
+                                      <input type="date" class="form-control form-control-lg" id="fechaNacimiento"
+                                        formControlName="fechaNacimiento">
+                                    </div>
+
+                                    <label class="col-form-label">Selecciona un lugar</label>
+                                    <select class=" form-control form-control-lg"
+                                      (change)="onChangeBautizmoIglesia($event.target)" id="exampleSelectBorder">
+                                      <option> Sendas de Justicia</option>
+                                      <option>Otra</option>
+                                    </select>
+                                    <!-- CARGO PASTOR / LIDER  (SI NO ES DE LA IGLESIA)-->
+
+                                    <div class="form-group" *ngIf="bautizmoLugar==='Otra'">
+                                      <label class="col-form-label">Nombre Denominación / Iglesia</label>
+                                      <input type="text" class="form-control form-control-lg" id="segundoNombre"
+                                        placeholder="Ingresa el carga" formControlName="segundoNombre">
+                                    </div>
+
+                                    <!-- CARGO PASTOR / LIDER  (SI NO ES DE LA IGLESIA)-->
+
+                                    <div class="form-group" *ngIf="bautizmoLugar==='Otra'">
+                                      <label class="col-form-label">Pastor / Lider / Miembro (Responsable)</label>
+                                      <input type="text" class="form-control form-control-lg" id="segundoNombre"
+                                        placeholder="Ingresa el carga" formControlName="segundoNombre">
+                                    </div>
+
+
+                                    <!-- CARGO PASTOR / LIDER (SI ES DE LA IGLESIA)-->
+
+
+                                    <div class="form-group" *ngIf="bautizmoLugar!=='Otra'">
+
+                                      <label class="col-form-label">Pastor / Lider / Miembro (Responsable)</label>
+                                      <select class=" form-control form-control-lg"
+                                        (change)="onChangeBautizmoIglesia($event.target)" id="exampleSelectBorder">
+                                        <option> Nombre de Lideres o grupos</option>
+                                        <option>Otra</option>
+                                      </select>
+                                    </div>
+
+                                  </section>
+
+
+                                </div>
+
+                              </div>
+                              <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+                              </div>
+                            </div>
+                            <!-- /.modal-content -->
+                          </div>
+                          <!-- /.modal-dialog -->
+                        </div>
+                        <!-- /.modal-origen -->
+
+
+
+                      </div>
+
+
+
+
+
+                    </div>
+                    <!-- /.card-body -->
+
+
+                  </div>
+                  <!-- /.card -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="tab_3">
+                  Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                  when an unknown printer took a galley of type and scrambled it to make a type
+                  specimen
+                  book.
+                  It has survived not only five centuries, but also the leap into electronic
+                  typesetting,
+                  remaining essentially unchanged. It was popularised in the 1960s with the release of
+                  Letraset
+                  sheets containing Lorem Ipsum passages, and more recently with desktop publishing
+                  software
+                  like Aldus PageMaker including versions of Lorem Ipsum.
+                </div>
+                <div class="tab-pane" id="tab_4">
+                  Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                  when an unknown printer took a galley of type and scrambled it to make a type
+                  specimen
+                  book.
+                  It has survived not only five centuries, but also the leap into electronic
+                  typesetting,
+                  remaining essentially unchanged. It was popularised in the 1960s with the release of
+                  Letraset
+                  sheets containing Lorem Ipsum passages, and more recently with desktop publishing
+                  software
+                  like Aldus PageMaker including versions of Lorem Ipsum.
+                </div>
+                <!-- /.tab-pane -->
+              </div>
+              <!-- /.tab-content -->
+            </div><!-- /.card-body -->
+          </div>
+          <!-- ./card -->
+          <button type="submit" class="btn btn-success btn-lg-12 btn-sm-12" [disabled]="personaForm.invalid">Guardar
+            Persona</button>
+        </form>
+
+      </div>
+      <!-- /.col -->
+
+    </div>
+    <!-- /.row -->
+
+
+  </div>
+</section>

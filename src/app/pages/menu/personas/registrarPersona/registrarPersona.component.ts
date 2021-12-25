@@ -1,13 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Escuela } from 'src/app/dataModels/escuela';
 import { Grupo } from 'src/app/dataModels/grupo';
 import { Bautizmo, DatoBasicoPersona, DatosLlegada, OracionFe, OrigenPersona, Persona } from 'src/app/dataModels/persona';
+import { Seminario } from 'src/app/dataModels/seminario';
+import { TipoPersona } from 'src/app/dataModels/tipoPersona';
 import { TipoProceso } from 'src/app/dataModels/tipoProceso';
+import { Usuario } from 'src/app/dataModels/usuario';
 import { RuteadorService } from 'src/app/router/ruteador.service';
+import { EscuelaService } from 'src/app/services/catalogos/escuela.service';
+import { GrupoService } from 'src/app/services/catalogos/grupo.service';
+import { SeminarioService } from 'src/app/services/catalogos/seminario.service';
+import { TipoProcesoService } from 'src/app/services/catalogos/tipo-proceso.service';
+import { UsuarioService } from 'src/app/services/catalogos/usuario.service copy';
+import { UserDataService } from 'src/app/services/general/user-data.service';
 import { PersonaService } from 'src/app/services/persona/persona/persona.service';
+import { TipoPersonaService } from 'src/app/services/persona/tipoPersona/tipoPersona.service';
 
 
 @Component({
@@ -17,15 +27,34 @@ import { PersonaService } from 'src/app/services/persona/persona/persona.service
 })
 export class RegisterPersonComponent implements OnInit {
 
+  //::: LOGIN
+  datosPersonaSesion: any;
+  idPersona: String = "";
+
+  //::: OTROS
+  _id_persona_creada: boolean = false;
+  personaFueCreada = false;
+  mostrarBotonEditarOracionFeYBautizo = false;
+
+  //::: COMUNES
+  tipoPersona: TipoPersona[] = [];
+  escuela: Escuela[] = [];
+  persona: Persona[] = [];
+  personaNueva: Persona;
+
+
+
   //::: ORIGEN 
   tiempoPermanencia: Number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
   origenIglesiaSeleccionado = "";
   origenPersonaForm: FormGroup;
-  origenPersona: OrigenPersona
+  origenPersona: OrigenPersona;
+  tieneCartaAutorizacion = false;
 
   //::: DATOS LLEGADA
   datosLlegadaForm: FormGroup;
   datosLlegada: DatosLlegada
+  datoLlegadaSeleccionado = "";
 
   //::: ORACION DE FE
   oracionFeLugar = "";
@@ -39,44 +68,50 @@ export class RegisterPersonComponent implements OnInit {
   bautizmoForm: FormGroup;
   bautizmo: Bautizmo;
 
+  //::: USUARIO
+  usuarioForm: FormGroup;
+  datoUsuario: Usuario;
+  usuarioFueCreado = false;
 
 
   //::: PROCESOS
   tipoPersonaSeleccion = "";
   //:::     //:: ESCUELAS
-  listaEscuelasTodas: Escuela[] = [
+  listaEscuelasTodas: Escuela[] = [];/*
     { _id: "1", tipo: "CEFI1", color: "#00BE56" },
     { _id: "2", tipo: "CEFI2", color: "#B1BE00" },
     { _id: "3", tipo: "CEFI3", color: "#7200BE" },
     { _id: "4", tipo: "CEFI4", color: "#0053BE" },
     { _id: "5", tipo: "CEFI5", color: "#BE00B9" },
-  ];
+  ];*/
   listaEscuelasSeleccion: Escuela[] = [];
 
   //:::     //::: TIPOS PROCESOS
-  listaProcesosTodos: TipoProceso[] = [
-    { _id: "1", tipo: "Encuentro"},
-    { _id: "2", tipo: "Re-Encuentro"},
-    { _id: "3", tipo: "Campamento"},
-    { _id: "4", tipo: "EDEM"},
-    { _id: "5", tipo: "Retiro de Caballeros"}
-  ];
+  listaProcesosTodos: TipoProceso[] = [];/*
+    { _id: "1", tipo: "Encuentro" },
+    { _id: "2", tipo: "Re-Encuentro" },
+    { _id: "3", tipo: "Campamento" },
+    { _id: "4", tipo: "EDEM" },
+    { _id: "5", tipo: "Retiro de Caballeros" }
+  ];*/
   listaProcesosSeleccion: TipoProceso[] = [];
 
   //:::     //::: GRUPOS
-  listaGruposTodos: Grupo[] = [
+  listaGruposTodos: Grupo[] = [];
+  listaSeminariosTodos: Grupo[] = [];/*
     { _id: "1", tipo: "Alabanza" },
     { _id: "2", tipo: "Jovenes" },
     { _id: "3", tipo: "Damas" },
     { _id: "4", tipo: "Caballeros" }
-  ];
+  ];*/
   listaGruposSelecion: Grupo[] = [];
+  listaSeminariosSelecion: Seminario[] = [];
 
 
 
 
 
-//::: PERSONAS
+  //::: PERSONAS
   personaForm: FormGroup;
 
 
@@ -88,7 +123,15 @@ export class RegisterPersonComponent implements OnInit {
   }*/
 
 
-  constructor(private fbBautizmo: FormBuilder,private fbOracionFe: FormBuilder,private fbOrigenPersona: FormBuilder, private fbDatosLlegadaPersona: FormBuilder, private fb: FormBuilder, private router: Router, private personaService: PersonaService, private toastr: ToastrService, private sesion: RuteadorService) {
+  constructor(private fbUsuario: FormBuilder, private fbBautizmo: FormBuilder, private fbOracionFe: FormBuilder,
+    private fbOrigenPersona: FormBuilder, private fbDatosLlegadaPersona: FormBuilder,
+    private fb: FormBuilder, private router: Router, private personaService: PersonaService,
+    private toastr: ToastrService, private sesion: RuteadorService,
+    private tipoPersonaService: TipoPersonaService, private escuelaService: EscuelaService,
+    private tipoProcesoService: TipoProcesoService, private grupoService: GrupoService, private usuarioService: UsuarioService,
+    private ruteadorService: RuteadorService, private userDataService: UserDataService, private seminarioService: SeminarioService,
+
+  ) {
 
     //Valida si el usuario tene acceso a esta pagina
     sesion.existeUsuarioActivo();
@@ -96,7 +139,10 @@ export class RegisterPersonComponent implements OnInit {
     this.origenPersona = new OrigenPersona();
     this.datosLlegada = new DatosLlegada();
     this.oracionFe = new OracionFe();
-    this.bautizmo= new Bautizmo();
+    this.bautizmo = new Bautizmo();
+    this.datoUsuario = new Usuario();
+    this.personaNueva = new Persona();
+
 
 
     this.personaForm = this.fb.group({
@@ -125,8 +171,10 @@ export class RegisterPersonComponent implements OnInit {
     //DATOS LLEGADA
     this.datosLlegadaForm = this.fbDatosLlegadaPersona.group({
       fechaLlegada: [""],
-      InvitadoPor: [""],
-      actividadLlegada: [""]
+      invitadoPor: [""],
+      invitadoPorNombre: [""],
+      actividadLlegada: [""],
+      observacionUbicacion: [""]
     });
 
     //DORACION FE
@@ -145,6 +193,52 @@ export class RegisterPersonComponent implements OnInit {
       responsable: [""]
     });
 
+    //USUARIO
+    this.usuarioForm = this.fbUsuario.group({
+      usuario: ["", Validators.required],
+      password: ["", Validators.required],
+      repetirPassword: ["", Validators.required],
+      _idPersona: [""]
+    });
+
+  }
+
+
+  ngOnInit(): void {
+    this.personaFueCreada = false;
+    this.usuarioFueCreado = false;
+    this.ruteadorService.servidorActivo(this.router.url);
+
+
+    this.tipoPersonaService.consultarTipoPersonas();
+    this.tipoPersonaService.obtenerTipoPersonas$().subscribe(tp => {
+      this.tipoPersona = tp;
+    });
+
+    this.escuelaService.consultarEscuela();
+    this.escuelaService.obtenerEscuelas$().subscribe(tp => {
+      this.listaEscuelasTodas = tp;
+    });
+
+    this.tipoProcesoService.consultarTipoProceso();
+    this.tipoProcesoService.obtenerTipoProcesos$().subscribe(tp => {
+      this.listaProcesosTodos = tp;
+    });
+
+    this.grupoService.consultarGrupo();
+    this.grupoService.obtenerGrupos$().subscribe(tp => {
+      this.listaGruposTodos = tp;
+    });
+
+    this.personaService.consultarDatosBasicosPersonas();
+    this.personaService.obtenerPersonas$().subscribe(tp => {
+      this.persona = tp;
+    });
+
+    this.seminarioService.consultarSeminario();
+    this.seminarioService.obtenerSeminarios$().subscribe(tp => {
+      this.listaSeminariosTodos = tp;
+    });
   }
 
   //ORIGEN PERSONA
@@ -153,15 +247,36 @@ export class RegisterPersonComponent implements OnInit {
     //Verifica si la seleccion es diferente de "Otra" que significa que viene de otra iglesia
     let _origenPersona = new OrigenPersona();
 
+    _origenPersona.tieneCartaAutorizacion = this.tieneCartaAutorizacion
+
+
     if (this.origenIglesiaSeleccionado !== "Otra") {
       _origenPersona.nombreIglesiaOrigen = this.origenIglesiaSeleccionado;
 
     } else {
-      _origenPersona.nombreIglesiaOrigen = this.origenPersonaForm.get('nombreIglesiaOrigen')?.value,
-        _origenPersona.cargoEjercido = this.origenPersonaForm.get('cargoEjercido')?.value,
-        _origenPersona.tiempoPermanencia = this.origenPersonaForm.get('tiempoPermanencia')?.value
+      _origenPersona.nombreIglesiaOrigen = this.origenPersonaForm.get('nombreIglesiaOrigen')?.value;
+      _origenPersona.cargoEjercido = this.origenPersonaForm.get('cargoEjercido')?.value;
+      _origenPersona.tiempoPermanencia = this.origenPersonaForm.get('tiempoPermanencia')?.value;
+
+
     }
     this.origenPersona = _origenPersona;
+
+
+
+
+    //ESTABLECE EL PARAMETRO QUE VERIFICA SI SE MUESTRA O NO LOS BOTONES "EDITAR" EN ORACION DE FE Y BAUTIZ
+    if (this.origenIglesiaSeleccionado !== "Otra") {
+      this.mostrarBotonEditarOracionFeYBautizo = true;
+    } else {
+      if (this.tieneCartaAutorizacion) {
+        this.mostrarBotonEditarOracionFeYBautizo = true;
+      } else {
+        this.mostrarBotonEditarOracionFeYBautizo = false;
+      }
+    }
+
+
 
     this.toastr.info('Se actualizó el origen de la persona');
 
@@ -171,19 +286,27 @@ export class RegisterPersonComponent implements OnInit {
 
   //DATOS LLEGADA 
   generarBloqueDatosLlegada() {
-
     let _datosLlegada = new DatosLlegada();
 
-    _datosLlegada.fechaLlegada = this.datosLlegadaForm.get('fechaLlegada')?.value,
-      _datosLlegada.InvitadoPor = this.datosLlegadaForm.get('InvitadoPor')?.value,
-      _datosLlegada.actividadLlegada = this.datosLlegadaForm.get('actividadLlegada')?.value
+    _datosLlegada.fechaLlegada = this.datosLlegadaForm.get('fechaLlegada')?.value;
+    _datosLlegada.actividadLlegada = this.datosLlegadaForm.get('actividadLlegada')?.value;
+
+
+
+    if (this.datoLlegadaSeleccionado !== "Otra") {
+      _datosLlegada.invitadoPor = this.datoLlegadaSeleccionado;
+    } else {
+      _datosLlegada.observacionUbicacion = this.datosLlegadaForm.get('observacionUbicacion')?.value;
+      _datosLlegada.invitadoPor = this.datosLlegadaForm.get('invitadoPorNombre')?.value;
+    }
 
     this.datosLlegada = _datosLlegada;
 
-    console.log("DATOS: " + _datosLlegada.fechaLlegada + "   :   " + _datosLlegada.InvitadoPor + "   :   " + _datosLlegada.actividadLlegada);
-    this.toastr.info('Se actualizaron los datos de llegada de la persona');
 
   }
+
+
+
 
   //ORACION FE
   generarBloqueOracionFe() {
@@ -193,23 +316,22 @@ export class RegisterPersonComponent implements OnInit {
     //Verifica si marco "Hizo oracion de fe", si es asi llena todos los datos; si no, los completa todos como vacios
     if (this.hizoOracionFe) {
       _oracionFe.oracionFe = this.hizoOracionFe;
-      _oracionFe.fecha = this.oracionFeForm.get('fecha')?.value;
-        
-        if (this.oracionFeLugar !== "Otra") {
-          _oracionFe.lugar = this.oracionFeLugar;
-        } else { 
-          _oracionFe.lugar = this.oracionFeForm.get('lugar')?.value;
-        }
-      _oracionFe.responsable = this.oracionFeForm.get('responsable')?.value;
+      _oracionFe.fechaOracionFe = this.oracionFeForm.get('fecha')?.value;
+
+      if (this.oracionFeLugar !== "Otra") {
+        _oracionFe.lugarOracionFe = this.oracionFeLugar;
+      } else {
+        _oracionFe.lugarOracionFe = this.oracionFeForm.get('lugar')?.value;
+      }
+      _oracionFe.responsableOracionFe = this.oracionFeForm.get('responsable')?.value;
 
     } else {
       _oracionFe.oracionFe = false;
-      _oracionFe.fecha = undefined;
-      _oracionFe.lugar = "";
-      _oracionFe.responsable = "";
+      _oracionFe.fechaOracionFe = undefined;
+      _oracionFe.lugarOracionFe = "";
+      _oracionFe.responsableOracionFe = "";
     }
 
-    console.log("datoooo: " + _oracionFe.fecha + "   :   " + _oracionFe.oracionFe + "   :   " + _oracionFe.lugar + "   :  " + _oracionFe.responsable);
 
     this.oracionFe = _oracionFe;
 
@@ -228,23 +350,22 @@ export class RegisterPersonComponent implements OnInit {
     //Verifica si marco "Hizo bautizmo", si es asi llena todos los datos; si no, los completa todos como vacios
     if (this.hizoBautizmo) {
       _bautizmo.bautizmo = this.hizoBautizmo;
-      _bautizmo.fecha = this.bautizmoForm.get('fecha')?.value;
+      _bautizmo.fechaBautizmo = this.bautizmoForm.get('fecha')?.value;
 
       if (this.bautizmoLugar !== "Otra") {
-        _bautizmo.lugar = this.bautizmoLugar;
+        _bautizmo.lugarBautizmo = this.bautizmoLugar;
       } else {
-        _bautizmo.lugar = this.bautizmoForm.get('lugar')?.value;
+        _bautizmo.lugarBautizmo = this.bautizmoForm.get('lugar')?.value;
       }
-      _bautizmo.responsable = this.bautizmoForm.get('responsable')?.value;
+      _bautizmo.responsableBautizmo = this.bautizmoForm.get('responsable')?.value;
 
     } else {
       _bautizmo.bautizmo = false;
-      _bautizmo.fecha = undefined;
-      _bautizmo.lugar = "";
-      _bautizmo.responsable = "";
+      _bautizmo.fechaBautizmo = undefined;
+      _bautizmo.lugarBautizmo = "";
+      _bautizmo.responsableBautizmo = "";
     }
 
-    console.log("datoooo: " + _bautizmo.fecha + "   :   " + _bautizmo.bautizmo + "   :   " + _bautizmo.lugar + "   :  " + _bautizmo.responsable);
 
     this.bautizmo = _bautizmo;
 
@@ -252,9 +373,11 @@ export class RegisterPersonComponent implements OnInit {
 
   }
 
+
+
+
   agregarPersona() {
-    console.log(this.personaForm);
-    console.log("SEXO: " + this.personaForm.get('sexo')?.value);
+
     let sexo;
     const datoBasicoPersona: DatoBasicoPersona = {
       cedula: this.personaForm.get('cedula')?.value,
@@ -272,30 +395,99 @@ export class RegisterPersonComponent implements OnInit {
 
     }
 
-    console.log("DATOS DE PERSONA");
-    console.log("cedula: " + datoBasicoPersona.cedula);
-    console.log("primerNombre: " + datoBasicoPersona.primerNombre);
-    console.log("segundoNombre: " + datoBasicoPersona.segundoNombre);
-    console.log("primerApellido: " + datoBasicoPersona.primerApellido);
-    console.log("segundoApellido: " + datoBasicoPersona.segundoApellido);
-    console.log("fechaNacimiento: " + datoBasicoPersona.fechaNacimiento);
-    console.log("telefono: " + datoBasicoPersona.telefono);
-    console.log("celular: " + datoBasicoPersona.celular);
-    console.log("direccion: " + datoBasicoPersona.direccion);
-    console.log("email: " + datoBasicoPersona.email);
-    console.log("sexo: " + datoBasicoPersona.sexo);
-    console.log("foto: " + datoBasicoPersona.foto);
+    console.log("fecha de persona:   " + datoBasicoPersona.fechaNacimiento);
 
 
-    let persona: Persona = new Persona();
-    persona.datoBasicoPersona = datoBasicoPersona;
-    this.personaService.agregarPersonas(persona);
+    this.personaNueva.datoBasicoPersona = datoBasicoPersona;
+    //this.personaService.agregarPersonas(persona);
+    this.personaService.agregarPersonas(this.personaNueva).then(_idPersonaCreada => {
+      if (_idPersonaCreada.length > 0) {
+        localStorage.setItem("_id_persona_creada", _idPersonaCreada)
+        this._id_persona_creada = true;
+        this.toastr.success('Persona registrada correctamente', 'Registro de Personas');
 
-    console.log("PERSONA: " + datoBasicoPersona.cedula);
+        this.userDataService.notificarPersonaNueva(_idPersonaCreada);
+        this.personaFueCreada = true;
+        this.personaNueva._id = _idPersonaCreada;
+
+        this.limpiarCampos();
+
+
+
+      } else {
+        this._id_persona_creada = false;
+        this.toastr.error('No se pudo guardar la persona, por favor intentalo nuevamente', 'Registro de Personas');
+      }
+
+    });
+
     //    this.toastr.success('El producto fue registrado correctamente', 'Registro de Producto ');
-    this.toastr.success('Persona registrada correctamente', 'Registro de Personas');
 
-    this.limpiarCampos();
+  }
+
+
+  agregarUsuario() {
+
+    //ESTO NO DEBERIA IR AQUI PERO LO PONGO POR  ADELANTAR EL FLUJO NORMAL 
+    //localStorage.setItem("_id_persona_creada",_idPersonaCreada)
+
+
+    this.datoUsuario = new Usuario();
+
+    if (this.usuarioForm.get('password')?.value === this.usuarioForm.get('repetirPassword')?.value) {
+
+      this.datoUsuario.usuario = this.usuarioForm.get('usuario')?.value,
+        this.datoUsuario.password = this.usuarioForm.get('password')?.value,
+        this.datoUsuario._idPersona = this.personaNueva._id;
+      //datoUsuario._idPersona = localStorage.getItem("_id_persona_creada")!;
+
+
+
+
+      this.usuarioService.agregarUsuario(this.datoUsuario).then(_idUsuarioCreado => {
+        if (_idUsuarioCreado.length > 0) {
+          //localStorage.setItem("_id_persona_creada", _idPersonaCreada)
+          //this._id_persona_creada = true;
+          this.toastr.success('Usuario registrada correctamente', 'Registro de Usuario');
+
+          //this.userDataService.notificarPersonaNueva(_idPersonaCreada);
+
+          this.usuarioFueCreado = true;
+
+          this.limpiarCamposUsuario();
+
+        } else {
+          //this._id_persona_creada = false;
+          this.toastr.error('No se pudo guardar el usuario, por favor intentalo nuevamente', 'Registro de Usuario');
+        }
+
+      });
+
+
+
+
+    } else {
+      this.toastr.warning('Los passwords ingresados, no coinciden.', 'Registro de Usuario');
+
+    }
+
+
+
+    // this.usuarioService.agregarUsuario(datoUsuario);
+
+    //    this.toastr.success('El producto fue registrado correctamente', 'Registro de Producto ');
+
+  }
+
+  limpiarCamposUsuario() {
+
+    this.usuarioForm.setValue({
+      usuario: '',
+      password: '',
+      repetirPassword: '',
+      _idPersona: ''
+    });
+
   }
 
   limpiarCampos() {
@@ -317,33 +509,37 @@ export class RegisterPersonComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
-  }
 
 
   //::: ORIGEN
   onChangeIglesiaOrigen(_origenIglesiaSeleccionado: any) {
-    this.origenIglesiaSeleccionado = _origenIglesiaSeleccionado.value;
+    this.origenIglesiaSeleccionado = _origenIglesiaSeleccionado.value
+
   }
+
   onChangeIglesiaOrigenTiempoPermanencia(_origenIglesiaTiempoPermanencia: any) {
 
     this.origenPersonaForm.patchValue({
       tiempoPermanencia: _origenIglesiaTiempoPermanencia.value
     });
-    console.log("datx: " + _origenIglesiaTiempoPermanencia.value);
   }
 
   //::: DATOS DE LLEGADA
-  onChangeIglesiaInvitadoPorDatoLlegada(_origenIglesiaInvitadoPorDatoLlegada: any) {
+  onChangeIglesiaInvitadoPorDatoLlegada(_datoLlegadaSeleccionado: any) {
+    this.datoLlegadaSeleccionado = _datoLlegadaSeleccionado.value;
 
-    this.datosLlegadaForm.patchValue({
+
+    /*this.datosLlegadaForm.patchValue({
       InvitadoPor: _origenIglesiaInvitadoPorDatoLlegada.value
     });
-    console.log("datx: " + _origenIglesiaInvitadoPorDatoLlegada.value);
+    console.log("datx: " + _origenIglesiaInvitadoPorDatoLlegada.value);*/
   }
 
 
-  
+  onChangeTieneCartaAutorizacion(_tieneCartaAutorizacion: any) {//@@@@
+    this.tieneCartaAutorizacion = _tieneCartaAutorizacion.currentTarget.checked;
+  }
+
 
   //::: ORACION FE
   onChangeOracionFeLugar(_oracionFeLugar: any) {
@@ -351,13 +547,11 @@ export class RegisterPersonComponent implements OnInit {
   }
   onChangeHizoOracionFe(_hizoOracionFe: any) {//@@@@
     this.hizoOracionFe = _hizoOracionFe.currentTarget.checked;
-    console.log(this.hizoOracionFe);
   }
 
   //::: BAUTIZMO
   onChangeHizoBautizmo(_hizoBautizmo: any) {
     this.hizoBautizmo = _hizoBautizmo.currentTarget.checked;
-    console.log(this.hizoBautizmo);
   }
   onChangeBautizmoIglesia(_bautizmoLugar: any) {
     this.bautizmoLugar = _bautizmoLugar.value;
@@ -366,11 +560,10 @@ export class RegisterPersonComponent implements OnInit {
   //::: PROCESOS
   onChangeTipoPersona(_tipoPersonaSeleccion: any) {
     this.tipoPersonaSeleccion = _tipoPersonaSeleccion.value;
-    console.log(this.tipoPersonaSeleccion);
   }
   //::: //::: ESCUELAS
   marcarEscuelas(_id: String) {
-    let _escuela= new Escuela();
+    let _escuela = new Escuela();
     _escuela = this.listaEscuelasTodas.find(e => e._id === _id)!;
     this.listaEscuelasSeleccion.push(_escuela);
     this.listaEscuelasTodas = this.listaEscuelasTodas.filter(e => e._id !== _escuela._id);
@@ -416,11 +609,160 @@ export class RegisterPersonComponent implements OnInit {
 
   }
 
+  //:::  //:::: SEMINARIO
+  marcarSeminarios(_id: String) {
+    let _seminario = new Seminario();
+    _seminario = this.listaSeminariosTodos.find(s => s._id === _id)!;
+    this.listaSeminariosSelecion.push(_seminario);
+    this.listaSeminariosTodos = this.listaSeminariosTodos.filter(s => s._id !== _seminario._id);
+    console.log("TAMAÑO "+this.listaSeminariosSelecion.length);
+  }
+
+  desmarcarSeminarios(_id: String) {
+    let _seminario = new Seminario();
+    _seminario = this.listaSeminariosSelecion.find(s => s._id === _id)!;
+    this.listaSeminariosTodos.push(_seminario);
+    this.listaSeminariosSelecion = this.listaSeminariosSelecion.filter(s => s._id !== _seminario._id);
+
+  }
 
 
 
   temp(a: any, b: string) {
 
+  }
+
+  nuevaPersona() {
+    this.userDataService.notificarPersonaNueva("");
+    this._id_persona_creada = false;
+
+    this.personaFueCreada = false;
+    this.usuarioFueCreado = false;
+
+    this.origenPersona = new OrigenPersona();
+    this.datosLlegada = new DatosLlegada();
+    this.oracionFe = new OracionFe();
+    this.bautizmo = new Bautizmo();
+    this.datoUsuario = new Usuario();
+    this.personaNueva = new Persona();
+
+
+    this.personaForm.reset();
+    this.origenPersonaForm.reset();
+    this.origenPersonaForm.reset();
+    this.oracionFeForm.reset();
+    this.bautizmoForm.reset();
+    this.usuarioForm.reset();
+
+
+    this.limpiarCampos();
+    this.limpiarCamposUsuario();
+  }
+
+
+
+
+  async guardarInformacionEspiritual() {
+    let contadorResultadosCorrectos = 0;
+    //VERIFICANDO SI EXISTE EL ID DE LA PERSONA QUE SE VA A GUARDAR_INFORMACION_ESPIRITUAL
+    //this.extraerPersonaDeBase();
+    console.log("LOGIN ID: " + this.personaNueva._id);
+
+    if (this.personaNueva._id!.length > 0) {
+
+
+
+      //GUARDANDO ORIGEN PERSONA
+      await this.personaService.actualizarOrigenPersona(this.personaNueva._id, this.origenPersona).then(_idPersonaModificada => {
+        if (!_idPersonaModificada) {
+          this.toastr.error('No se pudo actualizar los datos de Origen de la Persona.');
+        } else { contadorResultadosCorrectos++;}      
+      });
+
+
+      //GUARDANDO DATOS LLEGADA
+      await this.personaService.actualizarDatosLlegada(this.personaNueva._id, this.datosLlegada).then(_idPersonaModificada => {
+        if (!_idPersonaModificada) {
+          this.toastr.error('No se pudo actualizar los datos de Llegada.');
+        } else { contadorResultadosCorrectos++; }      
+      });
+
+      //GUARDANDO DATOS ORACION DE FE
+      await this.personaService.actualizarOracionFe(this.personaNueva._id, this.oracionFe).then(_idPersonaModificada => {
+        if (!_idPersonaModificada) {
+          this.toastr.error('No se pudo actualizar los datos de oración de fe.');
+        } else { contadorResultadosCorrectos++; }
+      });
+
+      //GUARDANDO DATOS DE BAUTIZMO
+      await this.personaService.actualizarBautizmo(this.personaNueva._id, this.bautizmo).then(_idPersonaModificada => {
+        if (!_idPersonaModificada) {
+          this.toastr.error('No se pudo actualizar los datos de bautizmo.');
+        } else { contadorResultadosCorrectos++; }
+      });
+
+      //GUARDANDO TIPO PERSONA
+      await this.personaService.actualizarProcesosTipoPersona(this.personaNueva._id, this.tipoPersonaSeleccion).then(_idPersonaModificada => {
+        if (!_idPersonaModificada) {
+          this.toastr.error('No se pudo actualizar los datos de tipo persona.');
+        } else { contadorResultadosCorrectos++; }
+      });
+
+      //GUARDANDO ESCUELAS
+      await this.personaService.actualizarProcesosEscuelas(this.personaNueva._id, this.listaEscuelasSeleccion).then(_idPersonaModificada => {
+        if (!_idPersonaModificada) {
+          this.toastr.error('No se pudo actualizar las escuelas.');
+        } else { contadorResultadosCorrectos++; }
+      });
+
+
+      //GUARDANDO TIPO PROCESOS
+      await this.personaService.actualizarProcesosTipoProcesos(this.personaNueva._id, this.listaProcesosSeleccion).then(_idPersonaModificada => {
+        if (!_idPersonaModificada) {
+          this.toastr.error('No se pudo actualizar los procesos.');
+        } else { contadorResultadosCorrectos++; }
+      });
+
+      //GUARDANDO  GRUPOS
+      await this.personaService.actualizarProcesosGrupos(this.personaNueva._id, this.listaGruposSelecion).then(_idPersonaModificada => {
+        if (!_idPersonaModificada) {
+          this.toastr.error('No se pudo actualizar los grupos.');
+        } else { contadorResultadosCorrectos++; }
+      });
+
+      //GUARDANDO SEMINARIOS
+      await this.personaService.actualizarProcesosSeminarios(this.personaNueva._id, this.listaSeminariosSelecion).then(_idPersonaModificada => {
+        if (!_idPersonaModificada) {
+          this.toastr.error('No se pudo actualizar los seminarios.');
+        } else { contadorResultadosCorrectos++; }
+      });
+
+
+      
+
+      
+      //AQUI EN EL IF SE DEBE PONER LA CANTIDAD DE RETORNOS 
+      if (contadorResultadosCorrectos == 9) {
+        this.toastr.success('Se actualizó toda la información Espiritual de la persona.');  
+      } else {
+        this.toastr.warning('Actualizacion de datos espirituales incompleta.');  
+      }
+
+
+
+    } else {
+      alert('Se ha producido un error al intentar guardar la información espiritual de la persona, por favor recarga la página o vuelve a iniciar sesión; si el problema persiste, por favor ponte en contacto con el administrador.');
+    }
+  }
+
+
+
+
+
+
+
+  ngOnDestroy() {
+    this.userDataService.notificarPersonaNueva("");
   }
 }
 

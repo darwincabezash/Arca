@@ -19,12 +19,13 @@ export class LoginService {
     this.usuarios$ = new Subject();
   }
 
+  j:number = 0;
 
   //CONSULTAR
   async consultarUsuario(usuario: String, password: String) {
-    console.log("ENTRO A FUNCION DE CONSUTLA");
+    this.usuarios$= new Subject();
     this.usuarios = [];
-
+    this.j++;
     try {
       await fetch(this.server, {
 
@@ -42,6 +43,7 @@ export class LoginService {
                 _id
                 usuario
                 password
+                _idPersona
               }
             }`,
 
@@ -50,12 +52,12 @@ export class LoginService {
       })
         .then((res) => res.json())
         .then((result) => {
-
           if (result.data.usuario.length > 0) {
             let usuario = new Usuario;
             usuario._id = result.data.usuario[0]._id;
             usuario.usuario = result.data.usuario[0].usuario;
             usuario.password = result.data.usuario[0].password;
+            usuario._idPersona = result.data.usuario[0]._idPersona;
             this.usuarios.push(usuario);
 
           } else {

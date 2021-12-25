@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { RuteadorService } from 'src/app/router/ruteador.service';
 import {PersonaService} from "src/app/services/persona/persona/persona.service";
 import { Persona, DatoBasicoPersona } from '../../../../dataModels/persona';
@@ -14,17 +15,20 @@ export class ViewPersonsComponent implements OnInit {
 
   personas:Persona[]=[];
 
-  constructor(private personaService:PersonaService,private sesion:RuteadorService) { 
+  constructor(private personaService: PersonaService, private sesion: RuteadorService, private ruteadorService: RuteadorService, private router: Router) { 
     sesion.existeUsuarioActivo();
   }
 
   ngOnInit(): void {
+
+    this.ruteadorService.servidorActivo(this.router.url);
+
     //new tableUtil();
 
     this.personaService.consultarPersonas();
 
 
-    this.personaService.obtenerPersonas().subscribe(personas =>{
+    this.personaService.obtenerPersonas$().subscribe(personas =>{
       this.personas=personas;
  
     });

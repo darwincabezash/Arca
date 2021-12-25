@@ -24,7 +24,6 @@ export class EscuelaService {
 
   //AGREGAR
   async agregarEscuela(escuela: Escuela) {
-    console.log("color es: "+escuela.color);
     try {
 
       await fetch(this.server, {

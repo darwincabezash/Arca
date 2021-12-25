@@ -1,18 +1,31 @@
 import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserDataService {
 
-    val:number=0;
-  constructor() { }
+    
+  //TIPO PROCESO
+  private nuevaPersona: String="";
+  private nuevaPersona$: Subject<String>;
 
-  sumar(){
-    this.val=this.val+1;
+  resultado: any;
+  constructor() {
+    this.nuevaPersona$ = new Subject();
   }
 
-  obtener(){
-    return this.val;
+
+  
+
+  notificarPersonaNueva(_id:string) {
+    this.nuevaPersona$.next(_id);
+
+  }
+
+
+  obtenerNotificacionNuevaPersona$(): Observable<String> {
+    return this.nuevaPersona$.asObservable();
   }
 }

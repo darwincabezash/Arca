@@ -7,7 +7,7 @@
 
         <div class="card">
           <div class="card-header d-flex p-0">
-            <h3 class="mt-4 mb-2 pl-4">Catálogo Escuelas</h3>
+            <h3 class="mt-4 mb-2 pl-4">Catálogo Seminarios</h3>
 
           </div><!-- /.card-header -->
           <div class="card-body">
@@ -17,8 +17,8 @@
                 <!-- general form elements -->
                 <div class="card card-primary">
                   <div class="card-header">
-                    <h3 class="card-title"><span class="text-light">Registra las escuelas que vas a usar en el sistema
-                        Ej. Educación1, Educación2, Educación3, Etc.</span></h3>
+                    <h3 class="card-title"><span class="text-light">Registra los seminarios que vas a usar en el sistema
+                        Ej. ..... , Etc.</span></h3>
 
                   </div>
                   <!-- /.card-header -->
@@ -27,17 +27,17 @@
                   <div class="card-body">
 
 
-                    <form [formGroup]="nuevaEscuelaForm" (ngSubmit)="agregarEscuela()">
+                    <form [formGroup]="nuevoSeminarioForm" (ngSubmit)="agregarSeminario()">
 
                       <!--TIPO-->
                       <div class="row">
                         <div class="col-sm-12 col-md-8">
                           <!-- text input -->
                           <div class="form-group">
-                            <label class="col-form-label">*Escuela</label>
+                            <label class="col-form-label">*Seminario</label>
 
                             <input type="text" class="form-control form-control-lg" id="tipo"
-                              placeholder="Ingresa la escuela" formControlName="tipo">
+                              placeholder="Ingresa el seminario" formControlName="tipo">
                           </div>
                         </div>
                         <div class="col-sm-12 col-md-4">
@@ -56,7 +56,7 @@
 
 
                       <button type="submit" class="btn btn-success btn-lg-12 btn-sm-12"
-                        [disabled]="nuevaEscuelaForm.invalid">Guardar Escuela</button>
+                        [disabled]="nuevoSeminarioForm.invalid">Guardar Seminario</button>
 
                     </form>
 
@@ -73,7 +73,7 @@
 
 
             <div class="text-right mt-0 mb-0 pl-4">
-              <button type="button" class="btn btn-link" aria-label="Left Align" (click)="refrescarEscuela()"
+              <button type="button" class="btn btn-link" aria-label="Left Align" (click)="refrescarSeminario()"
                 style="background-color: transparent;">
                 <i class="fas fa-sync-alt .bg-primary fa-2x" style="border-width: 0px;"></i>
               </button>
@@ -100,7 +100,7 @@
 
                     <!-- <tr *ngIf="let tp of grupo"> -->
 
-                    <tr *ngFor="let tp of escuela">
+                    <tr *ngFor="let tp of seminario">
 
                       <td class="align-middle">{{tp.tipo}}</td>
                       <td class="align-middle text-center">
@@ -136,11 +136,11 @@
 
                 <div class="modal fade" id="modal-editar">
                   <div class="modal-dialog">
-                    <form [formGroup]="actualizarEscuelaForm">
+                    <form [formGroup]="actualizarSeminarioForm">
 
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h4 class="modal-title">Editar escuela</h4>
+                          <h4 class="modal-title">Editar seminario</h4>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
@@ -152,10 +152,10 @@
 
                             <!--TIPO-->
                             <div class="form-group">
-                              <label class="col-form-label">*Escuela</label>
+                              <label class="col-form-label">*Seminario</label>
 
                               <input type="text" class="form-control form-control-lg text-left" id="tipoEditar"
-                                placeholder="Ingresa la escuela" formControlName="tipoEditar"
+                                placeholder="Ingresa el seminario" formControlName="tipoEditar"
                                 value="{{_idEditar?.tipo}}">
 
                               <label class="col-form-label">*Color</label>
@@ -174,8 +174,8 @@
 
 
                           <button class="btn btn-success btn-lg-12 btn-sm-12" data-dismiss="modal"
-                            (click)="actualizarEscuela()">Actualizar
-                            Escuela</button>
+                            (click)="actualizarSeminario()">Actualizar
+                            Seminario</button>
                         </div>
                       </div>
 
@@ -196,7 +196,7 @@
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h4 class="modal-title">Eliminar escuela</h4>
+                        <h4 class="modal-title">Eliminar seminario</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
@@ -204,7 +204,7 @@
                       <div class="modal-body">
                         <div class="card-body">
 
-                          <p>La escuela <b> {{_idEliminar?.tipo}}</b> sera eliminada, ¿Desea
+                          <p>El seminario <b> {{_idEliminar?.tipo}}</b> sera eliminado, ¿Desea
                             continuar?</p>
                         </div>
 
@@ -212,7 +212,7 @@
                       <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
                         <button type="button" class="btn btn-primary" data-dismiss="modal"
-                          (click)="eliminarEscuela()">Si, Eliminar</button>
+                          (click)="eliminarSeminario()">Si, Eliminar</button>
                       </div>
                     </div>
                     <!-- /.modal-content -->
@@ -328,3 +328,4 @@
 
   </div>
 </section>
+

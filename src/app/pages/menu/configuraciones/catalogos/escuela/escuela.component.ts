@@ -24,7 +24,7 @@ export class EscuelaComponent implements OnInit {
 
   constructor(private fbNueva: FormBuilder, private fbActualizar: FormBuilder, private router: Router,
     private escuelaService: EscuelaService,
-    private toastr: ToastrService, private sesion: RuteadorService) {
+    private toastr: ToastrService, private sesion: RuteadorService, private ruteadorService: RuteadorService) {
 
     this.sesion.existeUsuarioActivo();
 
@@ -41,9 +41,11 @@ export class EscuelaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.ruteadorService.servidorActivo(this.router.url);
+
+
     this.escuelaService.consultarEscuela();
     this.escuelaService.obtenerEscuelas$().subscribe(tp => {
-      console.log("SE ACTUALIZO! " + tp.length);
       this.escuela = tp;
     });
   }
@@ -82,7 +84,6 @@ export class EscuelaComponent implements OnInit {
   idAEditar(_id: any) {
     this._idEditar = this.escuela.find(tipo => tipo._id === _id);
     this.colorBoton = this._idEditar?.color;
-    console.log("TIPO EDITAR: " + this._idEditar?.tipo);
   }
 
   actualizarEscuela() {
@@ -106,7 +107,6 @@ export class EscuelaComponent implements OnInit {
   cargarEditarColor(event: MouseEvent, color: String) {
     event.preventDefault();
     this.colorBoton = color;
-    console.log("SI, INFO ES:" + color);
 
   }
 

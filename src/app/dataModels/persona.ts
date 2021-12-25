@@ -25,34 +25,38 @@ export class DatoBasicoPersona{
     direccion?:String
     email?:String
     sexo?:String
-    foto?:String
+    foto?: String
+    tipoPersona?: DatosAdicionales
 }
 
 export class OrigenPersona{
     nombreIglesiaOrigen?: String
     cargoEjercido?:String 
-    tiempoPermanencia?:number
+    tiempoPermanencia?: number
+    tieneCartaAutorizacion?: boolean
 }
 
 export class DatosLlegada {
     fechaLlegada?: Date
-    InvitadoPor?: String
+    invitadoPor?: String
+    observacionUbicacion?: String
     actividadLlegada?: String
 }
 
 
 export class OracionFe {
     oracionFe?: boolean
-    fecha?: Date
-    lugar?: String
-    responsable?: String
+    fechaOracionFe?: Date
+    lugarOracionFe?: String
+    responsableOracionFe?: String
+    
 }
 
 export class Bautizmo {
     bautizmo?: boolean
-    fecha?: Date
-    lugar?: String
-    responsable?: String
+    fechaBautizmo?: Date
+    lugarBautizmo?: String
+    responsableBautizmo?: String
 }
 
 
@@ -68,4 +72,6 @@ export class ListaGrupo {
     grupos?: Grupo[]
 }
 
-
+export class DatosAdicionales {
+    tipoPersona?: String
+}

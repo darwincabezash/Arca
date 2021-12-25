@@ -1,3 +1,8 @@
+import { ProgressBarModule } from 'primeng/progressbar';
+
+import { TableModule } from 'primeng/table';
+import { ChartModule } from 'primeng/chart';
+import { ButtonModule } from 'primeng/button';
 import { NgModule, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -28,7 +33,8 @@ import { EscuelaComponent } from './pages/menu/configuraciones/catalogos/escuela
 import { Page404Component } from './shared/page404/page404.component';
 import { LoginComponent } from './shared/login/login.component';
 import { PermisoComponent } from './pages/menu/configuraciones/catalogos/permiso/permiso.component';
-
+import { Page503Component } from './shared/page503/page503.component';
+import { SeminarioComponent } from './pages/menu/configuraciones/catalogos/seminario/seminario.component';
 
 
 
@@ -78,6 +84,18 @@ const routes: Route[]=[
       },
       {
         path:'permiso',component:PermisoComponent
+      },
+      {
+        path: 'pagina404', component: Page404Component
+      },
+      {
+        path: 'pagina503', component: Page503Component
+      },
+      {
+        path: 'seminario', component: SeminarioComponent
+      },
+      {
+        path: 'dashboard', component: DashboardComponent
       }
 
     ] 
@@ -119,6 +137,8 @@ const routes: Route[]=[
     Page404Component,
     LoginComponent,
     PermisoComponent,
+    Page503Component,
+    SeminarioComponent,
   ],
   imports: [
     BrowserModule,
@@ -127,8 +147,11 @@ const routes: Route[]=[
     RouterModule.forRoot(routes,{useHash:true}),
     BrowserAnimationsModule,
     ToastrModule.forRoot(), 
-    NgLetModule
-  
+    NgLetModule,
+    ButtonModule,
+    ChartModule,
+    TableModule,
+    ProgressBarModule
      // required animations module
 
   ],
@@ -138,11 +161,9 @@ const routes: Route[]=[
 export class AppModule { 
 
   ngOnInit(){
-console.log(" paso 1 ")
   }
 
   OnInit(){
-    console.log(" paso 2 ")
 
   }
   

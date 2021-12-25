@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserDataService } from 'src/app/services/general/user-data.service';
 
 @Component({
   selector: 'app-header',
@@ -8,17 +9,32 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private router :Router) { }
+
+  _mostrarNuevPersona:boolean=false;
+
+  constructor(private router: Router, private userDataService: UserDataService) { }
 
 
   cerrarSesion(){
-    localStorage.setItem('usuario','');
+    this.eliminarSession();
     this.router.navigate(["/login"]);
+  }
 
-
+  eliminarSession() {
+    localStorage.setItem("usuario", "");
+    localStorage.setItem("persona", "");
   }
 
   ngOnInit(): void {
+
+    this.userDataService.obtenerNotificacionNuevaPersona$().subscribe(_id => {
+      if (_id.length > 0) {
+        this._mostrarNuevPersona = true;
+      } else {
+        this._mostrarNuevPersona = false;
+      }
+    });
+
   }
 
 }

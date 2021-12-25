@@ -33,7 +33,7 @@ export class PermisoComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private router: Router,
     private grupoService: GrupoService, private permisoService: PermisoService,
-    private toastr: ToastrService, private sesion: RuteadorService) {
+    private toastr: ToastrService, private sesion: RuteadorService, private ruteadorService: RuteadorService) {
 
 
     sesion.existeUsuarioActivo();
@@ -43,6 +43,7 @@ export class PermisoComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.ruteadorService.servidorActivo(this.router.url);
 
     //GRUPOS
     this.grupoService.consultarGrupo();

@@ -3,6 +3,6 @@ export class GlobalDataService {
     private static serverPro: RequestInfo = "https://arca-server.vercel.app/graphql";
     public static val:Number=0;
     static getServer(){
-        return this.serverLocal;
+        return this.serverPro;
     }
 }

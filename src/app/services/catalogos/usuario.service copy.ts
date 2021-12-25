@@ -1,30 +1,30 @@
-import { TipoProceso } from './../../dataModels/tipoProceso';
-import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Usuario } from 'src/app/dataModels/usuario';
 import { GlobalDataService } from '../login/globalDataServices';
+import { Injectable } from '@angular/core';
+import { Observable, Subject, concatMapTo } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TipoProcesoService {
+export class UsuarioService {
 
-  server:RequestInfo=GlobalDataService.getServer();
+  server: RequestInfo = GlobalDataService.getServer();
 
-
-  //TIPO PROCESO
-  private tipoProcesos: TipoProceso[];
-  private tipoProcesos$: Subject<TipoProceso[]>;
+  //USUARIO
+  private usuarios: Usuario[];
+  private usuarios$: Subject<Usuario[]>;
 
   resultado: any;
   constructor() {
-    this.tipoProcesos = [];
-    this.tipoProcesos$ = new Subject();
+    this.usuarios = [];
+    this.usuarios$ = new Subject();
   }
 
-  //TIPO PROCESO
+  //GRUPO
 
   //AGREGAR
-  async agregarTipoProceso(tipoProceso: TipoProceso) {
+  async agregarUsuario(usuario: Usuario): Promise<any> {
+    let _idUsuarioCreado = "";
     try {
 
       await fetch(this.server, {
@@ -35,28 +35,35 @@ export class TipoProcesoService {
         },
         body: JSON.stringify({
           query: `mutation{
-            crearTipoProceso(input:{
-              tipo:"${tipoProceso.tipo}"            
-            }){
-              tipo
-            }
-          }`,
+  crearUsuario(input:{
+    usuario:"${usuario.usuario}"
+    password:"${usuario.password}"
+    _idPersona:"${usuario._idPersona}"
+  }){
+    _id
+  }
+}`,
         })
       })
         .then((res) => res.json())
-        .then((result) => {    
-          this.consultarTipoProceso();
+        .then((result) => {
+          console.log(result);
+          _idUsuarioCreado =result.data.crearUsuario._id;
+          //_idUsuarioCreado = "registro";
+          //this.consultarUsuario();
 
         });
     } catch (e) {
       console.log("ERROR: " + e);
+      _idUsuarioCreado = "";
     }
+    return _idUsuarioCreado;
   }
 
   //CONSULTAR
-  async consultarTipoProceso() {
+  async consultarUsuario() {
 
-    this.tipoProcesos = [];
+    this.usuarios = [];
 
     try {
 
@@ -68,13 +75,12 @@ export class TipoProcesoService {
           'Accept': 'application/json',
         },
 
-
-
         body: JSON.stringify({
           query: `{
-            tipoProceso{
+            usuario{
               _id
               tipo
+              color
             }
                   }`,
 
@@ -83,16 +89,15 @@ export class TipoProcesoService {
       })
         .then((res) => res.json())
         .then((result) => {
-          result.data.tipoProceso.map((tp: any) => {
-            let tipoProceso = new TipoProceso();
-            tipoProceso._id = tp._id;
-            tipoProceso.tipo = tp.tipo;
-            this.tipoProcesos.push(tipoProceso);
+          result.data.usuario.map((tp: any) => {
+            let usuario = new Usuario();
+            usuario._id = tp._id;
+            usuario.usuario = tp.tipo;
+            usuario.usuario = tp.color;
+            this.usuarios.push(usuario);
           });
-          this.tipoProcesos$.next(this.tipoProcesos);
-
         });
-
+      this.usuarios$.next(this.usuarios);
 
     } catch (e) {
       console.log("ERROR: " + e);
@@ -100,7 +105,7 @@ export class TipoProcesoService {
   }
 
   //ELIMINAR
-  async eliminarTipoProceso(_id: any) {
+  async eliminarUsuario(_id: any) {
     try {
 
       await fetch(this.server, {
@@ -112,7 +117,7 @@ export class TipoProcesoService {
         },
         body: JSON.stringify({
           query: `mutation{
-            eliminarTipoProceso(_id:"${_id}"){
+            eliminarUsuario(_id:"${_id}"){
               _id
               tipo
             }
@@ -123,9 +128,9 @@ export class TipoProcesoService {
       })
         .then((res) => res.json())
         .then((result) => {
-          this.consultarTipoProceso();
-        });
+          this.consultarUsuario();
 
+        });
 
     } catch (e) {
       console.log("ERROR: " + e);
@@ -133,7 +138,7 @@ export class TipoProcesoService {
   }
 
   //ACTUALIZAR
-  async actualizarTipoProceso(_id:any,tipoProceso:TipoProceso) {
+  async actualizarUsuario(_id: any, usuario: Usuario) {
     try {
 
       await fetch(this.server, {
@@ -145,9 +150,10 @@ export class TipoProcesoService {
         },
         body: JSON.stringify({
           query: `mutation{
-            actualizarTipoProceso(_id:"${_id}",
+            actualizarUsuario(_id:"${_id}",
             input:{
-              tipo:"${tipoProceso.tipo}"
+              tipo:"${usuario.usuario}"
+              color:"${usuario.usuario}"
             }){
               _id
             }
@@ -158,7 +164,8 @@ export class TipoProcesoService {
       })
         .then((res) => res.json())
         .then((result) => {
-          this.consultarTipoProceso();
+          this.consultarUsuario();
+
         });
 
     } catch (e) {
@@ -166,7 +173,8 @@ export class TipoProcesoService {
     }
   }
 
-  obtenerTipoProcesos$(): Observable<TipoProceso[]> {
-    return this.tipoProcesos$.asObservable();
+  obtenerUsuarios$(): Observable<Usuario[]> {
+    return this.usuarios$.asObservable();
   }
+
 }

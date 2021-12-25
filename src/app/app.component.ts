@@ -13,19 +13,12 @@ export class AppComponent {
 
   constructor(private service:UserDataService) { 
 
-    this.service.sumar();
   }
 
-  sumar(){
-    this.service.sumar();
-    console.log("SUMA: "+this.service.obtener());
-
-  }
 
   ngOnInit(): void {
 
 
-console.log("inicio");
 
     const myObj = {
       name: 'darwin',
@@ -70,8 +63,7 @@ console.log("inicio");
   }
 
   obtener(){
-console.log(
-    localStorage.getItem("LOGIN"));
+
   }
   
 }

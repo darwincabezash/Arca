@@ -1,1 +1,58 @@
-<p>dashboard works!.......</p>
+<section class="content">
+  <div class="container-fluid">
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div>
+            <h1>Página Inicial</h1>
+          </div>
+
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+
+
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="card bg-light mb-3">
+          <div class="card-header">Personas por Etapas (Todas)</div>
+          <div class="card-body">
+            <p-chart type="pie" [data]="personasPorEtapa" [options]="chartOptions" [style]="{'width': '40%'}"></p-chart>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="card bg-light mb-3">
+          <div class="card-header">Adultos por Sexo</div>
+          <div class="card-body">
+            <p-chart type="pie" [data]="adultosPorSexo" [options]="chartOptions" [style]="{'width': '40%'}"></p-chart>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+  </div>
+
+</section>

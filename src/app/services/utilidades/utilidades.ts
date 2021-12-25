@@ -7,7 +7,7 @@ import { GlobalDataService } from '../login/globalDataServices';
 })
 
 export class UtilidadesService {
-    private estadoServidor:Boolean=true;
+    private estadoServidor: Boolean = true;
     private estadoServidor$: Subject<Boolean>;
 
     server: RequestInfo = GlobalDataService.getServer();
@@ -18,7 +18,7 @@ export class UtilidadesService {
     }
 
     //CONSULTAR
-    async servidorActivo() {
+    async servidorActivo(): Promise<any> {
         try {
             await fetch(this.server, {
 
@@ -38,24 +38,22 @@ export class UtilidadesService {
                 .then((res) => res.json())
                 .then((result) => {
 
-                    console.log(result.data.servidorActivo);
-                    if (result.data.servidorActivo)
-                    { this.estadoServidor = true; } else { this.estadoServidor =false;}
-                    
+                    if (result.data.servidorActivo) { this.estadoServidor = true; } else { this.estadoServidor = false; }
+
                 });
 
         } catch (e) {
             console.log("ERROR: " + e);
-            this.estadoServidor =false;
+            this.estadoServidor = false;
         }
 
-        this.estadoServidor$.next(this.estadoServidor);
-
+        //this.estadoServidor$.next(this.estadoServidor);
+        return this.estadoServidor;
     }
 
-    obtenerEstadoServidor$(): Observable<Boolean> {
+    /*obtenerEstadoServidor$(): Observable<Boolean> {
         return this.estadoServidor$.asObservable();
-    }
+    }*/
 
 
 }

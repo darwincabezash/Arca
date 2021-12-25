@@ -15,11 +15,48 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
+
+      <li class="nav-item dropdown" *ngIf="_mostrarNuevPersona">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="fas fa-user-check" text-error style="color:#28A745"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
+          <span class=" dropdown-header">Mi Cuenta</span>
+
+          <div class="dropdown-divider"></div>
+
+          <a href="#" class="dropdown-item" (click)="cerrarSesion()">
+
+
+
+
+            <i class="fas fa-sign-out-alt mr-2"></i> Salir
+          </a>
+
+          <div class="dropdown-divider"></div>
+
+        </div>
+
+
+
+
+
+
+
+
+        
+      </li>
+
+
       <!-- Navbar Search -->
       <li class="nav-item">
+
+
         <a class="nav-link" data-widget="navbar-search" href="#" role="button">
           <i class="fas fa-search"></i>
         </a>
+
+
         <div class="navbar-search-block">
           <form class="form-inline">
             <div class="input-group input-group-sm">
@@ -138,9 +175,7 @@
 
           <div class="dropdown-divider"></div>
 
-          <a href="#" class="dropdown-item" (click)="cerrarSesion()">
-            
-           
+          <a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal-cerrar">
 
 
             <i class="fas fa-sign-out-alt mr-2"></i> Salir
@@ -153,6 +188,49 @@
 
 
 
+
     </ul>
+
+
+
+
   </nav>
   <!-- /.navbar -->
+
+
+<!-- Modal Origen  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
+
+<div class="modal fade" id="modal-cerrar">
+
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Cerrar Sessión</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="card-body">
+
+          <!-- IGLESIA ORIGEN -->
+
+          <label class="col-form-label">La sessión será cerrada, ¿deseas continuar?</label>
+
+
+
+
+        </div>
+
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="cerrarSesion()">Si, cerrar
+          Sessión</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal-origen -->

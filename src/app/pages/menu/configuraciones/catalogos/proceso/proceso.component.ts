@@ -24,9 +24,9 @@ export class TipoProcesoComponent implements OnInit {
 
   constructor(private fbNuevo: FormBuilder, private fbActualizar: FormBuilder, private router: Router,
     private tipoProcesoService: TipoProcesoService,
-    private toastr: ToastrService, private sesion: RuteadorService, private utilidadesService:UtilidadesService) {
+    private toastr: ToastrService, private ruteadorService: RuteadorService, private utilidadesService:UtilidadesService) {
   
-    sesion.existeUsuarioActivo();
+    ruteadorService.existeUsuarioActivo();
     
     this.nuevoTipoProcesoForm = this.fbNuevo.group({
       tipo: ["", Validators.required]
@@ -38,13 +38,14 @@ export class TipoProcesoComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
-    this.utilidadesService.servidorActivo();
+ ngOnInit() {
+   this.ruteadorService.servidorActivo(this.router.url);
+
+  /*  this.utilidadesService.servidorActivo();
     this.utilidadesService.obtenerEstadoServidor$().subscribe(estado => {
       this.estadoServidor = estado;
-      console.log("ESTADO s: " + estado);
     });
-
+*/
     this.tipoProcesoService.consultarTipoProceso();
     this.tipoProcesoService.obtenerTipoProcesos$().subscribe(tp => {
       this.tipoProceso = tp;

@@ -23,7 +23,7 @@ export class TipoPersonaComponent implements OnInit {
 
   constructor(private fbNuevo: FormBuilder, private fbActualizar: FormBuilder, private router: Router,
     private tipoPersonaService: TipoPersonaService,
-    private toastr: ToastrService, private sesion: RuteadorService) {
+    private toastr: ToastrService, private sesion: RuteadorService, private ruteadorService: RuteadorService) {
 
     sesion.existeUsuarioActivo();
 
@@ -38,6 +38,8 @@ export class TipoPersonaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.ruteadorService.servidorActivo(this.router.url);
+
     this.tipoPersonaService.consultarTipoPersonas();
     this.tipoPersonaService.obtenerTipoPersonas$().subscribe(tp => {
       this.tipoPersona = tp;

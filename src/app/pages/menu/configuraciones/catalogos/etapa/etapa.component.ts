@@ -23,7 +23,7 @@ export class EtapaComponent implements OnInit {
 
   constructor(private fbNueva: FormBuilder, private fbActualizar: FormBuilder, private router: Router, 
     private etapaService: EtapaService, 
-    private toastr: ToastrService,private sesion:RuteadorService) {
+    private toastr: ToastrService, private sesion: RuteadorService, private ruteadorService: RuteadorService) {
 
       sesion.existeUsuarioActivo();
 
@@ -42,6 +42,8 @@ export class EtapaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.ruteadorService.servidorActivo(this.router.url);
+
     this.etapaService.consultarEtapa();
     this.etapaService.obtenerEtapas$().subscribe(tp => {
       this.etapa = tp;

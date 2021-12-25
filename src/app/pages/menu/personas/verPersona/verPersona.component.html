@@ -1,7 +1,32 @@
-
-
 <section class="content">
   <div class="container-fluid">
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div>
+            <h1>Lista de Personas</h1>
+          </div>
+
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+
+
+
 
 
     <div class="row mt-4">
@@ -23,36 +48,43 @@
                 <th class="text-center">CELULAR</th>
                 <th class="text-center">EMAIL</th>
                 <th class="text-center"></th>
+                <th class="text-center"></th>
                 <th class="text-center" style="text-align:center;width:100px;">ACCIÓN</th>
               </tr>
             </thead>
 
-            
+
+
+
 
 
             <tbody>
-              <tr  *ngFor="let p of personas" >
+              <tr *ngFor="let p of personas">
 
-                <td class="align-middle">{{p.datoBasicoPersona?.cedula}}</td>
-                <td>{{p.datoBasicoPersona?.primerNombre}}</td>
-                <td>{{p.datoBasicoPersona?.primerApellido}}</td>
-                <td>{{p.datoBasicoPersona?.celular}}</td>
-                <td>{{p.datoBasicoPersona?.email}}</td>
+                <td class="align-middle" style="padding:5px;"> {{p.datoBasicoPersona?.cedula}}</td>
+                <td class="align-middle" style="padding:5px;"> {{p.datoBasicoPersona?.primerNombre}}</td>
+                <td class="align-middle" style="padding:5px;">{{p.datoBasicoPersona?.primerApellido}}</td>
+                <td class="align-middle" style="padding:5px;">{{p.datoBasicoPersona?.celular}}</td>
+                <td class="align-middle" style="padding:5px;">{{p.datoBasicoPersona?.email}}</td>
 
-                <td>
-                  <div *ngIf="p.datoBasicoPersona?.foto  !== undefined && p.datoBasicoPersona?.foto  !== '' && p.datoBasicoPersona?.foto !== null && p.datoBasicoPersona?.foto !== ' ' ; else elseBlock">
-                    <img src="{{p.datoBasicoPersona?.foto}}" alt="Avatar"  style="vertical-align: middle;width: 30px;height: 30px;border-radius: 50%;">
-                    
+                <td class="align-middle text-center" style="padding:5px;">
+                  <div
+                    *ngIf="p.datoBasicoPersona?.foto  !== undefined && p.datoBasicoPersona?.foto  !== '' && p.datoBasicoPersona?.foto !== null && p.datoBasicoPersona?.foto !== ' ' ; else elseBlock">
+                    <img src="{{p.datoBasicoPersona?.foto}}" alt="Avatar"
+                      style="vertical-align: middle;width: 25px;height: 25px;border-radius: 50%; margin-top:0px; padding:0px;">
+
                   </div>
                   <ng-template #elseBlock>
 
                     <div *ngIf="p.datoBasicoPersona?.sexo==='H' ; else elseBlock1">
-                      <img src="../../../assets/images/H.jpg" alt="Avatar"  style="vertical-align: middle;width: 30px;height: 30px;border-radius: 50%;">
-                      
+                      <img src="../../../assets/images/H.jpg" alt="Avatar"
+                        style="vertical-align: middle;width: 25px;height: 25px;border-radius: 50%;margin-top:0px">
+
                     </div>
 
                     <ng-template #elseBlock1>
-                      <img src="../../../assets/images/M.jpg" alt="Avatar"  style="vertical-align: middle;width: 30px;height: 30px;border-radius: 50%;">
+                      <img src="../../../assets/images/M.jpg" alt="Avatar"
+                        style="vertical-align: middle;width: 25px;height: 25px;border-radius: 50%;margin-top:0px">
 
                     </ng-template>
 
@@ -60,19 +92,27 @@
                   </ng-template>
 
 
-                  
-               </td>
+
+                </td>
+
+                <td class="align-middle" width="100px">
+                  <div class="progress align-middle" style="border-radius: 10px;height:10px;">
+                    <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="25"
+                      aria-valuemin="0" aria-valuemax="100">25 %
+                    </div>
+                  </div>
+                </td>
 
 
 
-                <td>
+                <td class="align-middle  text-center" style="padding:5px;">
 
 
-                  <button type="button" class="btn-xs align-middle" style="margin:0px;border:none;">
+                  <button type="button" class="btn-xs align-middle" style="margin:0px;border:none;margin-top:0px">
                     <i class="fas fa-user-edit fa-2x " style="color:#18A2B8;"></i>
                   </button>
 
-                  <button type="button" class="btn-xs align-middle" style="margin-left:5px;border:none;">
+                  <button type="button" class="btn-xs align-middle" style="margin-left:5px;border:none;margin-top:0px">
 
                     <i class="fas fa-trash fa-2x ml-1 mr-1" style="color:#DC3545;"></i>
 
@@ -107,9 +147,27 @@
           </div>
 
 
-        
+
         </div>
       </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   </div>
 </section>

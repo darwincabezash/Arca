@@ -1,30 +1,30 @@
-import { TipoProceso } from './../../dataModels/tipoProceso';
-import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
 import { GlobalDataService } from '../login/globalDataServices';
+import { Injectable } from '@angular/core';
+import { Observable, Subject, concatMapTo } from 'rxjs';
+import { Seminario } from 'src/app/dataModels/seminario';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TipoProcesoService {
+export class SeminarioService {
 
-  server:RequestInfo=GlobalDataService.getServer();
+  server: RequestInfo = GlobalDataService.getServer();
 
-
-  //TIPO PROCESO
-  private tipoProcesos: TipoProceso[];
-  private tipoProcesos$: Subject<TipoProceso[]>;
+  //SEMINARIO
+  private seminarios: Seminario[];
+  private seminarios$: Subject<Seminario[]>;
 
   resultado: any;
   constructor() {
-    this.tipoProcesos = [];
-    this.tipoProcesos$ = new Subject();
+    this.seminarios = [];
+    this.seminarios$ = new Subject();
   }
 
-  //TIPO PROCESO
+  //GRUPO
 
   //AGREGAR
-  async agregarTipoProceso(tipoProceso: TipoProceso) {
+  async agregarSeminario(seminario: Seminario) {
+    console.log("color es: " + seminario.color);
     try {
 
       await fetch(this.server, {
@@ -35,8 +35,9 @@ export class TipoProcesoService {
         },
         body: JSON.stringify({
           query: `mutation{
-            crearTipoProceso(input:{
-              tipo:"${tipoProceso.tipo}"            
+            crearSeminario(input:{
+              tipo:"${seminario.tipo}"    
+              color:"${seminario.color}"    
             }){
               tipo
             }
@@ -44,19 +45,20 @@ export class TipoProcesoService {
         })
       })
         .then((res) => res.json())
-        .then((result) => {    
-          this.consultarTipoProceso();
+        .then((result) => {
+          this.consultarSeminario();
 
         });
     } catch (e) {
       console.log("ERROR: " + e);
     }
+
   }
 
   //CONSULTAR
-  async consultarTipoProceso() {
+  async consultarSeminario() {
 
-    this.tipoProcesos = [];
+    this.seminarios = [];
 
     try {
 
@@ -68,13 +70,12 @@ export class TipoProcesoService {
           'Accept': 'application/json',
         },
 
-
-
         body: JSON.stringify({
           query: `{
-            tipoProceso{
+            seminario{
               _id
               tipo
+              color
             }
                   }`,
 
@@ -83,16 +84,15 @@ export class TipoProcesoService {
       })
         .then((res) => res.json())
         .then((result) => {
-          result.data.tipoProceso.map((tp: any) => {
-            let tipoProceso = new TipoProceso();
-            tipoProceso._id = tp._id;
-            tipoProceso.tipo = tp.tipo;
-            this.tipoProcesos.push(tipoProceso);
+          result.data.seminario.map((tp: any) => {
+            let seminario = new Seminario();
+            seminario._id = tp._id;
+            seminario.tipo = tp.tipo;
+            seminario.color = tp.color;
+            this.seminarios.push(seminario);
           });
-          this.tipoProcesos$.next(this.tipoProcesos);
-
         });
-
+      this.seminarios$.next(this.seminarios);
 
     } catch (e) {
       console.log("ERROR: " + e);
@@ -100,7 +100,7 @@ export class TipoProcesoService {
   }
 
   //ELIMINAR
-  async eliminarTipoProceso(_id: any) {
+  async eliminarSeminario(_id: any) {
     try {
 
       await fetch(this.server, {
@@ -112,7 +112,7 @@ export class TipoProcesoService {
         },
         body: JSON.stringify({
           query: `mutation{
-            eliminarTipoProceso(_id:"${_id}"){
+            eliminarSeminario(_id:"${_id}"){
               _id
               tipo
             }
@@ -123,9 +123,9 @@ export class TipoProcesoService {
       })
         .then((res) => res.json())
         .then((result) => {
-          this.consultarTipoProceso();
-        });
+          this.consultarSeminario();
 
+        });
 
     } catch (e) {
       console.log("ERROR: " + e);
@@ -133,7 +133,7 @@ export class TipoProcesoService {
   }
 
   //ACTUALIZAR
-  async actualizarTipoProceso(_id:any,tipoProceso:TipoProceso) {
+  async actualizarSeminario(_id: any, seminario: Seminario) {
     try {
 
       await fetch(this.server, {
@@ -145,9 +145,10 @@ export class TipoProcesoService {
         },
         body: JSON.stringify({
           query: `mutation{
-            actualizarTipoProceso(_id:"${_id}",
+            actualizarSeminario(_id:"${_id}",
             input:{
-              tipo:"${tipoProceso.tipo}"
+              tipo:"${seminario.tipo}"
+              color:"${seminario.color}"
             }){
               _id
             }
@@ -158,7 +159,8 @@ export class TipoProcesoService {
       })
         .then((res) => res.json())
         .then((result) => {
-          this.consultarTipoProceso();
+          this.consultarSeminario();
+
         });
 
     } catch (e) {
@@ -166,7 +168,8 @@ export class TipoProcesoService {
     }
   }
 
-  obtenerTipoProcesos$(): Observable<TipoProceso[]> {
-    return this.tipoProcesos$.asObservable();
+  obtenerSeminarios$(): Observable<Seminario[]> {
+    return this.seminarios$.asObservable();
   }
+
 }

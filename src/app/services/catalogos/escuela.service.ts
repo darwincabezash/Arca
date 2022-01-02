@@ -37,6 +37,7 @@ export class EscuelaService {
             crearEscuela(input:{
               tipo:"${escuela.tipo}"    
               color:"${escuela.color}"    
+              colorTextoNegro:${escuela.colorTextoNegro}    
             }){
               tipo
             }
@@ -75,6 +76,7 @@ export class EscuelaService {
               _id
               tipo
               color
+              colorTextoNegro
             }
                   }`,
 
@@ -87,7 +89,8 @@ export class EscuelaService {
             let escuela = new Escuela();
             escuela._id = tp._id;
             escuela.tipo = tp.tipo;
-            escuela.color=tp.color;
+            escuela.color = tp.color;
+            escuela.colorTextoNegro = tp.colorTextoNegro;
             this.escuelas.push(escuela);
           });
         });
@@ -96,6 +99,43 @@ export class EscuelaService {
     } catch (e) {
       console.log("ERROR: " + e);
     }
+  }
+
+
+  //CONSULTAR CANTIDAD ESCUELAS
+  async consultarEscuelaCantidad():Promise<number> {
+
+    let cantidadEscuelas = 0;
+
+    try {
+
+      await fetch(this.server, {
+
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+
+        body: JSON.stringify({
+          query: `{
+            escuelaCantidad
+                  }`,
+
+        })
+
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          cantidadEscuelas=result.data.escuelaCantidad;
+
+        });
+
+    } catch (e) {
+      console.log("ERROR: " + e);
+      cantidadEscuelas = 0;
+    }
+    return cantidadEscuelas;
   }
 
   //ELIMINAR
@@ -148,6 +188,7 @@ export class EscuelaService {
             input:{
               tipo:"${escuela.tipo}"
               color:"${escuela.color}"
+              colorTextoNegro:${escuela.colorTextoNegro}
             }){
               _id
             }

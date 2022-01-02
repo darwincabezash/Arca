@@ -23,12 +23,11 @@
               </li>
               <li class="nav-item"><a class="nav-link " href="#tab_2" data-toggle="tab">Información
                   Espiritual</a></li>
-              <li class="nav-item"><a class="nav-link" href="#tab_3" data-toggle="tab">Información
-                  Espiritual</a></li>
+              <!--<li class="nav-item"><a class="nav-link" href="#tab_3" data-toggle="tab">En Construcción</a></li>
 
 
-              <li class="nav-item"><a class="nav-link" href="#tab_4" data-toggle="tab">Información
-                  Familiar</a></li>
+            <!--  <li class="nav-item"><a class="nav-link" href="#tab_4" data-toggle="tab">Información
+                  Familiar</a></li>-->
 
               <li class="nav-item"><a class="nav-link" href="#tab_5" data-toggle="tab">Información
                   Acceso</a></li>
@@ -406,14 +405,14 @@
 
 
                           <p class="text-muted mt-3"
-                            *ngIf="origenPersona.cargoEjercido!==undefined && origenPersona.cargoEjercido!=='' ">    <!-- MOD 1 -->
+                            *ngIf="origenPersona.cargoEjercido!==undefined && origenPersona.cargoEjercido!=='' ">
+                            <!-- MOD 1 -->
 
                             <i class="fas fa-angle-right mr-1"></i> Cargo Ejercido: &nbsp;
-                            {{origenPersona.cargoEjercido}}      
+                            {{origenPersona.cargoEjercido}}
 
                           </p>
-                          <p class="text-muted mt-0"
-                            *ngIf="origenPersona.tiempoPermanencia!==undefined">
+                          <p class="text-muted mt-0" *ngIf="origenPersona.tiempoPermanencia!==undefined">
                             <!-- MOD 2 -->
                             <i class="fas fa-angle-right mr-1"></i> Tiempo de permanencia: &nbsp;
                             {{origenPersona.tiempoPermanencia==1 ? origenPersona.tiempoPermanencia +  " Año" : origenPersona.tiempoPermanencia+ " Años"}}
@@ -666,8 +665,7 @@
                         </div>
 
                         <!-- /.card-header   *ngIf="bautizmo.bautizmo" -->
-                        <div class="card-body"
-                          *ngIf="listaEscuelasSeleccion.length || listaProcesosSeleccion.length ||
+                        <div class="card-body" *ngIf="listaEscuelasSeleccion.length || listaProcesosSeleccion.length ||
                           listaGruposSelecion.length || listaSeminariosSelecion.length">
 
                           <div *ngIf="listaEscuelasSeleccion.length">
@@ -681,8 +679,6 @@
                             <hr>
 
                           </div>
-
-
 
                           <div *ngIf="listaProcesosSeleccion.length">
 
@@ -975,7 +971,7 @@
                                     <label class="col-form-label">Selecciona un lugar</label>
                                     <select class=" form-control form-control-lg"
                                       (change)="onChangeOracionFeLugar($event.target)" id="lugarOption">
-                                      <option> Selecciona una opción</option>
+                                      <option disabled selected> Selecciona una opción</option>
                                       <option> Sendas de Justicia</option>
                                       <option>Otra</option>
                                     </select>
@@ -1061,7 +1057,7 @@
                                     <label class="col-form-label">Selecciona un lugar</label>
                                     <select class=" form-control form-control-lg"
                                       (change)="onChangeBautizmoIglesia($event.target)" id="exampleSelectBorder">
-                                      <option> Selecciona una opción</option>
+                                      <option disabled selected> Selecciona una opción</option>
                                       <option> Sendas de Justicia</option>
                                       <option>Otra</option>
                                     </select>
@@ -1185,7 +1181,7 @@
                                 <label class="col-form-label">Soy...</label>
                                 <select class=" form-control form-control-lg"
                                   (change)="onChangeTipoPersona($event.target)" id="exampleSelectBorder">
-                                  <option>Otra</option>
+                                  <option disabled selected>Seleccione una opción</option>
                                   <option *ngFor="let tp of tipoPersona"> {{tp.tipo}}</option>
 
                                 </select>
@@ -1204,7 +1200,8 @@
                                   <li class="list-group-item">
 
                                     <a *ngFor="let e of listaEscuelasTodas" class="badge  badge-pill badge-primary"
-                                      [ngStyle]="{'background-color': e.color}"
+                                      [ngStyle]="{'background-color': e.color, 'color':e.colorTextoNegro ?
+                                      'black' : 'white'}"
                                       style="font-size:1rem; margin:3px; cursor: pointer;"
                                       (click)="marcarEscuelas(e._id!) ">{{e.tipo}}</a>
 
@@ -1220,7 +1217,9 @@
 
                                       <a *ngFor="let e of listaEscuelasSeleccion"
                                         class="badge  badge-pill badge-primary"
-                                        [ngStyle]="{'background-color': e.color}"
+                                        [ngStyle]="{'background-color': e.color, 'color':e.colorTextoNegro
+                                        ?
+                                        'black' : 'white'}"
                                         style="font-size:1rem; margin:3px; cursor: pointer;"
                                         (click)="desmarcarEscuelas(e._id!) ">{{e.tipo}}</a>
 
@@ -1229,7 +1228,7 @@
                                   </ul>
                                 </div>
 
-<hr>
+                                <hr>
 
                                 <!-- Procesos -->
 
@@ -1265,7 +1264,7 @@
                                   </ul>
                                 </div>
 
-<hr>
+                                <hr>
 
                                 <!-- Grupos -->
 
@@ -1299,7 +1298,7 @@
 
                                   </ul>
                                 </div>
-<hr>
+                                <hr>
 
                                 <!-- Seminarios -->
 
@@ -1372,7 +1371,10 @@
                   <!-- /.card-body -->
 
                   <button type="submit" class="btn btn-success btn-lg-12 btn-sm-12"
-                    (click)="guardarInformacionEspiritual()">Guardar Información Espiritual</button>
+                    (click)="guardarInformacionEspiritual()" *ngIf="_id_persona_creada &&
+                    !informacionEspiritualGuardada">Guardar
+                    Información
+                    Espiritual</button>
 
 
                 </div>
@@ -1421,32 +1423,10 @@
               </div>
               <!-- /.tab-pane -->
               <div class="tab-pane" id="tab_3">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type
-                specimen
-                book.
-                It has survived not only five centuries, but also the leap into electronic
-                typesetting,
-                remaining essentially unchanged. It was popularised in the 1960s with the release of
-                Letraset
-                sheets containing Lorem Ipsum passages, and more recently with desktop publishing
-                software
-                like Aldus PageMaker including versions of Lorem Ipsum.
+               NO DISPONIBLE
               </div>
               <div class="tab-pane" id="tab_4">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type
-                specimen
-                book.
-                It has survived not only five centuries, but also the leap into electronic
-                typesetting,
-                remaining essentially unchanged. It was popularised in the 1960s with the release of
-                Letraset
-                sheets containing Lorem Ipsum passages, and more recently with desktop publishing
-                software
-                like Aldus PageMaker including versions of Lorem Ipsum.
+                NO DISPONIBLE
               </div>
 
 
@@ -1613,7 +1593,7 @@
 
                     </div>
                     <button type="submit" class="btn btn-success btn-lg-12 btn-sm-12"
-                      [disabled]="usuarioForm.invalid">Guardar
+                      [disabled]="usuarioForm.invalid" *ngIf="_id_persona_creada">Guardar
                       Usuario</button>
                     <!-- /.card-body -->
 

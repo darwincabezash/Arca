@@ -3,33 +3,355 @@
 
 
 
+    <span class="ml-4">
+      <div class="d-block w-100 text-right text-muted" data-toggle="collapse" href="#collapseBusqueda"
+        style="cursor:default">
+        Mostrar Busqueda <i class="fas fa-caret-down ml-1"></i> </div>
+    </span>
+
+
+    <div id="accordionB" class="pt-1">
+      <div class="card card-light " style="box-shadow: none;">
+
+        <div id="collapseBusqueda" class="collapse show" data-parent="#accordionB">
+          <div class="card-body p-0">
 
 
 
+            <div class="row">
+              <div class="col-lg-12">
+                <!-- ./card-body -->
+                <div class="card-footer p-0 ml-3 mr-3">
+                  <div class="row">
+                    <div class="col-lg-12">
+
+                      <!-- Main content -->
+
+                      <div class="btn btn-success rounded btn-lg btn-flat text-left d-inline pl-2 pr-2 pt-1 pb-1"
+                        *ngIf="personasBusqueda.length!==personas.length">
+                        <i class="fas fa-users fa-md mr-2"></i>
+                        {{personasBusqueda.length}}
+                      </div>
+
+                      <h2 class="text-center display-6 pt-1">Búsqueda</h2>
+                      <div class="row">
+                        <div class="col-md-12 ">
+                          <form action="simple-results.html">
+                            <div class="input-group align-middle">
 
 
+                              <input type="text" class="form-control form-control-lg"
+                                placeholder="Escribe aquí la búsqueda" (input)="buscar($event)">
+
+                              <div class="input-group-append">
+
+                                <span class="input-group-text align-middle">
+                                  <span class="text-muted mr-2"> Coincidir Todas</span>
+                                  <input type="checkbox" (change)="onChangeCoincidirTodas($event)">
+
+                                  <span class="ml-4">
+                                    <div class="d-block w-100 text-right text-muted" data-toggle="collapse"
+                                      href="#collapseProcesos" style="cursor:default">
+                                      Procesos <i class="fas fa-caret-down ml-1"></i> </div>
+                                  </span>
+
+                                  <span class="ml-4">
+                                    <div class="d-block w-100 text-right text-muted" data-toggle="collapse"
+                                      href="#collapseColumnas" style="cursor:default">
+                                      Mostrar Columnas <i class="fas fa-caret-down ml-1"></i> </div>
+                                  </span>
+                                </span>
 
 
+                                <!--<button type="submit" class="btn btn-lg btn-default">
+                  <i class="fa fa-search"></i>
+                </button>-->
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
 
-    <!-- Content Wrapper. Contains page content -->
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div>
-            <h1>Lista de Personas</h1>
+
+                    </div>
+                  </div>
+                  <!-- /.row -->
+                </div>
+                <!-- /.card-footer -->
+
+              </div>
+            </div>
           </div>
-
         </div>
-      </div><!-- /.container-fluid -->
-    </section>
+      </div>
+    </div>
 
 
 
 
 
 
-    <div class="row mt-4">
+
+
+
+
+
+    <div id="accordionP" class="pt-1">
+      <div class="card card-light  ml-3 mr-3">
+
+        <div id="collapseProcesos" class="collapse" data-parent="#accordionP">
+          <div class="card-body pl-2 pt-2">
+
+
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">
+                      <i class="fas fa-graduation-cap"></i>
+                      Escuelas
+                    </h3>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body p-1">
+
+
+
+                    <!-- Escuelas -->
+
+
+
+                    <li class="list-group-item m-0 p-0" style="border:0px">
+
+                      <a *ngFor="let e of listaEscuelasTodas" class="badge  badge-pill badge-primary"
+                        [ngStyle]="{'background-color': e.color,'color':(e.colorTextoNegro ? '#000000' : '#FFFFFF' )}"
+                        style=" margin:2px;
+                        cursor: pointer;" (click)="marcarEscuelas(e._id!) ">{{e.tipo}}</a>
+
+                    </li>
+
+
+
+                    <div *ngIf="listaEscuelasSeleccion.length>0" class="pt-1">
+                      <label class="col-form-label align-center">Selección</label>
+
+                      <ul class="list-group align-left">
+                        <li class="list-group-item" style="border-color: #007BFF;" style="padding:1px;">
+
+                          <a *ngFor="let e of listaEscuelasSeleccion" class="badge  badge-pill badge-primary" [ngStyle]="{'background-color': e.color,'color':(e.colorTextoNegro ? '#000000' : '#FFFFFF'
+                            )}" style="margin:2px;
+                            cursor: pointer;" (click)="desmarcarEscuelas(e._id!) ">{{e.tipo}}</a>
+
+                        </li>
+
+                      </ul>
+                    </div>
+
+                    <hr>
+
+
+
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+              </div>
+              <!-- ./col -->
+              <div class="col-md-4">
+
+                <!-- /.card -->
+              </div>
+              <!-- ./col -->
+              <div class="col-md-4">
+
+                <!-- /.card -->
+              </div>
+              <!-- ./col -->
+            </div>
+            <!-- /.row -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="accordionC" class="pt-1">
+      <div class="card card-light ml-3 mr-3">
+
+        <div id="collapseColumnas" class="collapse" data-parent="#accordionC">
+          <div class="card-body p-0">
+
+
+
+            <div class="row">
+              <div class="col-md-12">
+                <!-- ./card-body -->
+                <div class="card-footer p-0">
+                  <div class="row ml-3">
+                    <div class="">
+                      <div class="description-block border-right">
+
+                        <span class="input-group-text align-middle" style="border: 0px">
+                          <input type="checkbox" (change)="onChangeVerColumnaCedula($event)" [checked]="mostrarCedula">
+                          <span class="text-muted mr-2 ml-2"> Cédula</span>
+                        </span>
+
+                      </div>
+                      <!-- /.description-block -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="">
+                      <div class="description-block border-right">
+
+                        <span class="input-group-text align-middle" style="border: 0px">
+                          <input type="checkbox" (change)="onChangeVerColumnaNombres($event)"
+                            [checked]="mostrarNombres">
+                          <span class="text-muted mr-2 ml-2"> Nombres</span>
+                        </span>
+
+                      </div>
+                      <!-- /.description-block -->
+                    </div>
+
+                    <div class="">
+                      <div class="description-block border-right">
+
+                        <span class="input-group-text align-middle" style="border: 0px">
+                          <input type="checkbox" (change)="onChangeVerColumnaApellidos($event)"
+                            [checked]="mostrarApellidos">
+                          <span class="text-muted mr-2 ml-2"> Apellidos</span>
+                        </span>
+
+                      </div>
+                      <!-- /.description-block -->
+                    </div>
+
+
+                    <div class="">
+                      <div class="description-block border-right">
+
+                        <span class="input-group-text align-middle" style="border: 0px">
+                          <input type="checkbox" (change)="onChangeVerColumnaCelular($event)"
+                            [checked]="mostrarCelular">
+                          <span class="text-muted mr-2 ml-2"> Celular</span>
+                        </span>
+
+                      </div>
+                      <!-- /.description-block -->
+                    </div>
+
+                    <div class="">
+                      <div class="description-block border-right">
+
+                        <span class="input-group-text align-middle" style="border: 0px">
+                          <input type="checkbox" (change)="onChangeVerColumnaFechaNacimiento($event)"
+                            [checked]="mostrarFechaNacimiento">
+                          <span class="text-muted mr-2 ml-2"> Fecha de Nacimiento</span>
+                        </span>
+
+                      </div>
+                      <!-- /.description-block -->
+                    </div>
+
+
+
+                    <div class="">
+                      <div class="description-block border-right">
+
+                        <span class="input-group-text align-middle" style="border: 0px">
+                          <input type="checkbox" (change)="onChangeVerColumnaFoto($event)" [checked]="mostrarFoto">
+                          <span class="text-muted mr-2 ml-2"> Foto</span>
+                        </span>
+
+                      </div>
+                      <!-- /.description-block -->
+                    </div>
+
+
+
+                    <div class="">
+                      <div class="description-block border-right">
+
+                        <span class="input-group-text align-middle" style="border: 0px">
+                          <input type="checkbox" (change)="onChangeVerColumnaResumenProceso($event)"
+                            [checked]="mostrarResumenProcesos">
+                          <span class="text-muted mr-2 ml-2"> Resumen de Procesos</span>
+                        </span>
+
+                      </div>
+                      <!-- /.description-block -->
+                    </div>
+
+
+                    <div class="">
+                      <div class="description-block border-right">
+
+                        <span class="input-group-text align-middle" style="border: 0px">
+                          <input type="checkbox" (change)="onChangeVerColumnaEscuela($event)"
+                            [checked]="mostrarEscuela">
+                          <span class="text-muted mr-2 ml-2"> Escuelas</span>
+                        </span>
+
+                      </div>
+                      <!-- /.description-block -->
+                    </div>
+
+
+                    <div class="">
+                      <div class="description-block border-right">
+
+                        <span class="input-group-text align-middle" style="border: 0px">
+                          <input type="checkbox" (change)="onChangeVerColumnaAccion($event)" [checked]="mostrarAccion">
+                          <span class="text-muted mr-2 ml-2"> Acción</span>
+                        </span>
+
+                      </div>
+                      <!-- /.description-block -->
+                    </div>
+
+                    <!-- /.col -->
+
+                    <!-- /.col -->
+
+                  </div>
+                  <!-- /.row -->
+                </div>
+                <!-- /.card-footer -->
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="row mt-2">
       <div class="col-12">
         <!-- Custom Tabs -->
         <div class="card ml-3 mr-3">
@@ -42,14 +364,19 @@
 
             <thead>
               <tr>
-                <th class="text-center">CÉDULA</th>
-                <th class="text-center">NOMBRE</th>
-                <th class="text-center">APELLIDO</th>
-                <th class="text-center">CELULAR</th>
-                <th class="text-center">EMAIL</th>
-                <th class="text-center"></th>
-                <th class="text-center"></th>
-                <th class="text-center" style="text-align:center;width:100px;">ACCIÓN</th>
+                <th class="text-center " *ngIf="mostrarCedula">CÉDULA <i class="fas fa-sort pl-2"
+                    (click)="ordenarPorCedula()"></i>
+                </th>
+                <th class="text-center" *ngIf="mostrarNombres">NOMBRES<i class="fas fa-sort pl-2"
+                    (click)="ordenarPorNombres()"></i></th>
+                <th class="text-center" *ngIf="mostrarApellidos">APELLIDOS<i class="fas fa-sort pl-2"
+                    (click)="ordenarPorApellidos()"></i></th>
+                <th class="text-center" *ngIf="mostrarCelular">CELULAR</th>
+                <th class="text-center" *ngIf="mostrarFechaNacimiento">FECHA DE NACIMIENTO</th>
+                <th class="text-center" *ngIf="mostrarFoto">FOTO</th>
+                <th class="text-center" *ngIf="mostrarResumenProcesos">RESUMEN PROCESOS</th>
+                <th class="text-center" *ngIf="mostrarEscuela">ESCUELAS</th>
+                <th class="text-center" *ngIf="mostrarAccion" style="text-align:center;width:100px;">ACCIÓN</th>
               </tr>
             </thead>
 
@@ -59,19 +386,35 @@
 
 
             <tbody>
-              <tr *ngFor="let p of personas">
+              <tr *ngFor="let p of personasBusqueda">
 
-                <td class="align-middle" style="padding:5px;"> {{p.datoBasicoPersona?.cedula}}</td>
-                <td class="align-middle" style="padding:5px;"> {{p.datoBasicoPersona?.primerNombre}}</td>
-                <td class="align-middle" style="padding:5px;">{{p.datoBasicoPersona?.primerApellido}}</td>
-                <td class="align-middle" style="padding:5px;">{{p.datoBasicoPersona?.celular}}</td>
-                <td class="align-middle" style="padding:5px;">{{p.datoBasicoPersona?.email}}</td>
+                <th scope="row" class=" align-middle " style="padding:5px; " *ngIf="mostrarCedula">
+                  {{p.datoBasicoPersona?.cedula}}</th>
 
-                <td class="align-middle text-center" style="padding:5px;">
+                <td class="align-middle" style="padding:5px; " *ngIf="mostrarNombres">
+                  {{p.datoBasicoPersona?.nombres}} </td>
+
+                <td class="align-middle" style="padding:5px; " *ngIf="mostrarApellidos">
+                  {{p.datoBasicoPersona?.apellidos}}</td>
+
+                <td class="align-middle" style="padding:5px; " *ngIf="mostrarCelular"><a
+                    href="{{p.datoBasicoPersona!.whatsapp }}" target="_blank" rel="noopener
+                    noreferrer">
+                    {{p.datoBasicoPersona?.celular}} </a>
+
+                </td>
+
+                <td class="align-middle" style="padding:5px; " *ngIf="mostrarFechaNacimiento">
+                  {{p.datoBasicoPersona?.fechaNacimientoFormateada}}
+
+                </td>
+                <!-- {{ p.datoBasicoPersona?.fechaNacimiento | date:  'shortDate' }} -->
+                <td class="align-middle text-center" style="padding:5px; " *ngIf="mostrarFoto">
                   <div
                     *ngIf="p.datoBasicoPersona?.foto  !== undefined && p.datoBasicoPersona?.foto  !== '' && p.datoBasicoPersona?.foto !== null && p.datoBasicoPersona?.foto !== ' ' ; else elseBlock">
                     <img src="{{p.datoBasicoPersona?.foto}}" alt="Avatar"
-                      style="vertical-align: middle;width: 25px;height: 25px;border-radius: 50%; margin-top:0px; padding:0px;">
+                      style="vertical-align: middle;width: 25px;height: 25px;border-radius: 50%; margin-top:0px;
+                      padding:0px;" onerror="this.src='../../../assets/images/NF.jpeg'" >
 
                   </div>
                   <ng-template #elseBlock>
@@ -94,29 +437,83 @@
 
 
                 </td>
+                <!-- {{ p.datoBasicoPersona?.fechaNacimiento | date:  'shortDate' }} -->
 
-                <td class="align-middle" width="100px">
-                  <div class="progress align-middle" style="border-radius: 10px;height:10px;">
-                    <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="25"
-                      aria-valuemin="0" aria-valuemax="100">25 %
-                    </div>
-                  </div>
+                <td class="align-middle" style="padding: 0px;width: 20%; margin-right:5px;" *ngIf="mostrarEscuela">
+                  <!--  <span class="badge badge-pill bg-success small" style="font-size: 8px; margin-left: 2px;"
+                    *ngFor="let pr of p.proceso">{{pr.tipo}}</span>-->
+
+                  <span class="badge badge-pill bg-success small" style="font-size: 8px; margin-left: 2px;
+                    padding-left:3px;padding-right:3px;padding-top:2px;padding-bottom:1px;"
+                    *ngFor="let pr of p.escuela">{{pr.tipo}}</span>
                 </td>
 
 
 
-                <td class="align-middle  text-center" style="padding:5px;">
+                <td class="align-middle" width="100px" style="padding: 0px; " *ngIf="mostrarResumenProcesos">
 
 
-                  <button type="button" class="btn-xs align-middle" style="margin:0px;border:none;margin-top:0px">
-                    <i class="fas fa-user-edit fa-2x " style="color:#18A2B8;"></i>
-                  </button>
+                  <div class="progress" style="height:10px;background: #C2C7D0;border-radius: 20px;
+                                                            overflow: visible;position: relative;padding:0px">
 
-                  <button type="button" class="btn-xs align-middle" style="margin-left:5px;border:none;margin-top:0px">
+                    <div class="progress-bar" style=" background:#4f5962; border-radius: 20px;-webkit-animation: 
+                    animate-positive 2s; animation: animate-positive 2s;"
+                      [ngStyle]="{width:obtenerPorcentajeEscuelas(p.escuela!)}">
 
-                    <i class="fas fa-trash fa-2x ml-1 mr-1" style="color:#DC3545;"></i>
 
-                  </button>
+
+                      <div class="progress-value" style="font-size:10px"></div>
+                    </div>
+                  </div>
+
+
+                  <div class="progress align-middle" style="border-radius: 10px;height:10px;">
+                    <!--  <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="25"
+                      aria-valuemin="0" aria-valuemax="100">25 %
+                    </div> -->
+
+
+                  </div>
+
+
+                </td>
+
+
+
+
+                <!-- Content Header (Page header) -->
+
+                <td class="align-middle  text-center" style="padding:5px; border:0px" *ngIf="mostrarAccion">
+
+
+                  <div class="btn-group" role="group" aria-label="Basic example">
+
+                    <!-- VER -->
+                    <button type="button" class="btn-xs align-middle" style="margin-left:5px;border:none;"
+                      (click)="verPerfil(p)" data-toggle="modal" data-target="#modal-eliminar">
+
+                      <i class="fas fa-eye fa-2x ml-1 mr-1 text-info"></i>
+
+                    </button>
+
+                    <!-- EDITAR -->
+                    <button type="button" class="btn-xs align-middle" style="margin-left:5px;border:none;">
+                      <i class="fas fa-user-edit fa-2x text-warning"></i>
+                    </button>
+
+
+                    <!-- ELIMINAR -->
+                    <button type="button" class="btn-xs align-middle" style="margin-left:5px;border:none;"
+                      (click)="idAEliminar(p._id)" data-toggle="modal" data-target="#modal-eliminar">
+
+                      <i class="fas fa-trash fa-2x ml-1 mr-1 text-danger"></i>
+
+                    </button>
+
+                  </div>
+
+
+
                 </td>
               </tr>
 
@@ -145,6 +542,47 @@
 
             </div>
           </div>
+
+
+
+
+
+
+
+
+          <!-- Modal Eliminar 2-->
+
+
+          <div class="modal fade" id="modal-eliminar">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Eliminar escuela</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="card-body">
+
+                    <p>La persona <b> {{_idEliminar?.datoBasicoPersona?.primerNombre}}
+                        {{_idEliminar?.datoBasicoPersona?.primerApellido}}</b> con cédula
+                      <b>{{_idEliminar?.datoBasicoPersona?.cedula}}</b> será eliminada, ¿Desea
+                      continuar?</p>
+                  </div>
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="eliminarPersona()">Si,
+                    Eliminar</button>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+
 
 
 

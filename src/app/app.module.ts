@@ -35,6 +35,10 @@ import { LoginComponent } from './shared/login/login.component';
 import { PermisoComponent } from './pages/menu/configuraciones/catalogos/permiso/permiso.component';
 import { Page503Component } from './shared/page503/page503.component';
 import { SeminarioComponent } from './pages/menu/configuraciones/catalogos/seminario/seminario.component';
+import { SplitterModule } from 'primeng/splitter';
+import { PerfilComponent } from './pages/menu/personas/perfil/perfil.component';
+
+
 
 
 
@@ -96,7 +100,11 @@ const routes: Route[]=[
       },
       {
         path: 'dashboard', component: DashboardComponent
+      },
+      {
+        path: 'perfil', component: PerfilComponent
       }
+
 
     ] 
   },{ 
@@ -104,7 +112,7 @@ const routes: Route[]=[
     children:[
       
       {
-        path:'login',component:LoginComponent
+        path:'login/',component:LoginComponent
       }
     ] 
   },
@@ -139,6 +147,7 @@ const routes: Route[]=[
     PermisoComponent,
     Page503Component,
     SeminarioComponent,
+    PerfilComponent,
   ],
   imports: [
     BrowserModule,
@@ -151,7 +160,8 @@ const routes: Route[]=[
     ButtonModule,
     ChartModule,
     TableModule,
-    ProgressBarModule
+    ProgressBarModule,
+    SplitterModule
      // required animations module
 
   ],

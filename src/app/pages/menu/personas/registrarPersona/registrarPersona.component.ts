@@ -43,6 +43,9 @@ export class RegisterPersonComponent implements OnInit {
   personaNueva: Persona;
 
 
+  informacionEspiritualGuardada = false;
+
+
 
   //::: ORIGEN 
   tiempoPermanencia: Number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
@@ -165,7 +168,7 @@ export class RegisterPersonComponent implements OnInit {
     this.origenPersonaForm = this.fbOrigenPersona.group({
       nombreIglesiaOrigen: [""],
       cargoEjercido: [""],
-      tiempoPermanencia: [""]
+      tiempoPermanencia: [0]
     });
 
     //DATOS LLEGADA
@@ -520,7 +523,7 @@ export class RegisterPersonComponent implements OnInit {
   onChangeIglesiaOrigenTiempoPermanencia(_origenIglesiaTiempoPermanencia: any) {
 
     this.origenPersonaForm.patchValue({
-      tiempoPermanencia: _origenIglesiaTiempoPermanencia.value
+      tiempoPermanencia: _origenIglesiaTiempoPermanencia.value.length > 0 ? _origenIglesiaTiempoPermanencia.value : 0
     });
   }
 
@@ -653,13 +656,48 @@ export class RegisterPersonComponent implements OnInit {
     this.oracionFeForm.reset();
     this.bautizmoForm.reset();
     this.usuarioForm.reset();
-
+    this.datosLlegadaForm.reset();
 
     this.limpiarCampos();
     this.limpiarCamposUsuario();
+
+    this.restaurarListaProcesos();
+
+    //this.listaEscuelasTodas = [];
+    this.listaEscuelasSeleccion = [];
+    //this.listaProcesosTodos = [];
+    this.listaProcesosSeleccion = [];
+    //this.listaGruposTodos = [];
+    this.listaGruposSelecion = [];
+    //this.listaSeminariosTodos = [];
+    this.listaSeminariosSelecion = [];
+
+    this.informacionEspiritualGuardada = false;
+
   }
 
 
+  restaurarListaProcesos() {
+      //ESCUELAS  
+    this.listaEscuelasSeleccion.forEach(escuela => {
+        this.listaEscuelasTodas.push(escuela);
+      });
+
+    //PROCESOS
+    this.listaProcesosSeleccion.forEach(proceso => {
+      this.listaProcesosTodos.push(proceso);
+    });
+
+    //GRUPOS
+    this.listaGruposSelecion.forEach(grupo => {
+      this.listaGruposTodos.push(grupo);
+    });
+
+    //SEMINARIOS
+    this.listaSeminariosSelecion.forEach(seminario => {
+      this.listaSeminariosTodos.push(seminario);
+    });
+  }
 
 
   async guardarInformacionEspiritual() {
@@ -748,11 +786,14 @@ export class RegisterPersonComponent implements OnInit {
         this.toastr.warning('Actualizacion de datos espirituales incompleta.');  
       }
 
-
+      this.mostrarBotonEditarOracionFeYBautizo = false;
+      this.informacionEspiritualGuardada = true;
 
     } else {
       alert('Se ha producido un error al intentar guardar la información espiritual de la persona, por favor recarga la página o vuelve a iniciar sesión; si el problema persiste, por favor ponte en contacto con el administrador.');
     }
+
+    
   }
 
 

@@ -5,12 +5,12 @@
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
+      <!--<li class="nav-item d-none d-sm-inline-block">
         <a href="../../index3.html" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
-      </li>
+      </li>-->
     </ul>
 
     <!-- Right navbar links -->
@@ -20,36 +20,12 @@
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="fas fa-user-check" text-error style="color:#28A745"></i>
         </a>
-        <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
-          <span class=" dropdown-header">Mi Cuenta</span>
 
-          <div class="dropdown-divider"></div>
-
-          <a href="#" class="dropdown-item" (click)="cerrarSesion()">
-
-
-
-
-            <i class="fas fa-sign-out-alt mr-2"></i> Salir
-          </a>
-
-          <div class="dropdown-divider"></div>
-
-        </div>
-
-
-
-
-
-
-
-
-        
       </li>
 
 
       <!-- Navbar Search -->
-      <li class="nav-item">
+      <!--<li class="nav-item">
 
 
         <a class="nav-link" data-widget="navbar-search" href="#" role="button">
@@ -72,9 +48,10 @@
             </div>
           </form>
         </div>
-      </li>
+      </li>-->
 
       <!-- Messages Dropdown Menu -->
+      <!--
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-comments"></i>
@@ -82,7 +59,6 @@
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <a href="#" class="dropdown-item">
-            <!-- Message Start -->
             <div class="media">
               <img src="./assets/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
               <div class="media-body">
@@ -94,11 +70,9 @@
                 <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
               </div>
             </div>
-            <!-- Message End -->
           </a>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
-            <!-- Message Start -->
             <div class="media">
               <img src="./assets/dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
               <div class="media-body">
@@ -110,11 +84,9 @@
                 <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
               </div>
             </div>
-            <!-- Message End -->
           </a>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
-            <!-- Message Start -->
             <div class="media">
               <img src="./assets/dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
               <div class="media-body">
@@ -126,14 +98,16 @@
                 <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
               </div>
             </div>
-            <!-- Message End -->
           </a>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
         </div>
-      </li>
-      <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
+      </li>-->
+
+
+
+      <!-- Notifications Dropdown Menu 
+      <!-- <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-bell"></i>
           <span class="badge badge-warning navbar-badge">15</span>
@@ -159,8 +133,10 @@
           <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
       </li>
+-->
+
       <li class="nav-item">
-        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+        <a class="nav-link" data-widget="fullscreen"  role="button">
           <i class="fas fa-expand-arrows-alt"></i>
         </a>
       </li>
@@ -171,9 +147,9 @@
           <i class="fas fa-user-cog"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
-          <span class=" dropdown-header">Mi Cuenta</span>
+          <!--<span class=" dropdown-header">Mi Cuenta</span>
 
-          <div class="dropdown-divider"></div>
+          <div class="dropdown-divider"></div>-->
 
           <a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal-cerrar">
 
@@ -198,39 +174,39 @@
   <!-- /.navbar -->
 
 
-<!-- Modal Origen  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
+  <!-- Modal Origen  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
 
-<div class="modal fade" id="modal-cerrar">
+  <div class="modal fade" id="modal-cerrar">
 
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Cerrar Sessión</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="card-body">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Cerrar Sessión</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card-body">
 
-          <!-- IGLESIA ORIGEN -->
+            <!-- IGLESIA ORIGEN -->
 
-          <label class="col-form-label">La sessión será cerrada, ¿deseas continuar?</label>
+            <label class="col-form-label">La sessión será cerrada, ¿deseas continuar?</label>
 
 
 
+
+          </div>
 
         </div>
-
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="cerrarSesion()">Si, cerrar
+            Sessión</button>
+        </div>
       </div>
-      <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="cerrarSesion()">Si, cerrar
-          Sessión</button>
-      </div>
+      <!-- /.modal-content -->
     </div>
-    <!-- /.modal-content -->
+    <!-- /.modal-dialog -->
   </div>
-  <!-- /.modal-dialog -->
-</div>
-<!-- /.modal-origen -->
+  <!-- /.modal-origen -->

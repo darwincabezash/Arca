@@ -1,3 +1,4 @@
+import { Seminario } from './seminarios';
 import { Escuela } from "./escuela"
 import { Grupo } from "./grupo"
 import { TipoProceso } from "./tipoProceso"
@@ -9,24 +10,31 @@ export class Persona{
     datosLlegada?: DatosLlegada
     oracionFe?: OracionFe
     bautizmo?: Bautizmo
-    escuela?: ListaEscuela
-    proceso?: ListaProceso
+    escuela?: ListaEscuela[]=[]
+    proceso?: ListaProceso[] = []
+    grupo?: ListaGrupo[]=[]
+    seminario?: ListaSeminario[] = []
 }
 
 export class DatoBasicoPersona{
+    
     cedula?:number
     primerNombre?:String
-    segundoNombre?:String
+    segundoNombre?: String
+    nombres?: String
     primerApellido?:String
-    segundoApellido?:String
-    fechaNacimiento?:Date
+    segundoApellido?: String
+    apellidos?: String
+    fechaNacimiento?: String
+    fechaNacimientoFormateada?: String
     telefono?:number
-    celular?:number
+    celular?: number
+    whatsapp?: String
     direccion?:String
     email?:String
     sexo?:String
     foto?: String
-    tipoPersona?: DatosAdicionales
+    tipoPersona?: String
 }
 
 export class OrigenPersona{
@@ -61,17 +69,30 @@ export class Bautizmo {
 
 
 export class ListaEscuela {
-    escuelas?: Escuela[]
+    //escuelas?: Escuela[]
+    _id?: String
+    tipo?: String
+    color?: String
+    idEscuela?: String
 }
 
 export class ListaProceso {
-    procesos?: TipoProceso[]
+    //procesos?: TipoProceso[]
+    _id?: String
+    tipo?: String
 }
 
 export class ListaGrupo {
-    grupos?: Grupo[]
+    //grupos?: Grupo[]
+    _id?: String
+    tipo?: String
+    color?: String
 }
 
-export class DatosAdicionales {
-    tipoPersona?: String
+export class ListaSeminario {
+    //seminario?: Seminario[]
+    _id?: String
+    tipo?: String
+    color?: String
 }
+

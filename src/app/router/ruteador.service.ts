@@ -19,8 +19,7 @@ export class RuteadorService {
 
   existeUsuarioActivo() {
     this.variableSesion = localStorage.getItem("usuario");
-    if(this.variableSesion===null || this.variableSesion==='')
-    {
+    if (this.variableSesion === null || this.variableSesion === '') {
       this.router.navigate(["/login"]);
     }
 
@@ -28,32 +27,60 @@ export class RuteadorService {
 
 
 
-  async servidorActivo(_ruta:string):Promise<any> {
-    await this.utilidadesService.servidorActivo().then(resultado => {
-      let _ruta_historia = localStorage.getItem("ruta_historia");
+  async servidorActivo(_ruta: string): Promise<any> {
+    try {
+      await this.utilidadesService.servidorActivo().then(resultado => {
+        let _ruta_historia = localStorage.getItem("ruta_historia");
 
-      if (resultado)
-      {
+        if (resultado) {
 
-        if (_ruta_historia !== undefined && _ruta_historia !== "") {
-          localStorage.setItem("ruta_historia","");
-          this.router.navigate([_ruta_historia]);
+          if (_ruta_historia !== undefined && _ruta_historia !== "") {
+            localStorage.setItem("ruta_historia", "");
+            this.router.navigate([_ruta_historia]);
+          }
+
+        } else {
+          localStorage.setItem("ruta_historia", _ruta);
+          this.router.navigate(["/dashboard/pagina503"]);
+
         }
 
-      }       else {
-        localStorage.setItem("ruta_historia", _ruta);
-        this.router.navigate(["/dashboard/pagina503"]);
+      });
+    }
+    catch (error) {
 
-        }
-
-    });
-    
+    }
   }
 
-  
 
 
-  
+
+
+  async servidorActivoInicio(): Promise<boolean> {
+    let estado: boolean = false;
+    try {
+      await this.utilidadesService.servidorActivo().then(resultado => {
+
+        if (resultado) {
+          estado = true;
+        } else {
+          estado = false;
+        }
+
+      });
+    }
+    catch (error) {
+      estado = false;
+    }
+
+    return estado;
+  }
+
+
+
+
+
+
 
 
 }

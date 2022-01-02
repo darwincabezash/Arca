@@ -21,7 +21,6 @@ export class UtilidadesService {
     async servidorActivo(): Promise<any> {
         try {
             await fetch(this.server, {
-
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -20,6 +20,8 @@ export class EscuelaComponent implements OnInit {
   nuevaEscuelaForm: FormGroup;
   actualizarEscuelaForm: FormGroup;
   colorBoton?: String;
+  usarColorNegroEnSeleccionColor = true;
+
 
 
   constructor(private fbNueva: FormBuilder, private fbActualizar: FormBuilder, private router: Router,
@@ -53,7 +55,8 @@ export class EscuelaComponent implements OnInit {
   agregarEscuela() {
     const datoEscuela: Escuela = {
       tipo: this.nuevaEscuelaForm.get('tipo')?.value,
-      color: this.colorBoton
+      color: this.colorBoton,
+      colorTextoNegro: this.usarColorNegroEnSeleccionColor
     }
 
     this.escuelaService.agregarEscuela(datoEscuela);
@@ -94,6 +97,7 @@ export class EscuelaComponent implements OnInit {
       datoEscuelaEditar.tipo = this._idEditar?.tipo
     }
     datoEscuelaEditar.color = this.colorBoton;
+    datoEscuelaEditar.colorTextoNegro = this.usarColorNegroEnSeleccionColor;
 
     this.escuelaService.actualizarEscuela(this._idEditar?._id, datoEscuelaEditar);
     this.toastr.success('Escuela actualizada correctamente', 'Editar Escuelas');
@@ -102,6 +106,13 @@ export class EscuelaComponent implements OnInit {
 
   refrescarEscuela() {
     this.escuelaService.consultarEscuela();
+  }
+
+
+
+
+  onChangeUsarColorNegroEnSeleccionColor(_usarColorNegro: any) {//@@@@
+    this.usarColorNegroEnSeleccionColor = _usarColorNegro.currentTarget.checked;
   }
 
   cargarEditarColor(event: MouseEvent, color: String) {

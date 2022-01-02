@@ -28,7 +28,6 @@ export class LoginService {
     this.j++;
     try {
       await fetch(this.server, {
-
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

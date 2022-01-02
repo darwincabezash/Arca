@@ -1,13 +1,16 @@
 import { Seminario } from './../../../dataModels/seminarios';
-import { Grupo } from 'src/app/dataModels/grupo';
 import { TipoPersona } from './../../../dataModels/tipoPersona';
 import { Injectable } from '@angular/core';
 import { concatMapTo, Observable, Subject } from 'rxjs';
 import { PublicInfo } from 'src/app/shared/data/publicInfo';
-import { Persona, DatoBasicoPersona, OrigenPersona, DatosLlegada, OracionFe, Bautizmo } from '../../../dataModels/persona';
+import { Persona, DatoBasicoPersona, OrigenPersona, DatosLlegada, OracionFe, Bautizmo, ListaEscuela, ListaProceso, ListaGrupo, ListaSeminario } from '../../../dataModels/persona';
 import { GlobalDataService } from '../../login/globalDataServices';
 import { Escuela } from 'src/app/dataModels/escuela';
 import { TipoProceso } from 'src/app/dataModels/tipoProceso';
+import { Grupo } from 'src/app/dataModels/grupo';
+import { formatDate } from '@angular/common';
+declare var moment: any;
+
 
 @Injectable({
   providedIn: 'root'
@@ -27,9 +30,24 @@ export class PersonaService {
     this.personas = [];
     this.personas$ = new Subject();
   }
-
+  _date: any;
   //PERSONA
-
+  public  date(value: string) {
+    //Create Date object from ISO string
+    let date = new Date(value);
+    //Get ms for date
+    let time = date.getTime();
+    //Check if timezoneOffset is positive or negative
+    if (date.getTimezoneOffset() <= 0) {
+      //Convert timezoneOffset to hours and add to Date value in milliseconds                              
+      let final = time + (Math.abs(date.getTimezoneOffset() * 60000));
+      //Convert from milliseconds to date and convert date back to ISO string                              
+      this._date = new Date(final).toISOString();
+    } else {
+      let final = time + (-Math.abs(date.getTimezoneOffset() * 60000));
+      this._date = new Date(final).toISOString();
+    }
+  }
 
   //CONSULTAR
   async consultarPersonas() {
@@ -37,7 +55,7 @@ export class PersonaService {
 
     try {
       await fetch(this.server, {
-
+        
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -49,6 +67,7 @@ export class PersonaService {
               _id
               cedula
               primerNombre
+              segundoNombre
               primerApellido
               segundoApellido
               fechaNacimiento
@@ -58,6 +77,43 @@ export class PersonaService {
               email
               sexo
               foto
+              tipoPersona
+              nombreIglesiaOrigen
+              cargoEjercido
+              tiempoPermanencia
+              tieneCartaAutorizacion
+              fechaLlegada
+              invitadoPor
+              observacionUbicacion
+              actividadLlegada
+              oracionFe
+              fechaOracionFe
+              lugarOracionFe
+              responsableOracionFe
+              bautizmo
+              fechaBautizmo
+              lugarBautizmo
+              responsableBautizmo
+              escuelas {
+                _id
+                tipo
+                color
+                idEscuela
+              }
+              tipoProcesos {
+                _id
+                tipo
+              }
+              grupos {
+                _id
+                tipo
+                color
+              }
+              seminarios {
+                _id
+                tipo
+                color
+              }
             }
                   }`,
 
@@ -66,25 +122,123 @@ export class PersonaService {
       })
         .then((res) => res.json())
         .then((result) => {
+          this.personas = [];
+          //console.log( JSON.stringify(result));
+          //console.log(result.data);
           result.data.personas.map((el: any) => {
+            //DATOS BASICOS
             let datoBasicoPersona: DatoBasicoPersona = new DatoBasicoPersona();
             datoBasicoPersona.cedula = el.cedula;
             datoBasicoPersona.primerNombre = el.primerNombre;
-            datoBasicoPersona.segundoNombre = el.primerNombre;
+            datoBasicoPersona.segundoNombre = el.segundoNombre;
+            datoBasicoPersona.nombres = el.primerNombre +" "+el.segundoNombre;
             datoBasicoPersona.primerApellido = el.primerApellido;
             datoBasicoPersona.segundoApellido = el.segundoApellido;
-            datoBasicoPersona.fechaNacimiento = el.fechaNacimiento;
+            datoBasicoPersona.apellidos = el.primerApellido +" " + el.segundoApellido;
+            let _fecha = el.fechaNacimiento.toString() + "T00:00:00";
+            datoBasicoPersona.fechaNacimiento = el.fechaNacimiento !== undefined && el.fechaNacimiento !== null && el.fechaNacimiento !== '' ? new Date(_fecha).toString()   : undefined;
+            datoBasicoPersona.fechaNacimientoFormateada = el.fechaNacimiento !== undefined && el.fechaNacimiento !== null && el.fechaNacimiento !== '' ? this.obtenerFechaNacimintoFormateada(new Date(_fecha)) : undefined;
             datoBasicoPersona.telefono = el.telefono;
             datoBasicoPersona.celular = el.celular;
+            datoBasicoPersona.whatsapp = this.obtenerLinkWhatsApp(el.celular);
             datoBasicoPersona.direccion = el.direccion;
             datoBasicoPersona.email = el.email;
             datoBasicoPersona.sexo = el.sexo;
             datoBasicoPersona.foto = el.foto;
+            datoBasicoPersona.tipoPersona = el.tipoPersona;
+
+            //ORIGEN PERSONA
+            let origenPersona: OrigenPersona = new OrigenPersona();
+            origenPersona.nombreIglesiaOrigen = el.nombreIglesiaOrigen;
+            origenPersona.cargoEjercido = el.cargoEjercido;
+            origenPersona.tiempoPermanencia = el.tiempoPermanencia;
+            origenPersona.tieneCartaAutorizacion = el.tieneCartaAutorizacion;
+
+
+            //DATOS LLEGADA
+            let datosLlegada: DatosLlegada = new DatosLlegada();
+            datosLlegada.fechaLlegada = el.fechaLlegada;
+            datosLlegada.invitadoPor = el.invitadoPor;
+            datosLlegada.observacionUbicacion = el.observacionUbicacion;
+            datosLlegada.actividadLlegada = el.actividadLlegada;
+
+            //ORACION FE
+            let oracionFe: OracionFe = new OracionFe();
+            oracionFe.oracionFe = el.oracionFe;
+            oracionFe.fechaOracionFe = el.fechaOracionFe;
+            oracionFe.lugarOracionFe = el.lugarOracionFe;
+            oracionFe.responsableOracionFe = el.responsableOracionFe;
+
+
+            //BAUTIZMO
+            let bautizmo: Bautizmo = new Bautizmo();
+            bautizmo.fechaBautizmo = el.fechaBautizmo;
+            bautizmo.bautizmo = el.bautizmo
+            bautizmo.lugarBautizmo = el.lugarBautizmo;
+            bautizmo.responsableBautizmo = el.responsableBautizmo;
+
+
+            //ESCUELAS
+            let escuelas: ListaEscuela[] = [];
+            el.escuelas.forEach((e: Escuela) => {
+              let _escuelaTemp: Escuela = new Escuela();
+              _escuelaTemp._id = e._id;
+              _escuelaTemp.tipo = e.tipo;
+              _escuelaTemp.color = e.color;
+              _escuelaTemp.idEscuela = e.idEscuela;
+              escuelas.push(_escuelaTemp);
+
+            });
+
+            //PROCEOSOS
+            let procesos: ListaProceso[] = [];
+            el.tipoProcesos.forEach((p: TipoProceso) => {
+              let _procesoTemp: TipoProceso = new TipoProceso();
+              _procesoTemp._id = p._id;
+              _procesoTemp.tipo = p.tipo;
+              procesos.push(_procesoTemp);
+
+            });
+
+            //GRUPOS
+            let grupos: ListaGrupo[] = [];
+            el.grupos.forEach((g: Grupo) => {
+              let _grupoTemp: Grupo = new Grupo();
+              _grupoTemp._id = g._id;
+              _grupoTemp.tipo = g.tipo;
+              grupos.push(_grupoTemp);
+
+            });
+
+            //SEMINARIOS
+            let seminarios: ListaSeminario[] = [];
+            el.seminarios.forEach((s: Seminario) => {
+              let _seminarioTemp: Seminario = new Seminario();
+              _seminarioTemp._id = s._id;
+              _seminarioTemp.tipo = s.tipo;
+              _seminarioTemp.color = s.color;
+
+              seminarios.push(_seminarioTemp);
+
+            });
 
             let persona = new Persona();
             persona._id = el._id;
             persona.datoBasicoPersona = datoBasicoPersona;
+            persona.origenPersona = origenPersona;
+            persona.datosLlegada = datosLlegada;
+            persona.oracionFe = oracionFe;
+            persona.bautizmo = bautizmo;
+            persona.escuela = escuelas;
+            persona.proceso = procesos;
+            persona.grupo = grupos;
+            persona.seminario = seminarios;
+
+
             this.personas.push(persona);
+
+
+
           });
         });
       this.personas$.next(this.personas);
@@ -92,6 +246,7 @@ export class PersonaService {
     } catch (e) {
       console.log("ERROR: " + e);
     }
+
   }
 
 
@@ -103,7 +258,6 @@ export class PersonaService {
 
     try {
       await fetch(this.server, {
-
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -296,7 +450,7 @@ export class PersonaService {
       })
         .then((res) => res.json())
         .then((result) => {
-          console.log(result);
+          //console.log(result);
           if (result.data.actualizarPersona._id.length > 0) {
             retorno = true;
           } else {
@@ -344,7 +498,7 @@ export class PersonaService {
       })
         .then((res) => res.json())
         .then((result) => {
-          console.log(result);
+          //console.log(result);
           if (result.data.actualizarPersona._id.length > 0) {
             retorno = true;
           } else {
@@ -391,7 +545,7 @@ export class PersonaService {
       })
         .then((res) => res.json())
         .then((result) => {
-          console.log(result);
+          //console.log(result);
           if (result.data.actualizarPersona._id.length > 0) {
             retorno = true;
           } else {
@@ -439,7 +593,7 @@ export class PersonaService {
       })
         .then((res) => res.json())
         .then((result) => {
-          console.log(result);
+          //console.log(result);
           if (result.data.actualizarPersona._id.length > 0) {
             retorno = true;
           } else {
@@ -484,7 +638,7 @@ export class PersonaService {
       })
         .then((res) => res.json())
         .then((result) => {
-          console.log(result);
+          //console.log(result);
           if (result.data.actualizarPersona._id.length > 0) {
             retorno = true;
           } else {
@@ -505,16 +659,18 @@ export class PersonaService {
   //PROCESOS - ESCUELAS
   async actualizarProcesosEscuelas(_id: any, _escuelas: Escuela[]): Promise<Boolean> {
     let retorno: Boolean = false;
-
+    
     try {
 
       let lista = '';
       _escuelas!.forEach(e => {
         //console.log("estado de permiso: " + element.estado);
         //if (element.estado) {
+        console.log("id escuela es : " + e._id);
         lista += `{ 
           tipo:"${e.tipo}"
           color:"${e.color}"
+          idEscuela:"${e._id}"
         },`
         //}
       });
@@ -545,7 +701,7 @@ export class PersonaService {
       })
         .then((res) => res.json())
         .then((result) => {
-          console.log(result);
+          //console.log(result);
           if (result.data.actualizarPersona._id.length > 0) {
             retorno = true;
           } else {
@@ -565,31 +721,31 @@ export class PersonaService {
   }
 
   //PROCESOS - TIPO PROCESO
-  async actualizarProcesosTipoProcesos(_id: any, _tipoProceso: TipoProceso[]): Promise < Boolean > {
-      let retorno: Boolean = false;
+  async actualizarProcesosTipoProcesos(_id: any, _tipoProceso: TipoProceso[]): Promise<Boolean> {
+    let retorno: Boolean = false;
 
-      try {
+    try {
 
-        let lista = '';
-        _tipoProceso!.forEach(t => {
-          //console.log("estado de permiso: " + element.estado);
-          //if (element.estado) {
-          lista += `{ 
+      let lista = '';
+      _tipoProceso!.forEach(t => {
+        //console.log("estado de permiso: " + element.estado);
+        //if (element.estado) {
+        lista += `{ 
           tipo:"${t.tipo}"
         },`
-          //}
-        });
+        //}
+      });
 
 
-        await fetch(this.server, {
+      await fetch(this.server, {
 
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-          },
-          body: JSON.stringify({
-            query: `mutation{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          query: `mutation{
             actualizarPersona(_id:"${_id}",
             input:{
               tipoProcesos:[
@@ -601,25 +757,25 @@ export class PersonaService {
           }`
 
 
-          })
-
         })
-          .then((res) => res.json())
-          .then((result) => {
-            console.log(result);
-            if (result.data.actualizarPersona._id.length > 0) {
-              retorno = true;
-            } else {
-              retorno = false;
-            }
 
-          });
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          //console.log(result);
+          if (result.data.actualizarPersona._id.length > 0) {
+            retorno = true;
+          } else {
+            retorno = false;
+          }
 
-      } catch(e) {
-        console.log("ERROR: " + e);
-        retorno = false;
+        });
 
-      }
+    } catch (e) {
+      console.log("ERROR: " + e);
+      retorno = false;
+
+    }
 
     return retorno;
   }
@@ -668,7 +824,7 @@ export class PersonaService {
       })
         .then((res) => res.json())
         .then((result) => {
-          console.log(result);
+          //console.log(result);
           if (result.data.actualizarPersona._id.length > 0) {
             retorno = true;
           } else {
@@ -700,6 +856,7 @@ export class PersonaService {
         //if (element.estado) {
         lista += `{ 
           tipo:"${s.tipo}"
+          color:"${s.color}"
         },`
         //}
       });
@@ -730,7 +887,7 @@ export class PersonaService {
       })
         .then((res) => res.json())
         .then((result) => {
-          console.log(result);
+          //console.log(result);
           if (result.data.actualizarPersona._id.length > 0) {
             retorno = true;
           } else {
@@ -749,8 +906,105 @@ export class PersonaService {
   }
 
 
+  //ELIMINAR
+  async eliminarPersona(_id: any) {
+    try {
+
+      await fetch(this.server, {
+
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          query: `mutation{
+            eliminarPersona(_id:"${_id}"){
+              _id
+            }
+          }`,
+
+        })
+
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          //console.log("RESULTAOD DE ELIMINACION: "+result.data);
+          this.consultarPersonas();
+
+        });
+
+    } catch (e) {
+      console.log("ERROR: " + e);
+    }
+  }
+
+  obtenerLinkWhatsApp(_celular: any) {
+    return "http://wa.me/593" + _celular;
+  }
 
 
+  obtenerFechaNacimintoFormateada(_fechaNacimiento: any) {
+    let _fechaCumpleanio: String = "";
+    try {
+
+      if (_fechaNacimiento !== undefined) {
+
+        let _dia = new Date(_fechaNacimiento).toLocaleString('es', { day: 'numeric' });
+        let _mes: String = new Date(_fechaNacimiento).toLocaleString('es', { month: 'long', });
+        let _anio: String = new Date(_fechaNacimiento).toLocaleString('es', { year: 'numeric', });
+
+        _fechaCumpleanio = _dia + " de " + _mes[0].toUpperCase() + _mes.slice(1) + (Number(_anio) > 1999 ? " del " : " de ") + _anio;
+
+        return _fechaCumpleanio;
+      } else {
+        _fechaCumpleanio = "No Disponible"
+
+      }
+    }
+    catch {
+      _fechaCumpleanio = "No Disponible"
+    }
+    return _fechaCumpleanio;
+  }
+
+
+
+  //CONSULTAR CANTIDAD PERSONAS
+  async consultarPersonaCantidad(): Promise<number> {
+
+    let cantidadPersonas = 0;
+
+    try {
+
+      await fetch(this.server, {
+
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+
+        body: JSON.stringify({
+          query: `{
+            personaCantidad
+                  }`,
+
+        })
+
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          cantidadPersonas = result.data.personaCantidad;
+
+        });
+
+    } catch (e) {
+      console.log("ERROR: " + e);
+      cantidadPersonas = 0;
+    }
+    return cantidadPersonas;
+  }
 
 
   obtenerPersonas$(): Observable<Persona[]> {

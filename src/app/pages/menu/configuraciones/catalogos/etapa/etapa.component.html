@@ -121,6 +121,7 @@
 
 
                       <td>
+                         <div class="btn-group" role="group" aria-label="Basic example">
                         <!-- Boton Editar-->
                         <button type="button" class="btn-xs align-middle" style="margin:0px;border:none;"
                           (click)="idAEditar(tp._id)" data-toggle="modal" data-target="#modal-editar">
@@ -135,6 +136,7 @@
                           <i class="fas fa-trash fa-2x ml-1 mr-1" style="color:#DC3545;"></i>
 
                         </button>
+                        </div>
                       </td>
                     </tr>
 
@@ -223,7 +225,7 @@
                       <div class="modal-body">
                         <div class="card-body">
 
-                          <p>La etapa <b> {{_idEliminar?.tipo}}</b> sera eliminada, ¿Desea
+                          <p>La etapa <b> {{_idEliminar?.tipo}}</b> será eliminada, ¿Desea
                             continuar?</p>
                         </div>
 

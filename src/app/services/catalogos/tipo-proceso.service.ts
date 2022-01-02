@@ -166,6 +166,44 @@ export class TipoProcesoService {
     }
   }
 
+
+
+  //CONSULTAR CANTIDAD ESCUELAS
+  async consultarTipoProcesoCantidad(): Promise<number> {
+
+    let cantidadTipoProceso = 0;
+
+    try {
+
+      await fetch(this.server, {
+
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+
+        body: JSON.stringify({
+          query: `{
+            tipoProcesoCantidad
+                  }`,
+
+        })
+
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          cantidadTipoProceso = result.data.tipoProcesoCantidad;
+
+        });
+
+    } catch (e) {
+      console.log("ERROR: " + e);
+      cantidadTipoProceso = 0;
+    }
+    return cantidadTipoProceso;
+  }
+
   obtenerTipoProcesos$(): Observable<TipoProceso[]> {
     return this.tipoProcesos$.asObservable();
   }

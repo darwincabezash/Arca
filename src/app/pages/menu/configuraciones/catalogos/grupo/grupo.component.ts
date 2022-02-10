@@ -25,7 +25,7 @@ export class GrupoComponent implements OnInit {
     private grupoService: GrupoService, 
     private toastr: ToastrService, private sesion: RuteadorService, private ruteadorService: RuteadorService) {
     
-    sesion.existeUsuarioActivo();
+    sesion.existeSessionActiva();
     
     this.nuevoGrupoForm = this.fbNuevo.group({
       tipo: ["", Validators.required]

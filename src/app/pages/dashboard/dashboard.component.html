@@ -2,66 +2,66 @@
   <div class="container-fluid">
 
 
-<a routerLink="/dashboard/perfil" class="nav-link"> Perfil</a>
+    <a routerLink="/dashboard/perfil" class="nav-link"> Perfil</a>
 
 
-<div class="row">
-  <div class="col-lg-3 col-6">
-    <!-- small box -->
-    <div class="small-box bg-info " >
-      <div class="inner">
-        <h3>{{personas.length}}</h3>
+    <div class="row">
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info ">
+          <div class="inner">
+            <h3>{{personas.length}}</h3>
 
-        <p>Personas</p>
+            <p>Personas</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-person"></i>
+          </div>
+          <!--    <a href="#" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>-->
+        </div>
       </div>
-      <div class="icon">
-        <i class="ion ion-person"></i>
-      </div>
-  <!--    <a href="#" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>-->
+      <!-- ./col -->
+      <!--<div class="col-lg-3 col-6">
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>53<sup style="font-size: 20px">%</sup></h3>
+
+                <p>Bounce Rate</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <div class="col-lg-3 col-6">
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h3>44</h3>
+
+                <p>User Registrations</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-person-add"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <div class="col-lg-3 col-6">
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3>65</h3>
+
+                <p>Unique Visitors</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>-->
+              <!-- ./col -->
     </div>
-  </div>
-  <!-- ./col -->
-  <!--<div class="col-lg-3 col-6">
-    <div class="small-box bg-success">
-      <div class="inner">
-        <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-        <p>Bounce Rate</p>
-      </div>
-      <div class="icon">
-        <i class="ion ion-stats-bars"></i>
-      </div>
-      <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-    </div>
-  </div>
-  <div class="col-lg-3 col-6">
-    <div class="small-box bg-warning">
-      <div class="inner">
-        <h3>44</h3>
-
-        <p>User Registrations</p>
-      </div>
-      <div class="icon">
-        <i class="ion ion-person-add"></i>
-      </div>
-      <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-    </div>
-  </div>
-  <div class="col-lg-3 col-6">
-    <div class="small-box bg-danger">
-      <div class="inner">
-        <h3>65</h3>
-
-        <p>Unique Visitors</p>
-      </div>
-      <div class="icon">
-        <i class="ion ion-pie-graph"></i>
-      </div>
-      <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-    </div>
-  </div>-->
-  <!-- ./col -->
-</div>
 
 
 
@@ -70,10 +70,11 @@
 
 
       <div class="col-sm-4">
-        <div class="card bg-light mb-3" style="height: 330px; max-height: 430px" >
+        <div class="card bg-light mb-3" style="height: 330px; max-height: 430px">
           <div class="card-header">Personas por Etapas</div>
           <div class="card-body">
-            <p-chart type="pie" width="240" max-height="240" [data]="personasPorEtapa" [options]="chartOptions"></p-chart>
+            <p-chart type="pie" width="240" max-height="240" [data]="personasPorEtapa" [options]="chartOptions">
+            </p-chart>
           </div>
         </div>
       </div>
@@ -81,8 +82,7 @@
       <div class="col-sm-4">
         <div class="card bg-light mb-3 scroll" style="height: 330px;overflow-y: auto;">
           <div class="card-header">Personas por Procesos
-            &nbsp;&nbsp;&nbsp;<b
-              class="text-success">Total:</b>&nbsp;&nbsp;{{personas.length}}</div>
+            &nbsp;&nbsp;&nbsp;<b class="text-success">Total:</b>&nbsp;&nbsp;{{personas.length}}</div>
           <div class="card-body p-0">
 
             <div class="card-body p-0">
@@ -139,7 +139,7 @@
                     <!-- /.progress-group -->
 
                   </div>
-            
+
 
 
                 </div>
@@ -164,6 +164,46 @@
       </div>
 
 
+
+      <!-- /.col -->
+
+      <div class="col-md-4">
+        <!-- USERS LIST -->
+        <div class="card" style="height: 330px; max-height: 430px">
+          <div class="card-header">
+            <h3 class="card-title">Cumpleaños del Mes</h3>
+
+            <div class="card-tools">
+              <span class="badge badge-danger">Total {{personasCumpleanioMes.length}}</span>
+
+            </div>
+          </div>
+          <!-- /.card-header -->
+
+
+
+
+
+          <div class="card-body p-0">
+            <ul class="users-list clearfix" >
+              <li *ngFor="let p of personasCumpleanioMes">
+
+
+
+                <img src="{{p.datoBasicoPersona!.foto}}" alt="User Image"
+                  onerror="this.src='../../../assets/images/NF.jpeg'">
+                <a class="users-list-name" href="#">{{p.datoBasicoPersona!.nombres}}</a>
+              </li>
+              
+            </ul>
+            <!-- /.users-list -->
+          </div>
+       
+        </div>
+        <!--/.card -->
+      </div>
+      <!-- /.col -->
+
     </div>
 
 
@@ -175,5 +215,3 @@
   </div>
 
 </section>
-
-

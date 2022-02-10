@@ -1,3 +1,4 @@
+import { Iglesia } from './../../dataModels/iglesia';
 import { LoginService } from './../../services/login/login.service';
 import { Usuario } from './../../dataModels/usuario';
 import { Component, OnInit } from '@angular/core';
@@ -9,12 +10,15 @@ import { GlobalDataService } from 'src/app/services/login/globalDataServices';
 import { PersonaService } from 'src/app/services/persona/persona/persona.service';
 import { DatoBasicoPersona, Persona } from 'src/app/dataModels/persona';
 import { DatosPersonaService } from 'src/app/services/persona/datos-persona.service';
+import { IglesiaService } from 'src/app/services/iglesia/iglesia/iglesia.service';
+import { General } from 'src/app/dataModels/staticGeneral';
 import { delay } from 'rxjs';
+import { SessionUsuario } from 'src/app/dataModels/sessionUsuario';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: []
+  styleUrls: [],
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
@@ -26,22 +30,29 @@ export class LoginComponent implements OnInit {
   intentandoLogin = false;
   estadoServidor = false;
 
+  private iglesia: Iglesia;
+  iglesias: Iglesia[] = [];
 
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private loguinService: LoginService,
+    private toastr: ToastrService,
+    private sesion: RuteadorService,
+    private personaService: PersonaService,
+    private datosPersonaService: DatosPersonaService,
+    private ruteadorService: RuteadorService,
+    private iglesiaService: IglesiaService
+  ) {
+    this.toastr.toastrConfig.maxOpened = 1;
+    this.toastr.toastrConfig.preventDuplicates = true;
 
-
-  constructor(private fb: FormBuilder, private router: Router,
-    private loguinService: LoginService, private toastr: ToastrService,
-    private sesion: RuteadorService, private personaService: PersonaService, private datosPersonaService: DatosPersonaService, private ruteadorService: RuteadorService) {
-
-      this.toastr.toastrConfig.maxOpened=1;
-      this.toastr.toastrConfig.preventDuplicates=true;
-
-      this.usuario= new Usuario();
+    this.usuario = new Usuario();
+    this.iglesia = new Iglesia();
 
     this.loginForm = this.fb.group({
-      usuario: ["", Validators.required],
-      password: ["", Validators.required],
-
+      usuario: ['', Validators.required],
+      password: ['', Validators.required],
     });
 
     /*
@@ -51,31 +62,30 @@ export class LoginComponent implements OnInit {
 
       }
     });*/
-   
 
     this.limpiarCampos();
   }
 
   f: number = 0;
   async iniciarLogin() {
-
-/*
+    /*
     this.ruteadorService.servidorActivoInicio().then((estado) => {
       if (!estado) {
         this.toastr.error('El Servidor no esta disponible.');
       }
     });*/
 
-    
     this.intentandoLogin = true;
 
     try {
-
       this.toastr.previousToastMessage?.slice();
 
-      this.loguinService.consultarUsuario(this.loginForm.get('usuario')?.value, this.loginForm.get('password')?.value);
+      this.loguinService.consultarUsuario(
+        this.loginForm.get('usuario')?.value,
+        this.loginForm.get('password')?.value
+      );
 
-
+      /*
       await this.loguinService.obtenerUsuarios().subscribe(async usuarios => {
         this.f++;
         this.usuarios = usuarios;
@@ -89,44 +99,104 @@ export class LoginComponent implements OnInit {
           await this.personaService.consultarPersona(this.usuario._idPersona!);
 
           //this.datosPersonaService.extraerPersonaDeBase();
-          this.router.navigate(["/dashboard/dashboard"]);
+          //this.router.navigate(["/dashboard/dashboard"]);
 
         }
         else {
           this.toastr.error('No se ha encontrado al usuario', 'Inicio de Sessión');
           this.limpiarCampos();
         }
-      });
-    }
-    catch {
-      
-    }
+      });*/
 
+      //OBTIENE EL USUARIO
+      await this.loguinService.obtenerUsuarios().subscribe(async (usuarios) => {
+        this.f++;
+        this.usuarios = usuarios;
+        if (this.usuarios.length > 0) {
+          //PROCEDER
+          this.usuario = this.usuarios[0];
+
+          /*
+          const myObjUsuario = JSON.stringify(this.usuario);
+        
+          localStorage.setItem('usuario', myObjUsuario);
+          //this.cargarDatosPersona(this.usuario._idPersona!);
+          await this.personaService.consultarPersona(this.usuario._idPersona!);
+
+          //this.datosPersonaService.extraerPersonaDeBase();
+          //this.router.navigate(["/dashboard/dashboard"]);*/
+
+          //OBTENIENDO INFORMACION DE LA IGLESIA A LA QUE PERTENECE EL USUARIO
+          this.iglesiaService.consultarIglesia(this.usuario.codIglesia!);
+          console.log('COD IGLESIA;:  ' + this.usuario.codIglesia);
+          await this.iglesiaService
+            .obteneriglesia()
+            .subscribe(async (iglesias) => {
+              this.f++;
+              this.iglesias = iglesias;
+              if (this.iglesias.length > 0) {
+                this.iglesia = this.iglesias[0];
+              }
+
+              /*
+           const myObjUsuario = JSON.stringify(this.usuario);
+         
+           localStorage.setItem('usuario', myObjUsuario);
+           //this.cargarDatosPersona(this.usuario._idPersona!);
+           await this.personaService.consultarPersona(this.usuario._idPersona!);
+ 
+           //this.datosPersonaService.extraerPersonaDeBase();
+           //this.router.navigate(["/dashboard/dashboard"]);*/
+
+              let sessionUsuario = new SessionUsuario();
+              sessionUsuario.usuario = this.usuario;
+              sessionUsuario.iglesia = this.iglesia;
+
+              //General.DATOS_SESION
+              const myObjSesionUsuario = JSON.stringify(sessionUsuario);
+
+              localStorage.setItem(General.DATOS_SESION, myObjSesionUsuario);
+              //this.cargarDatosPersona(this.usuario._idPersona!);
+              //await this.personaService.consultarPersona(this.usuario._idPersona!);
+
+              //this.datosPersonaService.extraerPersonaDeBase();
+              //this.router.navigate(["/dashboard/dashboard"]);
+
+              //}
+              await this.personaService.consultarPersona(
+                this.usuario._idPersona!
+              );
+              this.datosPersonaService.extraerPersonaDeBase();
+              //this.router.navigate(['/dashboard/dashboard']);
+              this.router.navigate(['/inicio/dashboard']);
+            });
+        } else {
+          this.toastr.error(
+            'No se ha encontrado al usuario',
+            'Inicio de Sessión'
+          );
+          this.limpiarCampos();
+        }
+      });
+    } catch {
+      console.log('entro 1');
+    }
 
     this.intentandoLogin = false;
   }
 
-
-  cargarDatosPersona(_id:String) {
-
+  cargarDatosPersona(_id: String) {
     //this.personaService.obtenerPersonas$().subscribe(personas => {
-     // this.personas = personas;
-
+    // this.personas = personas;
     //});
-    
   }
-
-
-
 
   limpiarCampos() {
     this.loginForm.setValue({
       usuario: '',
-      password: ''
+      password: '',
     });
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

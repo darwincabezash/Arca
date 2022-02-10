@@ -43,6 +43,7 @@ export class LoginService {
                 usuario
                 password
                 _idPersona
+                codIglesia
               }
             }`,
 
@@ -57,6 +58,7 @@ export class LoginService {
             usuario.usuario = result.data.usuario[0].usuario;
             usuario.password = result.data.usuario[0].password;
             usuario._idPersona = result.data.usuario[0]._idPersona;
+            usuario.codIglesia=result.data.usuario[0].codIglesia;
             this.usuarios.push(usuario);
 
           } else {

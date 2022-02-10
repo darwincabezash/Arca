@@ -3,4 +3,5 @@ export class Usuario{
     usuario?:String
     password?: String
     _idPersona?: String
+    codIglesia?: String
 }

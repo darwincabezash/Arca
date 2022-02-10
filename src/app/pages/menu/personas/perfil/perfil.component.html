@@ -19,11 +19,22 @@
         <div class="text-right mt-0 mb-0 pl-4">
 
           <div class="d-block w-100 align-right text-muted" style="cursor:default ">
-            <button type="button" class="btn btn-sm" style="background-color: #4f5962;"
-              (click)="mostrarBotonesEditar()">
+
+
+
+            <button *ngIf="!editandoPersonas" type="button" class="btn btn-sm" style="background-color: #4f5962;"
+              (click)="mostrarBotonesFinalizarModificado()">
               <i class="fas fa-pen ml-1" style="color:white"></i> &nbsp; <span class="h5" style="color: white;">Editar
                 Persona</span>
             </button>
+
+            
+
+   <button *ngIf="editandoPersonas" type="button" class="btn btn-sm bg-success" 
+     (click)="mostrarBotonesEditar()">
+     <i class="fas fa-pen ml-1" style="color:white"></i> &nbsp; <span class="h5" style="color: white;">Finalizar Edición</span>
+   </button>
+
           </div>
 
         </div>
@@ -64,8 +75,8 @@
 
               <div class="align-middle text-center" style="padding:5px; ">
                 <div *ngIf="personaEntrante.datoBasicoPersona?.foto !== undefined && personaEntrante.datoBasicoPersona?.foto !== '' &&
-    personaEntrante.datoBasicoPersona?.foto !== null && personaEntrante.datoBasicoPersona?.foto !== ' ' ; else
-    elseBlock">
+                   personaEntrante.datoBasicoPersona?.foto !== null && personaEntrante.datoBasicoPersona?.foto !== ' ' ; else
+                   elseBlock">
 
                   <img class="profile-user-img img-fluid img-circle" src="{{personaEntrante.datoBasicoPersona?.foto}}"
                     alt="User profile picture"
@@ -86,7 +97,7 @@
                   <ng-template #elseBlock1>
                     <img class="profile-user-img img-fluid img-circle" src="../../../../../assets/images/M.jpg"
                       alt="User profile picture" style="vertical-align: middle;width: 100px;height: 100px;border-radius:
-    50%;margin-top:0px">
+                      50%;margin-top:0px">
 
                   </ng-template>
 

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ignoreElements } from 'rxjs';
-import { UtilidadesService } from '../services/utilidades/utilidades';
+import { UtilidadesService } from '../services/compartido/utilidades.service';
+import { General } from '../dataModels/staticGeneral';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,8 @@ export class RuteadorService {
   }
 
 
-  existeUsuarioActivo() {
-    this.variableSesion = localStorage.getItem("usuario");
+  existeSessionActiva() {
+    this.variableSesion = localStorage.getItem(General.DATOS_SESION);
     if (this.variableSesion === null || this.variableSesion === '') {
       this.router.navigate(["/login"]);
     }

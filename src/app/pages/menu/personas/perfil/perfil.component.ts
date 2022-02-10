@@ -14,7 +14,9 @@ import { Location } from '@angular/common';
   styleUrls: []
 })
 export class PerfilComponent implements OnInit {
-@Input() personaEntrante:Persona
+  @Input() personaEntrante: Persona
+  
+  editandoPersonas = false;
 
   mostrarBotonesEdit = false;
   cantidadEscuelas: number = 0;
@@ -105,8 +107,21 @@ export class PerfilComponent implements OnInit {
   }
   
   mostrarBotonesEditar() {
+    this.editandoPersonas = false;
     this.mostrarBotonesEdit ? this.mostrarBotonesEdit = false : this.mostrarBotonesEdit=true;
     console.log(this.mostrarBotonesEdit);
   }
 
+  mostrarBotonesFinalizarModificado() {
+    this.editandoPersonas = true;
+    this.mostrarBotonesEdit ? this.mostrarBotonesEdit = false : this.mostrarBotonesEdit=true;
+    console.log(this.mostrarBotonesEdit);
+  }
+
+    editarPersona(_persona:Persona) {
+    this.perfilService.establecerPersona(_persona,true);
+    this.router.navigate(["/dashboard/perfil"]);
+
+}
+  
 }

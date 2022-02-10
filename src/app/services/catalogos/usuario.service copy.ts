@@ -39,6 +39,7 @@ export class UsuarioService {
     usuario:"${usuario.usuario}"
     password:"${usuario.password}"
     _idPersona:"${usuario._idPersona}"
+    codIglesia:"${usuario.codIglesia}"
   }){
     _id
   }

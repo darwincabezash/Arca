@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserDataService } from 'src/app/services/general/user-data.service';
+import { General } from 'src/app/dataModels/staticGeneral';
 
 @Component({
   selector: 'app-header',
@@ -21,7 +22,7 @@ export class HeaderComponent implements OnInit {
   }
 
   eliminarSession() {
-    localStorage.setItem("usuario", "");
+    localStorage.setItem(General.DATOS_SESION, "");
     localStorage.setItem("persona", "");
   }
 

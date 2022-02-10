@@ -5,6 +5,7 @@ import { Persona } from 'src/app/dataModels/persona';
 import { RuteadorService } from 'src/app/router/ruteador.service';
 import { EscuelaService } from 'src/app/services/catalogos/escuela.service';
 import { TipoProcesoService } from 'src/app/services/catalogos/tipo-proceso.service';
+import { MemoriaService } from 'src/app/services/compartido/memoria.service';
 import { PerfilService } from 'src/app/services/perfil/perfil.service';
 import { PersonaService } from 'src/app/services/persona/persona/persona.service';
 
@@ -13,7 +14,7 @@ import { PersonaService } from 'src/app/services/persona/persona/persona.service
   templateUrl: './contactoPersona.component.html',
   styleUrls: []
 })
-export class ContactsPersonComponent implements OnInit {
+export class ContactoPersonaComponent implements OnInit {
 
   personas: Persona[] = [];
   anioActual: number = 0;
@@ -22,22 +23,28 @@ export class ContactsPersonComponent implements OnInit {
 
   constructor(private personaService: PersonaService, private sesion: RuteadorService,
     private ruteadorService: RuteadorService, private router: Router, private escuelaService: EscuelaService, 
-    private tipoProcesoService : TipoProcesoService,private perfilService: PerfilService
+    private tipoProcesoService: TipoProcesoService, private perfilService: PerfilService,
+    private memoriaService: MemoriaService
   ) {
-    sesion.existeUsuarioActivo();
+    sesion.existeSessionActiva();
     this.anioActual = new Date().getFullYear();
   }
 
   ngOnInit(): void {
     this.ruteadorService.servidorActivo(this.router.url);
 
-    this.personaService.consultarPersonas();
+    //this.personaService.consultarPersonas();
 
 
-    this.personaService.obtenerPersonas$().subscribe(personas => {
+    /*this.personaService.obtenerPersonas$().subscribe(personas => {
       this.personas = personas;
 
-    });
+    });*/
+    let personas: any = this.memoriaService.obtenerLocalPersona();
+    if (personas) {
+      this.personas = personas;
+      console.log("ahora tengo: "+this.personas.length+" personas.");
+    }
 
     this.escuelaService.consultarEscuelaCantidad().then((cantidad) => {
       this.cantidadEscuelas = cantidad;

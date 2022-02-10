@@ -26,7 +26,7 @@ export class SeminarioComponent implements OnInit {
     private seminarioService: SeminarioService,
     private toastr: ToastrService, private sesion: RuteadorService, private ruteadorService: RuteadorService) {
 
-    this.sesion.existeUsuarioActivo();
+    this.sesion.existeSessionActiva();
 
     this.colorBoton = "#fff";
 

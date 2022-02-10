@@ -1,4 +1,4 @@
-import { Component, LOCALE_ID, OnInit } from '@angular/core';
+import { Component, LOCALE_ID, OnInit  ,Input} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -18,18 +18,15 @@ import { UsuarioService } from 'src/app/services/catalogos/usuario.service copy'
 import { UserDataService } from 'src/app/services/general/user-data.service';
 import { PersonaService } from 'src/app/services/persona/persona/persona.service';
 import { TipoPersonaService } from 'src/app/services/persona/tipoPersona/tipoPersona.service';
-import { UtilidadesService } from 'src/app/services/compartido/utilidades.service';
-import { v4 as uuidv4 } from 'uuid';
-import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
 
 @Component({
-  selector: 'app-register-person',
-  templateUrl: './registrarPersona.component.html',
+  selector: 'app-modificar-persona',
+  templateUrl: './modificar-persona.component.html',
   styleUrls: []
 })
-export class RegisterPersonComponent implements OnInit {
-
+export class ModificarPersonaComponent implements OnInit {
+//@Input() personaEntrante: Persona
   //::: LOGIN
   datosPersonaSesion: any;
   idPersona: String = "";
@@ -113,14 +110,12 @@ export class RegisterPersonComponent implements OnInit {
   listaGruposSelecion: Grupo[] = [];
   listaSeminariosSelecion: Seminario[] = [];
 
-  urlImagen: string = "";
-  cargandourlImagen = false;
+
 
 
 
   //::: PERSONAS
   personaForm: FormGroup;
-  
 
 
   /*constructor() { 
@@ -138,8 +133,9 @@ export class RegisterPersonComponent implements OnInit {
     private tipoPersonaService: TipoPersonaService, private escuelaService: EscuelaService,
     private tipoProcesoService: TipoProcesoService, private grupoService: GrupoService, private usuarioService: UsuarioService,
     private ruteadorService: RuteadorService, private userDataService: UserDataService, private seminarioService: SeminarioService,
-   private utilidadesService : UtilidadesService
+
   ) {
+//this.personaEntrante = this.paquetePerfilServicio.contenido;
 
     //Valida si el usuario tene acceso a esta pagina
     sesion.existeSessionActiva();
@@ -151,7 +147,7 @@ export class RegisterPersonComponent implements OnInit {
     this.datoUsuario = new Usuario();
     this.personaNueva = new Persona();
 
-//this.urlImagen
+
 
     this.personaForm = this.fb.group({
       cedula: ["", Validators.required],
@@ -209,7 +205,6 @@ export class RegisterPersonComponent implements OnInit {
       _idPersona: [""]
     });
 
-    
   }
 
 
@@ -385,48 +380,51 @@ export class RegisterPersonComponent implements OnInit {
 
 
 
-   async agregarPersona() {
+  agregarPersona() {
 
-      let sexo;
-      const datoBasicoPersona: DatoBasicoPersona = {
-        cedula: this.personaForm.get('cedula')?.value,
-        primerNombre: this.personaForm.get('primerNombre')?.value,
-        segundoNombre: this.personaForm.get('segundoNombre')?.value,
-        primerApellido: this.personaForm.get('primerApellido')?.value,
-        segundoApellido: this.personaForm.get('segundoApellido')?.value,
-        fechaNacimiento: this.personaForm.get('fechaNacimiento')?.value,
-        telefono: this.personaForm.get('telefono')?.value,
-        celular: this.personaForm.get('celular')?.value,
-        direccion: this.personaForm.get('direccion')?.value,
-        email: this.personaForm.get('email')?.value,
-        sexo: this.personaForm.get('sexo')?.value,
-        foto: this.urlImagen,
+    let sexo;
+    const datoBasicoPersona: DatoBasicoPersona = {
+      cedula: this.personaForm.get('cedula')?.value,
+      primerNombre: this.personaForm.get('primerNombre')?.value,
+      segundoNombre: this.personaForm.get('segundoNombre')?.value,
+      primerApellido: this.personaForm.get('primerApellido')?.value,
+      segundoApellido: this.personaForm.get('segundoApellido')?.value,
+      fechaNacimiento: this.personaForm.get('fechaNacimiento')?.value,
+      telefono: this.personaForm.get('telefono')?.value,
+      celular: this.personaForm.get('celular')?.value,
+      direccion: this.personaForm.get('direccion')?.value,
+      email: this.personaForm.get('email')?.value,
+      sexo: this.personaForm.get('sexo')?.value,
+      foto: this.personaForm.get('foto')?.value,
 
+    }
+
+    console.log("fecha de persona:   " + datoBasicoPersona.fechaNacimiento);
+
+
+    this.personaNueva.datoBasicoPersona = datoBasicoPersona;
+    //this.personaService.agregarPersonas(persona);
+    this.personaService.agregarPersonas(this.personaNueva).then(_idPersonaCreada => {
+      if (_idPersonaCreada.length > 0) {
+        localStorage.setItem("_id_persona_creada", _idPersonaCreada)
+        this._id_persona_creada = true;
+        this.toastr.success('Persona registrada correctamente', 'Registro de Personas');
+
+        this.userDataService.notificarPersonaNueva(_idPersonaCreada);
+        this.personaFueCreada = true;
+        this.personaNueva._id = _idPersonaCreada;
+
+        this.limpiarCampos();
+
+
+
+      } else {
+        this._id_persona_creada = false;
+        this.toastr.error('No se pudo guardar la persona, por favor intentalo nuevamente', 'Registro de Personas');
       }
 
-      console.log("fecha de persona:   " + datoBasicoPersona.fechaNacimiento);
+    });
 
-
-      this.personaNueva.datoBasicoPersona = datoBasicoPersona;
-      //this.personaService.agregarPersonas(persona);
-      this.personaService.agregarPersonas(this.personaNueva).then(_idPersonaCreada => {
-        if (_idPersonaCreada.length > 0) {
-          localStorage.setItem("_id_persona_creada", _idPersonaCreada)
-          this._id_persona_creada = true;
-          this.toastr.success('Persona registrada correctamente', 'Registro de Personas');
-
-          this.userDataService.notificarPersonaNueva(_idPersonaCreada);
-          this.personaFueCreada = true;
-          this.personaNueva._id = _idPersonaCreada;
-
-          this.limpiarCampos();
-
-
-
-        } 
-
-      });
-    
     //    this.toastr.success('El producto fue registrado correctamente', 'Registro de Producto ');
 
   }
@@ -445,7 +443,6 @@ export class RegisterPersonComponent implements OnInit {
       this.datoUsuario.usuario = this.usuarioForm.get('usuario')?.value,
         this.datoUsuario.password = this.usuarioForm.get('password')?.value,
         this.datoUsuario._idPersona = this.personaNueva._id;
-      this.datoUsuario.codIglesia = "61fd5733a432a0b499e74252";//@@@
       //datoUsuario._idPersona = localStorage.getItem("_id_persona_creada")!;
 
 
@@ -652,7 +649,7 @@ export class RegisterPersonComponent implements OnInit {
     this.bautizmo = new Bautizmo();
     this.datoUsuario = new Usuario();
     this.personaNueva = new Persona();
-    
+
 
     this.personaForm.reset();
     this.origenPersonaForm.reset();
@@ -678,7 +675,6 @@ export class RegisterPersonComponent implements OnInit {
 
     this.informacionEspiritualGuardada = false;
 
-    this.utilidadesService.eliminarUltimaImagenSubida();
   }
 
 
@@ -797,78 +793,13 @@ export class RegisterPersonComponent implements OnInit {
     } else {
       alert('Se ha producido un error al intentar guardar la información espiritual de la persona, por favor recarga la página o vuelve a iniciar sesión; si el problema persiste, por favor ponte en contacto con el administrador.');
     }
+
+    
   }
 
-  onUpload(e: any) {
-    try {
-      this.cargandourlImagen = true;
-      this.urlImagen = "_"
-      /*
-        const id = Math.random().toString(36).substring(2);
-        const file = e.target.files[0];
-        const filePath = 'upload/imagen.png';
-        const ref = this.storageFirebase.ref(filePath);
-        const task = this.storageFirebase.upload(filePath, file);*/
-
-      //const file = e.target.files[0];
-      let fileFoto = e.target.files[0];
-      //const id = Math.random().toString(36).substring(2);
-      //console.log(Date.now());
-      
-
-      const idx = uuidv4();
-      let reader = new FileReader();
-      reader.readAsDataURL(fileFoto);
-
-      reader.onloadend = () => {
-        console.log("****** 3");
-        this.utilidadesService.subirImagenFirebase(idx, reader.result).then((urlImagen) => {
-          console.log("URL: " + urlImagen);
-          this.urlImagen = urlImagen;
-          this.cargandourlImagen = false;
-          console.log("entro seguro 2");
-          //return urlImagen;
-        })
-      }
-    }
-    catch (e) {
-      this.cargandourlImagen = false;
-    }
-    }
 
 
-  
-  
-  async obtenerUrlImagen(): Promise<string> {
-    let fileFoto:any;
-    const idx = uuidv4();
-    let reader = new FileReader();
-    await reader.readAsDataURL(fileFoto);
-    console.log("****** 2");
 
-
- reader.onloadend = function(event) {
-    // El texto del archivo se mostrará por consola aquí
-  console.log(event.target!.result);
-  };
-
-    reader.onloadend = () => {
-      console.log("****** 3");
-       this.utilidadesService.subirImagenFirebase(idx, reader.result).then((urlImagen) => {
-         console.log("URL: " + urlImagen);
-         this.urlImagen = urlImagen;
-          console.log("entro seguro 2");      
-        //return urlImagen;
-    })
-      return "";
-    } 
-
-    console.log("****** 4");
-    return "";
-      }
-
-
-  
 
 
 
@@ -877,11 +808,3 @@ export class RegisterPersonComponent implements OnInit {
   }
 }
 
-/**********************
- //console.log(reader.result);
-          console.log("este esta 3");
-          await this.utilidadesService.subirImagenFirebase(idx, reader.result).then((urlImagen) => {
-          console.log("URL: " + urlImagen);
-          console.log("entro seguro 2");      
-          //return urlImagen;
-           */

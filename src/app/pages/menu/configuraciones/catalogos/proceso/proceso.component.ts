@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { TipoProceso } from 'src/app/dataModels/tipoProceso';
 import { RuteadorService } from 'src/app/router/ruteador.service';
 import { TipoProcesoService } from 'src/app/services/catalogos/tipo-proceso.service';
-import { UtilidadesService } from 'src/app/services/utilidades/utilidades';
+import { UtilidadesService } from 'src/app/services/compartido/utilidades.service';
 
 @Component({
   selector: 'app-tipo-proceso',
@@ -26,7 +26,7 @@ export class TipoProcesoComponent implements OnInit {
     private tipoProcesoService: TipoProcesoService,
     private toastr: ToastrService, private ruteadorService: RuteadorService, private utilidadesService:UtilidadesService) {
   
-    ruteadorService.existeUsuarioActivo();
+    ruteadorService.existeSessionActiva();
     
     this.nuevoTipoProcesoForm = this.fbNuevo.group({
       tipo: ["", Validators.required]

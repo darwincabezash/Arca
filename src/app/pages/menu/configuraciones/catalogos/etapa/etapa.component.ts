@@ -25,7 +25,7 @@ export class EtapaComponent implements OnInit {
     private etapaService: EtapaService, 
     private toastr: ToastrService, private sesion: RuteadorService, private ruteadorService: RuteadorService) {
 
-      sesion.existeUsuarioActivo();
+      sesion.existeSessionActiva();
 
     this.nuevaEtapaForm = this.fbNueva.group({
       tipo: ["", Validators.required],

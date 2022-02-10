@@ -25,11 +25,20 @@ export class PersonaService {
   private personas: Persona[];
   private personas$: Subject<Persona[]>;
 
+  codIglesia : String | undefined
+
+  //ALMACENANDO TEMPORALMENTE EL CODIGO DE IGLESIAS
+
   resultado: any;
   constructor() {
     this.personas = [];
     this.personas$ = new Subject();
   }
+  
+  establecerCodIglesia(_codIglesia:String) {
+  this.codIglesia=_codIglesia
+}
+
   _date: any;
   //PERSONA
   public  date(value: string) {
@@ -50,7 +59,8 @@ export class PersonaService {
   }
 
   //CONSULTAR
-  async consultarPersonas() {
+  //async consultarPersonas() {
+    async consultarPersonas() {
     this.personas = [];
 
     try {
@@ -62,8 +72,9 @@ export class PersonaService {
           'Accept': 'application/json',
         },
         body: JSON.stringify({
-          query: `{
-            personas{
+          query: `query{
+              personaIglesia(input:{
+                codIglesia:"${this.codIglesia}"}){
               _id
               cedula
               primerNombre
@@ -123,9 +134,10 @@ export class PersonaService {
         .then((res) => res.json())
         .then((result) => {
           this.personas = [];
+          console.log("VINE: "+result.data.personaIglesia.length);
           //console.log( JSON.stringify(result));
           //console.log(result.data);
-          result.data.personas.map((el: any) => {
+          result.data.personaIglesia.map((el: any) => {
             //DATOS BASICOS
             let datoBasicoPersona: DatoBasicoPersona = new DatoBasicoPersona();
             datoBasicoPersona.cedula = el.cedula;

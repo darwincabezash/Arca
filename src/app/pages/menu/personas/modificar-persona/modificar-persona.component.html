@@ -295,13 +295,11 @@
                       <!--FOTO-->
 
                       <div class="form-group">
-                        <label class="col-form-label">Foto </label>
+                        <label class="col-form-label">Foto (Url) </label>
 
-                        <label class="col-form-label">Selecciona la Foto &nbsp;&nbsp;</label>
-                        <input type="file" accept=".png, .jpg" (change)="onUpload($event)">
-                        <p class="text-muted"> Selecciona una foto preferiblemente cuadrada</p>
-
-
+                        <input type="text" class="form-control form-control-lg" id="foto"
+                          placeholder="Link de fotografía" formControlName="foto">
+                        <p class="text-muted"> Ej. https://sitio-web.com/tu-foto.jpg</p>
                       </div>
 
 
@@ -317,22 +315,9 @@
                     </div>
                     <!-- /.card-body -->
 
-
-
-                    <button *ngIf="!cargandourlImagen" type="submit"
-                      class="btn btn-success btn-lg-12 btn-sm-12"
+                    <button type="submit" class="btn btn-success btn-lg-12 btn-sm-12"
                       [disabled]="personaForm.invalid">Guardar
                       Persona</button>
-
-                     <div class="row" *ngIf="cargandourlImagen">
-                      <div class="col-lg-12" style="text-align: center">
-                        <p-progressSpinner strokeWidth="5" [style]="{width: '40px', height: '40px'}">
-                        </p-progressSpinner>
-                      </div>
-                     </div>
-                      
-
-
                   </div>
                   <!-- /.card -->
 
@@ -1216,8 +1201,7 @@
 
                                     <a *ngFor="let e of listaEscuelasTodas" class="badge  badge-pill badge-primary"
                                       [ngStyle]="{'background-color': e.color, 'color':e.colorTextoNegro ?
-                                      'black' : 'white'}"
-                                      style="font-size:1rem; margin:3px; cursor: pointer;"
+                                      'black' : 'white'}" style="font-size:1rem; margin:3px; cursor: pointer;"
                                       (click)="marcarEscuelas(e._id!) ">{{e.tipo}}</a>
 
                                   </li>
@@ -1231,11 +1215,9 @@
                                     <li class="list-group-item" style="border-color: #007BFF;">
 
                                       <a *ngFor="let e of listaEscuelasSeleccion"
-                                        class="badge  badge-pill badge-primary"
-                                        [ngStyle]="{'background-color': e.color, 'color':e.colorTextoNegro
+                                        class="badge  badge-pill badge-primary" [ngStyle]="{'background-color': e.color, 'color':e.colorTextoNegro
                                         ?
-                                        'black' : 'white'}"
-                                        style="font-size:1rem; margin:3px; cursor: pointer;"
+                                        'black' : 'white'}" style="font-size:1rem; margin:3px; cursor: pointer;"
                                         (click)="desmarcarEscuelas(e._id!) ">{{e.tipo}}</a>
 
                                     </li>
@@ -1438,7 +1420,7 @@
               </div>
               <!-- /.tab-pane -->
               <div class="tab-pane" id="tab_3">
-               NO DISPONIBLE
+                NO DISPONIBLE
               </div>
               <div class="tab-pane" id="tab_4">
                 NO DISPONIBLE
@@ -1607,8 +1589,8 @@
 
 
                     </div>
-                    <button type="submit" class="btn btn-success btn-lg-12 btn-sm-12"
-                      [disabled]="usuarioForm.invalid" *ngIf="_id_persona_creada">Guardar
+                    <button type="submit" class="btn btn-success btn-lg-12 btn-sm-12" [disabled]="usuarioForm.invalid"
+                      *ngIf="_id_persona_creada">Guardar
                       Usuario</button>
                     <!-- /.card-body -->
 

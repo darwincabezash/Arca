@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { DatoBasicoPersona, Persona } from 'src/app/dataModels/persona';
 import { SessionUsuario } from 'src/app/dataModels/sessionUsuario';
-import { General } from 'src/app/dataModels/staticGeneral';
+import { Sesiones } from 'src/app/shared/general/staticGeneral';
 import { MemoriaService } from 'src/app/services/compartido/memoria.service';
 import { DatosPersonaService } from 'src/app/services/persona/datos-persona.service';
 import { PersonaService } from 'src/app/services/persona/persona/persona.service';
@@ -77,9 +77,9 @@ window.location.reload();
   }
 
   extraerSesionUsuario() {
-    let objSesionUsuario = localStorage.getItem(General.DATOS_SESION);
-    console.log('EXTRAER SESION USUARIO');
-    console.log(objSesionUsuario);
+    let objSesionUsuario = localStorage.getItem(Sesiones.DATOS_SESION);
+    
+    
     if (objSesionUsuario != null) {
       const sessionUsuario = JSON.parse(objSesionUsuario) as SessionUsuario;
       this.usuarioSesion = sessionUsuario;

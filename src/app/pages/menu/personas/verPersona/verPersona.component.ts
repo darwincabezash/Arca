@@ -1,3 +1,4 @@
+import { Sesiones } from './../../../../shared/general/staticGeneral';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Escuela } from 'src/app/dataModels/escuela';
@@ -5,7 +6,6 @@ import { RuteadorService } from 'src/app/router/ruteador.service';
 import { EscuelaService } from 'src/app/services/catalogos/escuela.service';
 import { PerfilService } from 'src/app/services/perfil/perfil.service';
 import { PersonaService } from 'src/app/services/persona/persona/persona.service';
-import { UtilidadesService } from 'src/app/services/compartido/utilidades.service';
 import { Persona, DatoBasicoPersona } from '../../../../dataModels/persona';
 import { jsPDF } from 'jspdf';
 import { ToastrService } from 'ngx-toastr';
@@ -14,21 +14,21 @@ import { ButtonModule } from 'primeng/button';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-
 import html2canvas from 'html2canvas';
 import { MenuItem } from 'primeng/api/menuitem';
-import { General } from 'src/app/dataModels/staticGeneral';
+import { Paginas } from 'src/app/shared/general/staticGeneral';
 import { SessionUsuario } from 'src/app/dataModels/sessionUsuario';
+import { Subscription } from 'rxjs';
+import { Location } from '@angular/common';
 
 declare var tableUtil: any;
 
 @Component({
   selector: 'app-view-persons',
   templateUrl: './verPersona.component.html',
-  styleUrls: [],
+  styleUrls: ['./verPersonaStyle.css'],
 })
 export class VerPersonaComponent implements OnInit {
-
   usuarioSesion: SessionUsuario;
 
   personas: Persona[] = [];
@@ -60,9 +60,14 @@ export class VerPersonaComponent implements OnInit {
   tooltipItems: MenuItem[] = [];
   leftTooltipItems: MenuItem[] = [];
 
-  mostrarVistaReporte = true;
+  mostrarVistaReporte = false;
   vistaReporteHorizontal = false;
-  tituloReporte = "";
+  tituloReporte = '';
+
+  subscription!: Subscription;
+  messages: any[] = [];
+
+  anchoOrientacionReporte = '70%';
 
   constructor(
     private personaService: PersonaService,
@@ -72,23 +77,41 @@ export class VerPersonaComponent implements OnInit {
     private escuelaService: EscuelaService,
     private perfilService: PerfilService,
     private toastr: ToastrService,
-    private utilidadesService: UtilidadesService,
-    private memoriaService: MemoriaService
+    private memoriaService: MemoriaService,
+    private location: Location
   ) {
-       this.usuarioSesion = new SessionUsuario();
+    this.usuarioSesion = new SessionUsuario();
     this.toastr.toastrConfig.maxOpened = 1;
     this.toastr.toastrConfig.preventDuplicates = true;
-    sesion.existeSessionActiva();
+    sesion.existeUsuarioActivo();
+
+    this.subscription = this.memoriaService
+      .getMessage()
+      .subscribe((message) => {
+        if (message) {
+          this.messages.push(message);
+          let per: any = this.memoriaService.obtenerLocalPersona();
+
+          if (per) {
+            this.personas = per;
+          }
+        } else {
+          // clear messages when empty message received
+          this.messages = [];
+        }
+      });
   }
 
   downloadPDF() {
     // Extraemos el
     const DATA = document.getElementById('data');
-    const doc = new jsPDF('p', 'pt', 'a4');
+    const doc = new jsPDF(this.vistaReporteHorizontal ? 'l' : 'p', 'pt', 'a4');
     const options = {
+      orientation: this.vistaReporteHorizontal ? 'l' : 'p',
       background: 'white',
       scale: 3,
     };
+    window.scrollTo(0, 0);
     html2canvas(DATA!, options)
       .then((canvas) => {
         const img = canvas.toDataURL('image/PNG');
@@ -134,7 +157,7 @@ export class VerPersonaComponent implements OnInit {
     //
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.items = [
       {
         icon: 'pi pi-pencil',
@@ -156,10 +179,6 @@ export class VerPersonaComponent implements OnInit {
       },
     ];
 
-    console.log('entro initt');
-
-    console.log('ATRAS FUNCIONA ESTA DESACTIVADO');
-
     this.ruteadorService.servidorActivo(this.router.url);
 
     //new tableUtil();
@@ -172,22 +191,40 @@ export class VerPersonaComponent implements OnInit {
 
     //console.log("MI CODIGO DE IGLESIA :  " +this.codIglesia);
 
+    //ESTO ES LO QUE DEBERIA ESTAR ACTIVO-------------------------------------------- SI LO DEMAS NO FUNCIONA, DESCOMENTAR ESTE BLOQUE
+
+    //)))))))))))))XXXXXXXXXX
+
+    if (!this.memoriaService.existeLocalPersona()) {
+      this.personaService.consultarPersonas();
+
+      await this.personaService.obtenerPersonas$().subscribe((personas) => {
+        this.personas = personas;
+
+        this.memoriaService.guardarLocalPersona(personas);
+        this.buscar('');
+      });
+      this.obtenerEscuelas();
+    } else {
+      this.personas = this.memoriaService.obtenerLocalPersona()!;
+      this.obtenerEscuelas();
+    }
+
+    /*
+    console.log('LLEGO A OBTENER PERSONA LOCAL');
     let personas: any = this.memoriaService.obtenerLocalPersona();
+    console.log('TAMAÑO PERSONAS: ' + personas.length);
     if (personas) {
       this.personas = personas;
-      console.log('ahora tengo: ' + this.personas.length + ' personas.');
       this.escuelaService.consultarEscuelaCantidad().then((cantidad) => {
         this.cantidadEscuelas = cantidad;
-      });
-
-      this.escuelaService.consultarEscuela();
-      this.escuelaService.obtenerEscuelas$().subscribe((tp) => {
-        this.listaEscuelasTodas = tp;
       });
     } else {
       //SE DEBE MOSTRAR UN ERROR POR QUE NO SE PUDO OBTENER EL CODIGO DE IGLESIA Y A PARTIR DE AHI LAS PERSONAS QUE PERTENECEN A ESE IGLESIA
       this.toastr.error('Existe un error al cargar la información.');
-    }
+    }*/
+
+    //------------------------------------------------------------------------------
 
     this.buscar('');
 
@@ -217,6 +254,24 @@ export class VerPersonaComponent implements OnInit {
     this.extraerSesionUsuario();
   }
 
+  obtenerEscuelas() {
+    this.escuelaService.consultarEscuela();
+    this.escuelaService.obtenerEscuelas$().subscribe((tp) => {
+      this.listaEscuelasTodas = tp;
+    });
+
+    this.escuelaService.consultarEscuelaCantidad().then((cantidad) => {
+      this.cantidadEscuelas = cantidad;
+    });
+
+    /*this.personas.forEach((a) => {
+      console.log(a.datoBasicoPersona!.nombres);
+      a.escuela!.forEach((b) => {
+        console.log(b.tipo);
+      });
+    });*/
+  }
+
   t() {}
 
   idAEliminar(_id: any) {
@@ -224,9 +279,16 @@ export class VerPersonaComponent implements OnInit {
     this._idEliminar = this.personas.find((p) => p._id === _id);
   }
 
-  eliminarPersona() {
-    console.log('ELIMINAR: ' + this._idEliminar?._id);
-    this.personaService.eliminarPersona(this._idEliminar?._id);
+  async eliminarPersona() {
+    await this.personaService.eliminarPersona(this._idEliminar?._id);
+    this.personaService.consultarPersonas();
+
+    await this.personaService.obtenerPersonas$().subscribe((personas) => {
+      this.personas = personas;
+
+      this.memoriaService.guardarLocalPersona(personas);
+      this.buscar('');
+    });
   }
 
   obtenerPorcentajeEscuelas(escuelas: Escuela[]): String {
@@ -260,7 +322,6 @@ export class VerPersonaComponent implements OnInit {
       //console.log(this.listBusqueda);
 
       if (this.coincidirTodas) {
-        console.log('ENTRO POR SI');
         this.buscarOcurrenciaExacta();
       } else {
         this.buscarOcurrenciaLibre();
@@ -358,12 +419,10 @@ export class VerPersonaComponent implements OnInit {
       if (this.listBusquedaPalabras.length > 0) {
         if (contadorOcurrenciaEncontrada === this.listBusquedaPalabras.length) {
           ocurrenciaTextoCumple = true;
-          console.log('CUMPLE EN PALABRAS INGRESADAS');
           //this.personasBusqueda.push(persona);
           //personaAñadidaPalabra = true;
         } else {
           ocurrenciaTextoCumple = false;
-          console.log('NO CUMPLE EN PALABRAS INGRESADAS');
         }
       } else {
         //ESTABLECE QUE SI CUMPLE POR QUE NO EXISTE PALABRAS PARA BUSCAR
@@ -503,8 +562,12 @@ export class VerPersonaComponent implements OnInit {
   }
 
   verPerfil(_persona: Persona) {
-    this.perfilService.establecerPersona(_persona, true);
-    this.router.navigate(['/dashboard/perfil']);
+    this.perfilService.establecerPersona(
+      _persona,
+      true,
+      Paginas.INICIO_VERPERSONA
+    );
+    this.router.navigate([Paginas.INICIO_PERFIL]);
   }
 
   obtenerLinkWhatsApp(_celular: any) {
@@ -518,19 +581,45 @@ export class VerPersonaComponent implements OnInit {
   cambiarReporteAHorizontal() {
     this.vistaReporteHorizontal = this.vistaReporteHorizontal ? false : true;
     if (this.vistaReporteHorizontal) {
-      console.log('ahora esta en  HORIZONTAL: ' + this.vistaReporteHorizontal);
+      this.anchoOrientacionReporte = '100%';
     } else {
-      console.log('ahora esta en  VERTICAL: ' + this.vistaReporteHorizontal);
+      this.anchoOrientacionReporte = '70%';
     }
   }
 
   extraerSesionUsuario() {
-    let objSesionUsuario = localStorage.getItem(General.DATOS_SESION);
-    console.log('EXTRAER SESION USUARIO');
-    console.log(objSesionUsuario);
+    let objSesionUsuario = localStorage.getItem(Sesiones.DATOS_SESION);
     if (objSesionUsuario != null) {
       const sessionUsuario = JSON.parse(objSesionUsuario) as SessionUsuario;
       this.usuarioSesion = sessionUsuario;
     }
+  }
+
+  editarPersona(_persona: Persona) {
+    this.perfilService.establecerPersona(
+      _persona,
+      false,
+      Paginas.INICIO_VERPERSONA
+    );
+    this.router.navigate([Paginas.INICIO_MODIFICARPERSONA]);
+  }
+
+  actualizarPagina() {
+    //this.actualizarBase();
+this.ngOnInit();  }
+
+  async actualizarBase() {
+    this.personaService.consultarPersonas();
+
+    await this.personaService.obtenerPersonas$().subscribe((personas) => {
+      console.log('VIENEN PERSONAS: ' + personas.length);
+      //this.memoriaService.eliminarLocalPersona();
+      this.memoriaService.guardarLocalPersona(personas);
+      console.log('GUARDO EN MEMORIA');
+      this.personas = [];
+
+      this.personas = this.memoriaService.obtenerLocalPersona()!;
+      console.log('REASIGNO A PERSONAS');
+    });
   }
 }

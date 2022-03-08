@@ -28,7 +28,7 @@ export class EscuelaComponent implements OnInit {
     private escuelaService: EscuelaService,
     private toastr: ToastrService, private sesion: RuteadorService, private ruteadorService: RuteadorService) {
 
-    this.sesion.existeSessionActiva();
+    this.sesion.existeUsuarioActivo();
 
     this.colorBoton = "#fff";
 

@@ -4,7 +4,7 @@
     <!-- downloadPDF() -->
 
 
-
+    
 
 
 
@@ -13,23 +13,32 @@
     <div class="d-flex flex-row-reverse">
 
       <a class="btn btn-primary ml-2" data-toggle="collapse" href="#collapseBusqueda" role="button"
-        style="background-color: #17a2b8;color:white;border-color:#17a2b8;">Mostrar
-        Búsqueda</a>
-      <span class="ml-4">
+        style="background-color: #17a2b8;color:white;border-color:#17a2b8;">
+        <i class="fa fa-search"></i>
+        Mostrar Búsqueda</a>
+
+      <span class="ml-2">
         <button type="button" class="btn btn-primary" (click)="cambiarAVistaReporte()">
-          <i class="fa fa-home"></i>
+          <i class="fa fa-file"></i> 
+
           Generar Reporte</button>
 
       </span>
 
+      <span class="ml-2">
+        <button type="button" class="btn btn-success" (click)="actualizarPagina()">
+          
+          <i class="fa fa-retweet"></i>
+          Actualizar
+        </button>
+          
+
+      </span>
 
     </div>
 
-    <span class="ml-4">
-      <div class="d-block w-100 text-right text-muted" data-toggle="collapse" href="#collapseBusqueda"
-        style="cursor:default">
-        Mostrar Busqueda <i class="fas fa-caret-down ml-1"></i> </div>
-    </span>
+
+
 
 
     <div id="accordionB" class="pt-1">
@@ -76,6 +85,7 @@
                                       href="#collapseProcesos" style="cursor:default">
                                       Procesos <i class="fas fa-caret-down ml-1"></i> </div>
                                   </span>
+
 
                                   <span class="ml-4">
                                     <div class="d-block w-100 text-right text-muted" data-toggle="collapse"
@@ -370,11 +380,9 @@
 
 
 
+    <!-- ESTA ES LA TABLA VISIBLE PARA PANTALLAS GRANDES-->
 
-
-
-
-    <div class="row mt-2">
+    <div class="row mt-2" id="vista-grande">
       <div class="col-12">
         <!-- Custom Tabs -->
         <div class="card ml-3 mr-3">
@@ -387,18 +395,19 @@
 
             <thead>
               <tr>
-                <th class="text-center " *ngIf="mostrarCedula">CÉDULA <i class="fas fa-sort pl-2"
+                <th class="text-center " *ngIf="mostrarCedula" width="10%">CÉDULA <i class="fas fa-sort pl-2"
                     (click)="ordenarPorCedula()"></i>
                 </th>
-                <th class="text-center" *ngIf="mostrarNombreCompleto">NOMBRE<i class="fas fa-sort pl-2"
+                <th class="text-center" *ngIf="mostrarNombreCompleto" width="20%">NOMBRE<i class="fas fa-sort pl-2"
                     (click)="ordenarPorNombres()"></i></th>
-                <th class="text-center" *ngIf="mostrarNombres">NOMBRES<i class="fas fa-sort pl-2"
-                    (click)="ordenarPorNombres()"></i></th>
-                <th class="text-center" *ngIf="mostrarApellidos">APELLIDOS<i class="fas fa-sort pl-2"
+                <th class="text-center" *ngIf="mostrarNombres" style="text-align:center;" style="width: 40%"
+                  width="20%">NOMBRES<i class="fas fa-sort pl-2" (click)="ordenarPorNombres()"></i></th>
+                <th class="text-center" *ngIf="mostrarApellidos" width="20%">APELLIDOS<i class="fas fa-sort pl-2"
                     (click)="ordenarPorApellidos()"></i></th>
-                <th class="text-center" *ngIf="mostrarCelular">CELULAR</th>
-                <th class="text-center" *ngIf="mostrarFechaNacimiento">FECHA DE NACIMIENTO</th>
-                <th class="text-center" *ngIf="mostrarEscuela">ESCUELAS</th>
+                <th class="text-center" *ngIf="mostrarCelular" width="12%">CELULAR</th>
+                <th class="text-center" *ngIf="mostrarFechaNacimiento" width="20%">FECHA DE
+                  NACIMIENTO</th>
+                <th class="text-center" *ngIf="mostrarEscuela" width="20%">ESCUELAS</th>
                 <th class="text-center" *ngIf="mostrarProcesos">PROCESOS</th>
 
                 <th class="text-center" *ngIf="mostrarAccion" style="text-align:center;width:100px;">ACCIÓN</th>
@@ -419,32 +428,32 @@
                 <td class="align-middle font-weight-light" style="padding:5px; color:#495057;"
                   *ngIf="mostrarNombreCompleto" width="200px">
 
-
-                  <div
+                  <div class="d-inline"
                     *ngIf="p.datoBasicoPersona?.foto  !== undefined && p.datoBasicoPersona?.foto  !== '' && p.datoBasicoPersona?.foto !== null && p.datoBasicoPersona?.foto !== ' ' ; else elseBlock">
-                    <img src="{{p.datoBasicoPersona?.foto}}" alt="Avatar" style="vertical-align: middle;width: 25px;height: 25px;border-radius: 50%; margin-top:0px;
+                    <img src="{{p.datoBasicoPersona?.foto}}" alt="Avatar" style="display: inline-block;vertical-align: middle;width: 25px;height: 25px;border-radius: 50%; margin-top:0px;
                                             padding:0px;" onerror="this.src='../../../assets/images/NF.jpeg'">
 
                   </div>
+
                   <ng-template #elseBlock>
 
-                    <div *ngIf="p.datoBasicoPersona?.sexo==='H' ; else elseBlock1">
-                      <img src="../../../assets/images/H.jpg" alt="Avatar"
-                        style="vertical-align: middle;width: 25px;height: 25px;border-radius: 50%;margin-top:0px">
+                    <div class="d-inline" *ngIf="p.datoBasicoPersona?.sexo==='H' ; else elseBlock1">
+                      <img src="../../../assets/images/H.jpg" alt="Avatar" style="display: inline-block; vertical-align: middle;width: 25px;height: 25px;border-radius:
+                        50%;margin-top:0px">
 
                     </div>
 
                     <ng-template #elseBlock1>
-                      <img src="../../../assets/images/M.jpg" alt="Avatar"
-                        style="vertical-align: middle;width: 25px;height: 25px;border-radius: 50%;margin-top:0px">
+                      <img class="d-inline" src="../../../assets/images/M.jpg" alt="Avatar"
+                        style="display: inline-block; vertical-align: middle;width: 25px;height: 25px;border-radius: 50%;margin-top:0px">
 
                     </ng-template>
 
 
                   </ng-template>
                   &nbsp;
-                  {{p.datoBasicoPersona?.nombres}} &nbsp;
-                  {{p.datoBasicoPersona?.apellidos}}
+                  <div class="d-inline">{{p.datoBasicoPersona?.primerNombre}} &nbsp;
+                    {{p.datoBasicoPersona?.segundoNombre}}</div>
 
                 </td>
 
@@ -500,11 +509,16 @@
                 <td class="align-middle font-weight-light"
                   style="padding: 0px;width: 12%; margin-right:5px; color:#495057;" *ngIf="mostrarEscuela">
                   <!--  <span class="badge badge-pill bg-success small" style="font-size: 8px; margin-left: 2px;"
-                    *ngFor="let pr of p.proceso">{{pr.tipo}}</span>-->
+                    *ngFor="let pr of p.proceso">{{pr.tipo}}</span>
 
-                  <span class="badge badge-pill bg-success small" style="font-size: 8px; margin-left: 2px;
+                  <a *ngFor="let pr of p.escuela" [ngStyle]="{'background-color':pr.color}"
+                    class="badge badge-pill small" style="font-size: 8px; margin-left: 2px;
                     padding-left:3px;padding-right:3px;padding-top:2px;padding-bottom:1px;"
-                    *ngFor="let pr of p.escuela">{{pr.tipo}}</span>
+                    ></a>-->
+
+                  <a *ngFor="let s of p.escuela" class="badge  badge-pill badge-primary"
+                    [ngStyle]="{'background-color':s.color,'color':(s.colorTextoNegro ? '#000000' : '#FFFFFF' )}" style="font-size: 8px; margin-left: 2px;
+                      padding-left:3px;padding-right:3px;padding-top:2px;padding-bottom:1px;">{{s.tipo}}</a>
                 </td>
 
 
@@ -559,7 +573,8 @@
                     </button>
 
                     <!-- EDITAR -->
-                    <button type="button" class="btn-xs align-middle" style="margin-left:5px;border:none;">
+                    <button type="button" class="btn-xs align-middle" style="margin-left:5px;border:none;"
+                      (click)="editarPersona(p)">
                       <i class="fas fa-user-edit fa-2x text-warning"></i>
                     </button>
 
@@ -652,6 +667,7 @@
       </div>
     </div>
 
+    <!-- FIN DE LA VISTA DE TABLA PARA PANTALLAS GRANDES-->
 
 
 
@@ -661,8 +677,117 @@
 
 
 
+    <!-- ESTA ES LA TABLA VISIBLE PARA PANTALLAS pequeñas-->
+
+    <div class="row mt-2" id="vista-movil">
+      <div class="col-12">
+        <!-- Custom Tabs -->
 
 
+
+        <!-- we are adding the accordion ID so Bootstrap's collapse plugin detects it -->
+        <div id="accordion">
+          <div class="card" *ngFor="let p of personasBusqueda">
+            <div class="card-header">
+              <h4 class="card-title w-100">
+
+                <!-- <a class="d-block w-100" data-toggle="collapse" href="{{'#'+p._id}}">
+                    &nbsp;
+                  </a> -->
+
+
+
+
+                <div class="row">
+                  <div class="col-2">
+                    <img src="{{p.datoBasicoPersona?.foto}}" alt="Avatar" style="display: inline-block;vertical-align: 
+                      middle;width: 40px;height: 40px;border-radius: 50%; margin-top:0px;margin-left: 20px;
+                                            padding:0px;" onerror="this.src='../../../assets/images/NF.jpeg'">
+
+                  </div>
+                  <div class="col-8">
+                    <div class="d-inline">{{p.datoBasicoPersona?.primerNombre?.toUpperCase()}} &nbsp;
+                      {{p.datoBasicoPersona?.segundoNombre?.toUpperCase()}}
+
+                      <div class="text-muted" style="margin-top:2px; font-size:10px;">
+                        CÉDULA:&nbsp;{{p.datoBasicoPersona?.cedula}}
+                      </div>
+
+                      <a href="{{p.datoBasicoPersona!.whatsapp }}" target="_blank" rel="noopener
+                    noreferrer" style="font-size:10px;">
+                        CELULAR:&nbsp;{{p.datoBasicoPersona?.celular}} </a>
+
+
+
+
+
+                              <!-- EDITAR -->
+                              <button type="button" class="btn-xs align-middle" style="margin-left:5px;border:none;"
+                                (click)="editarPersona(p)">
+                                <i class="fas fa-user-edit fa-2x text-warning"></i>
+                              </button>
+
+
+
+                    </div>
+                  </div>
+
+<div class="col-2">
+
+  <div class="btn-group " role="group" aria-label="Basic example" >
+
+    <!-- VER -->
+    <button type="button" class="btn-xs align-middle" style="border:none;" 
+      >
+
+<a class="d-block w-100" data-toggle="collapse" href="{{'#'+p._id}}">
+  <i class="fas fa-chevron-down fa-2x text-secondary"></i>
+</a>
+
+      
+
+    </button>
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+                </div>
+
+
+
+
+
+
+              </h4>
+            </div>
+            <div id="{{p._id}}" class="collapse" data-parent="#accordion">
+              <div class="card-body">
+               
+                MAS INFORMACIÓN DE &nbsp; {{p.datoBasicoPersona?.primerNombre}}
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+
+      </div>
+    </div>
+
+
+
+
+
+
+    <!-- FIN DE LA VISTA DE TABLA PARA PANTALLAS pequeñas-->
 
 
 
@@ -752,10 +877,9 @@
                     <i class="fa fa-home"></i>
                     Vista Horizontal</button>
 
-                     <button type="button" class="btn btn-warning"
-                       (click)="downloadPDF()">
-                       <i class="fa fa-home"></i>
-                       Imprimir</button>
+                  <button type="button" class="btn btn-warning" (click)="downloadPDF()">
+                    <i class="fa fa-home"></i>
+                    Descargar</button>
                 </div>
               </div>
 
@@ -781,9 +905,9 @@
 
 
 
-    <div class="card" style="width: 70%; margin: 0 auto; /* Added */
+    <div class="card" [ngStyle]="{'width':anchoOrientacionReporte}" style="width: 70%; margin: 0 auto; /* Added */
         float: none; /* Added */
-        margin-bottom: 10px; /* Added */" id="data" >
+        margin-bottom: 10px; /* Added */" id="data">
 
       <div>
         <div style="text-align: center;padding-top: 30px;">
@@ -792,7 +916,7 @@
                      " onerror="this.src='../../../../../../assets/images/NF.jpeg'">
           </div>
           <div>
-            <span class="brand-text font-weight-light pl-3 h4">{{usuarioSesion!.iglesia!.nombreIglesia}}</span>
+            <span class="brand-text font-weight-light">{{usuarioSesion!.iglesia!.nombreIglesia}}</span>
           </div>
         </div>
       </div>
@@ -821,18 +945,19 @@
 
                 <thead>
                   <tr>
-                    <th class="text-center " *ngIf="mostrarCedula">CÉDULA <i class="fas fa-sort pl-2"
+                    <th class="text-center " *ngIf="mostrarCedula" width="10%">CÉDULA <i class="fas fa-sort pl-2"
                         (click)="ordenarPorCedula()"></i>
                     </th>
-                    <th class="text-center" *ngIf="mostrarNombreCompleto">NOMBRE<i class="fas fa-sort pl-2"
+                    <th class="text-center" *ngIf="mostrarNombreCompleto" width="20%">NOMBRE<i class="fas fa-sort pl-2"
                         (click)="ordenarPorNombres()"></i></th>
-                    <th class="text-center" *ngIf="mostrarNombres">NOMBRES<i class="fas fa-sort pl-2"
-                        (click)="ordenarPorNombres()"></i></th>
-                    <th class="text-center" *ngIf="mostrarApellidos">APELLIDOS<i class="fas fa-sort pl-2"
+                    <th class="text-center" *ngIf="mostrarNombres" style="text-align:center;" style="width: 40%"
+                      width="20%">NOMBRES<i class="fas fa-sort pl-2" (click)="ordenarPorNombres()"></i></th>
+                    <th class="text-center" *ngIf="mostrarApellidos" width="20%">APELLIDOS<i class="fas fa-sort pl-2"
                         (click)="ordenarPorApellidos()"></i></th>
-                    <th class="text-center" *ngIf="mostrarCelular">CELULAR</th>
-                    <th class="text-center" *ngIf="mostrarFechaNacimiento">FECHA DE NACIMIENTO</th>
-                    <th class="text-center" *ngIf="mostrarEscuela">ESCUELAS</th>
+                    <th class="text-center" *ngIf="mostrarCelular" width="12%">CELULAR</th>
+                    <th class="text-center" *ngIf="mostrarFechaNacimiento" width="20%">FECHA DE
+                      NACIMIENTO</th>
+                    <th class="text-center" *ngIf="mostrarEscuela" width="20%">ESCUELAS</th>
                     <th class="text-center" *ngIf="mostrarProcesos">PROCESOS</th>
 
                   </tr>
@@ -853,32 +978,32 @@
                     <td class="align-middle font-weight-light" style="padding:5px; color:#495057;"
                       *ngIf="mostrarNombreCompleto" width="200px">
 
-
-                      <div
+                      <div class="d-inline"
                         *ngIf="p.datoBasicoPersona?.foto  !== undefined && p.datoBasicoPersona?.foto  !== '' && p.datoBasicoPersona?.foto !== null && p.datoBasicoPersona?.foto !== ' ' ; else elseBlock">
-                        <img src="{{p.datoBasicoPersona?.foto}}" alt="Avatar" style="vertical-align: middle;width: 25px;height: 25px;border-radius: 50%; margin-top:0px;
+                        <img src="{{p.datoBasicoPersona?.foto}}" alt="Avatar" style="display: inline-block;vertical-align: middle;width: 25px;height: 25px;border-radius: 50%; margin-top:0px;
                                             padding:0px;" onerror="this.src='../../../assets/images/NF.jpeg'">
 
                       </div>
+
                       <ng-template #elseBlock>
 
-                        <div *ngIf="p.datoBasicoPersona?.sexo==='H' ; else elseBlock1">
-                          <img src="../../../assets/images/H.jpg" alt="Avatar"
-                            style="vertical-align: middle;width: 25px;height: 25px;border-radius: 50%;margin-top:0px">
+                        <div class="d-inline" *ngIf="p.datoBasicoPersona?.sexo==='H' ; else elseBlock1">
+                          <img src="../../../assets/images/H.jpg" alt="Avatar" style="display: inline-block; vertical-align: middle;width: 25px;height: 25px;border-radius:
+                        50%;margin-top:0px">
 
                         </div>
 
                         <ng-template #elseBlock1>
-                          <img src="../../../assets/images/M.jpg" alt="Avatar"
-                            style="vertical-align: middle;width: 25px;height: 25px;border-radius: 50%;margin-top:0px">
+                          <img class="d-inline" src="../../../assets/images/M.jpg" alt="Avatar"
+                            style="display: inline-block; vertical-align: middle;width: 25px;height: 25px;border-radius: 50%;margin-top:0px">
 
                         </ng-template>
 
 
                       </ng-template>
                       &nbsp;
-                      {{p.datoBasicoPersona?.nombres}} &nbsp;
-                      {{p.datoBasicoPersona?.apellidos}}
+                      <div class="d-inline">{{p.datoBasicoPersona?.nombres}} &nbsp;
+                        {{p.datoBasicoPersona?.apellidos}}</div>
 
                     </td>
 
@@ -896,6 +1021,7 @@
                         {{p.datoBasicoPersona?.celular}} </a>
 
                     </td>
+
 
                     <td class="align-middle font-weight-light" style="padding:5px; color:#495057;"
                       *ngIf="mostrarFechaNacimiento">
@@ -936,11 +1062,17 @@
                     <td class="align-middle font-weight-light"
                       style="padding: 0px;width: 12%; margin-right:5px; color:#495057;" *ngIf="mostrarEscuela">
                       <!--  <span class="badge badge-pill bg-success small" style="font-size: 8px; margin-left: 2px;"
-                    *ngFor="let pr of p.proceso">{{pr.tipo}}</span>-->
+                    *ngFor="let pr of p.proceso">{{pr.tipo}}</span>
 
-                      <span class="badge badge-pill bg-success small" style="font-size: 8px; margin-left: 2px;
+                  <a *ngFor="let pr of p.escuela" [ngStyle]="{'background-color':pr.color}"
+                    class="badge badge-pill small" style="font-size: 8px; margin-left: 2px;
                     padding-left:3px;padding-right:3px;padding-top:2px;padding-bottom:1px;"
-                        *ngFor="let pr of p.escuela">{{pr.tipo}}</span>
+                    ></a>-->
+
+                      <a *ngFor="let s of p.escuela" class="badge  badge-pill badge-primary"
+                        [ngStyle]="{'background-color':s.color,'color':(s.colorTextoNegro ? '#000000' : '#FFFFFF' )}"
+                        style="font-size: 8px; margin-left: 2px;
+                      padding-left:3px;padding-right:3px;padding-top:2px;padding-bottom:1px;">{{s.tipo}}</a>
                     </td>
 
 

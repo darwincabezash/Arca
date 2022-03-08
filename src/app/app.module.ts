@@ -42,8 +42,11 @@ import { ModificarPersonaComponent } from './pages/menu/personas/modificar-perso
 import { NgxImageCompressService } from 'ngx-image-compress';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { FormsModule } from '@angular/forms';
-
-
+import { PadreComponent } from './pruebas/padreHijo/padre/padre.component';
+import { HijoComponent } from './pruebas/padreHijo/hijo/hijo.component';
+import { AvatarComponent } from './partes/atomos/avatar/avatar.component';
+import { LabelComponent } from './partes/atomos/label/label.component';
+import { BarraProgresoComponent } from './partes/atomos/barra-progreso/barra-progreso.component';
 
 /*const routes: Route[]=[
   { path: '', component: DashboardComponent },
@@ -105,6 +108,28 @@ const routes: Routes = [
         path: 'registroDiezmo',
         component: RegistroDiezmoComponent,
       },
+      {
+        path: 'perfil',
+        component: PerfilComponent,
+      },
+      {
+        path: 'modifiarPersona',
+        component: ModificarPersonaComponent,
+      },
+
+
+
+
+      
+      {
+        path: 'padre',
+        component: PadreComponent,
+      },
+      
+      {
+        path: 'hijo',
+        component: HijoComponent,
+      },
     ],
   },
 
@@ -156,6 +181,11 @@ const routes: Routes = [
     PerfilComponent,
     RegistroDiezmoComponent,
     ModificarPersonaComponent,
+    PadreComponent,
+    HijoComponent,
+    AvatarComponent,
+    LabelComponent,
+    BarraProgresoComponent,
   ],
   imports: [
     BrowserModule,

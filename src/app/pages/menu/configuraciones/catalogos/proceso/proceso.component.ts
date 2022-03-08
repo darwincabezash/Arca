@@ -26,7 +26,7 @@ export class TipoProcesoComponent implements OnInit {
     private tipoProcesoService: TipoProcesoService,
     private toastr: ToastrService, private ruteadorService: RuteadorService, private utilidadesService:UtilidadesService) {
   
-    ruteadorService.existeSessionActiva();
+    ruteadorService.existeUsuarioActivo();
     
     this.nuevoTipoProcesoForm = this.fbNuevo.group({
       tipo: ["", Validators.required]

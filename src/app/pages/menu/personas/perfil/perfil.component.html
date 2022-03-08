@@ -6,6 +6,7 @@
 
     <span class="row pt-2 pb-2">
 
+      <!-- BOTON REGRESAR -->
       <div class="col-6">
         <div class="text-left mt-0 mb-0 pl-4">
           <button type="button" class="btn btn-link" aria-label="Left Align" (click)="regresar()"
@@ -14,126 +15,36 @@
           </button>
         </div>
       </div>
-
-      <div class="col-6">
-        <div class="text-right mt-0 mb-0 pl-4">
-
-          <div class="d-block w-100 align-right text-muted" style="cursor:default ">
-
-
-
-            <button *ngIf="!editandoPersonas" type="button" class="btn btn-sm" style="background-color: #4f5962;"
-              (click)="mostrarBotonesFinalizarModificado()">
-              <i class="fas fa-pen ml-1" style="color:white"></i> &nbsp; <span class="h5" style="color: white;">Editar
-                Persona</span>
-            </button>
-
-            
-
-   <button *ngIf="editandoPersonas" type="button" class="btn btn-sm bg-success" 
-     (click)="mostrarBotonesEditar()">
-     <i class="fas fa-pen ml-1" style="color:white"></i> &nbsp; <span class="h5" style="color: white;">Finalizar Edición</span>
-   </button>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
     </span>
 
 
 
     <div class="row mt-2">
       <div class="col-md-3">
-
-
-        <!--<div class="sonar-wrapper">
-          <div class="sonar-emitter text-center" style="width:35px;height:35px;background-color:#15A34A;">
-            <i class="fas fa-lg fa-pen align-middle " style="padding-top: 11px;color:white;"></i>
-            <div class="sonar-wave" style="background-color: #15A34A;">
-            </div>
-          </div>
-        </div>-->
-
-
-        <!-- Profile Image      ../../../../../assets/     ../../dist/img/user4-128x128.jpg-->
         <div class="card card-primary card-outline">
           <div class="card-body box-profile">
 
-            <button pButton pRipple type="button" icon="pi pi-user-edit"
-              class="p-button-rounded p-button-success m-0 p-0"
-              style="float: right;position: absolute;left:200px;top:3px " *ngIf="mostrarBotonesEdit"></button>
-
+            <!-- AVATAR -->
             <div class="text-center">
-
-
-
-
-
               <div class="align-middle text-center" style="padding:5px; ">
-                <div *ngIf="personaEntrante.datoBasicoPersona?.foto !== undefined && personaEntrante.datoBasicoPersona?.foto !== '' &&
-                   personaEntrante.datoBasicoPersona?.foto !== null && personaEntrante.datoBasicoPersona?.foto !== ' ' ; else
-                   elseBlock">
-
-                  <img class="profile-user-img img-fluid img-circle" src="{{personaEntrante.datoBasicoPersona?.foto}}"
-                    alt="User profile picture"
-                    style="vertical-align: middle;width: 100px;height: 100px;border-radius: 50%;margin-top:0px" 
-                    onerror="this.src='../../../../../assets/images/NF.jpeg'">
-
-                </div>
-                <ng-template #elseBlock>
-
-                  <div *ngIf="personaEntrante.datoBasicoPersona?.sexo==='H' ; else elseBlock1">
-
-
-                    <img class="profile-user-img img-fluid img-circle" src="../../../../../assets/images/H.jpg"
-                      alt="User profile picture"
-                      style="vertical-align: middle;width: 100px;height: 100px;border-radius: 50%;margin-top:0px">
-                  </div>
-
-                  <ng-template #elseBlock1>
-                    <img class="profile-user-img img-fluid img-circle" src="../../../../../assets/images/M.jpg"
-                      alt="User profile picture" style="vertical-align: middle;width: 100px;height: 100px;border-radius:
-                      50%;margin-top:0px">
-
-                  </ng-template>
-
-
-                </ng-template>
-
-
-
+                <atomo-avatar [avatarComponentData]="perfilVista._avatarComponentData"> </atomo-avatar>
               </div>
-
-
-
-
             </div>
 
             <h3 class="profile-username text-center">{{personaEntrante.datoBasicoPersona?.nombres}}</h3>
-
             <p class="text-center text-muted h5">{{personaEntrante.datoBasicoPersona?.cedula}}</p>
 
-
-
-
-
+            <!-- BARRA -->
             <div class="progress" style="height:5px;background: #C2C7D0;border-radius: 20px; overflow: visible;position: relative;margin-left:
-   30px;margin-right: 30px;">
-
-
+                    30px;margin-right: 30px;margin-top: 15px;">
               <div class="progress-bar"
                 style=" background:#4f5962; border-radius: 20px;-webkit-animation:animate-positive 2s; animation: animate-positive 2s;"
-                [ngStyle]="{width:obtenerPorcentaje([]), 'background-color':
-
-                                obtenerColorFondoBarra([])}">
+                [ngStyle]="{width:obtenerPorcentaje([],''), 'background-color':obtenerColorFondoBarra(0)}">
                 <div class="progress-value" style="font-size:10px"></div>
               </div>
             </div>
 
+            <!-- INFORMACION ADICIONAL -->
             <p class="text-muted text-center pt-5">{{personaEntrante.datoBasicoPersona?.tipoPersona}}</p>
 
             <ul class="list-group list-group-unbordered mb-2 mt-4">
@@ -149,42 +60,7 @@
             </ul>
 
           </div>
-          <!-- /.card-body -->
         </div>
-        <!-- /.card -->
-
-        <!-- About Me Box -->
-        <div class="card card-primary">
-
-
-          <div class="card-header pb-2">
-
-            <button pButton pRipple type="button" icon="pi pi-user-edit"
-              class="p-button-rounded p-button-success m-0 p-0"
-              style="float: right;position: absolute;left:200px;top:3px " *ngIf="mostrarBotonesEdit"></button>
-
-
-            Grupos
-
-          </div>
-
-          <div class="card-body pt-3">
-
-
-
-            <div class="text-muted text-sm mb-1 pt-2" *ngIf="personaEntrante.grupo?.length">
-
-
-              <span *ngFor="let g of personaEntrante.grupo" style="padding-top: 1px; margin: 2px;">
-                <span class="badge badge-pill badge-secondary" style="font-size: 9px;;">{{g.tipo}}</span>
-              </span>
-            </div>
-
-
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
       </div>
 
 
@@ -192,24 +68,13 @@
 
 
 
-      <!-- /.col -->
-      <div class="col-md-9">
+      <div class="col-md-9 card-outline">
+
+        <!-- INFORMACION ADICIONAL -->
 
         <div class=" pl-3 pr-4 pt-3 pb-1 mb-0">
-
           <div class="class row pb-0">
-
-            <div class="class col-12">
-              <button pButton pRipple type="button" icon="pi pi-user-edit"
-                class="p-button-rounded p-button-success m-0 p-0" style="float: right;"
-                *ngIf="mostrarBotonesEdit"></button>
-            </div>
-
-
             <div class="col-6">
-
-
-
               <label class="h5"> Oración de Fe</label>
               <strong class="text-muted align-right h5"
                 style="float:right">{{ obtenerFecha(personaEntrante.oracionFe?.fechaOracionFe)}}</strong>
@@ -235,195 +100,78 @@
         </div>
 
 
+        <!-- INDICADORES -->
+
         <div class="" style="background-color:transparent">
-
-
-
-
-
-
-
-
-
           <div class="row">
             <div class="col-sm-3 col-6">
-
-              <button pButton pRipple type="button" icon="pi pi-user-edit"
-                class="p-button-rounded p-button-success m-0 p-0" style="float: right;"
-                *ngIf="mostrarBotonesEdit"></button>
               <div class="description-block border-right pt-0 mt-0">
-
-                <span class="description-percentage"
-                  [ngStyle]="{'color':obtenerColorFondoBarra(personaEntrante.escuela!)}">
-
-                  {{obtenerPorcentaje(personaEntrante.escuela!)}}
+                <span class="description-percentage" [ngStyle]="{'color':perfilVista._colorTextoEscuela.toString()}">
+                  {{perfilVista._porcentajeEscuela}}&nbsp; %
                 </span>
                 <p> <Label class="description-header mb-0">ESCUELAS</Label></p>
-
-
-                <div class="progress" style="height:5px;background: #C2C7D0;border-radius: 20px; overflow: visible;position: relative;margin-left:
-                                 5px;margin-right: 8px;">
-
-
-                  <div class="progress-bar"
-                    style=" background:#4f5962; border-radius: 20px;-webkit-animation:animate-positive 2s; animation: animate-positive 2s;"
-                    [ngStyle]="{width:obtenerPorcentaje(personaEntrante.escuela!), 'background-color':
-
-                                obtenerColorFondoBarra(personaEntrante.escuela!)}">
-                    <div class="progress-value" style="font-size:10px"></div>
-                  </div>
+                <div style="margin-left:5px;margin-right: 8px;">
+                  <atomo-app-barra-progreso
+                    [barraProgresoComponentData]="perfilVista._barraProgresoComponentDataEscuela">
+                  </atomo-app-barra-progreso>
                 </div>
-
-
-
               </div>
-              <!-- /.description-block -->
             </div>
-            <!-- /.col -->
+
+
             <div class="col-sm-3 col-6">
-              <div class="description-block border-right">
+              <div class="description-block border-right pt-0 mt-0">
+                <span class="description-percentage" [ngStyle]="{'color':perfilVista._colorTextoProceso.toString()}">
+                  {{perfilVista._porcentajeProceso}} &nbsp; %
+                </span>
+                <p> <Label class="description-header mb-0">PROCESOS</Label></p>
 
-                <button pButton pRipple type="button" icon="pi pi-user-edit"
-                  class="p-button-rounded p-button-success m-0 p-0" style="float: right;"
-                  *ngIf="mostrarBotonesEdit"></button>
-                <div class="description-block border-right pt-0 mt-0">
-
-                  <span class="description-percentage text-warning">
-                    0%</span>
-                  <p> <Label class="description-header mb-0">...</Label></p>
-
-
-                  <div class="progress" style="height:5px;background: #C2C7D0;border-radius: 20px; overflow: visible;position: relative;margin-left:
-                                 5px;margin-right: 8px;">
-
-
-                    <div class="progress-bar"
-                      style=" background:#4f5962; border-radius: 20px;-webkit-animation:animate-positive 2s; animation: animate-positive 2s;"
-                      [ngStyle]="{width:obtenerPorcentaje([]), 'background-color':
-
-                                obtenerColorFondoBarra([])}">
-                      <div class="progress-value" style="font-size:10px"></div>
-                    </div>
-                  </div>
-
-
-
+                <div style="margin-left:5px;margin-right: 8px;">
+                  <atomo-app-barra-progreso
+                    [barraProgresoComponentData]="perfilVista._barraProgresoComponentDataProceso">
+                  </atomo-app-barra-progreso>
                 </div>
-                <!-- /.description-block -->
-
-
               </div>
-              <!-- /.description-block -->
             </div>
-            <!-- /.col -->
+
             <div class="col-sm-3 col-6">
-              <div class="description-block border-right">
-
-
-
-
-                <button pButton pRipple type="button" icon="pi pi-user-edit"
-                  class="p-button-rounded p-button-success m-0 p-0" style="float: right;"
-                  *ngIf="mostrarBotonesEdit"></button>
-                <div class="description-block border-right pt-0 mt-0">
-
-                  <span class="description-percentage text-info">
-                    0%</span>
-                  <p> <Label class="description-header mb-0">...</Label></p>
-
-
-                  <div class="progress" style="height:5px;background: #C2C7D0;border-radius: 20px; overflow: visible;position: relative;margin-left:
-                                 5px;margin-right: 8px;">
-
-
-                    <div class="progress-bar"
-                      style=" background:#4f5962; border-radius: 20px;-webkit-animation:animate-positive 2s; animation: animate-positive 2s;"
-                      [ngStyle]="{width:obtenerPorcentaje([]), 'background-color':
-
-                                obtenerColorFondoBarra([])}">
-                      <div class="progress-value" style="font-size:10px"></div>
-                    </div>
-                  </div>
-
-
-
+              <div class="description-block border-right pt-0 mt-0">
+                <span class="description-percentage" [ngStyle]="{'color':perfilVista._colorTextoGrupo.toString()}">
+                  {{perfilVista._porcentajeGrupo}} &nbsp; %
+                </span>
+                <p> <Label class="description-header mb-0">GRUPOS</Label></p>
+                <div style="margin-left:5px;margin-right: 8px;">
+                  <atomo-app-barra-progreso [barraProgresoComponentData]="perfilVista._barraProgresoComponentDataGrupo">
+                  </atomo-app-barra-progreso>
                 </div>
-                <!-- /.description-block -->
-
-
               </div>
-              <!-- /.description-block -->
             </div>
-            <!-- /.col -->
+
             <div class="col-sm-3 col-6">
-              <div class="description-block">
-                <span class="description-percentage text-danger"></span>
-
-
-
-                <button pButton pRipple type="button" icon="pi pi-user-edit"
-                  class="p-button-rounded p-button-success m-0 p-0" style="float:
-                  right;" *ngIf="mostrarBotonesEdit"></button>
-                <div class="description-block border-right pt-0 mt-0">
-
-                  <span class="description-percentage text-danger">
-                    0%</span>
-                  <p> <Label class="description-header mb-0">...</Label></p>
-
-
-                  <div class="progress" style="height:5px;background: #C2C7D0;border-radius: 20px; overflow: visible;position: relative;margin-left:
-                                 5px;margin-right: 8px;">
-
-
-                    <div class="progress-bar"
-                      style=" background:#4f5962; border-radius: 20px;-webkit-animation:animate-positive 2s; animation: animate-positive 2s;"
-                      [ngStyle]="{width:obtenerPorcentaje([]), 'background-color':
-
-                                obtenerColorFondoBarra([])}">
-                      <div class="progress-value" style="font-size:10px"></div>
-                    </div>
-                  </div>
-
-
-
+              <div class="description-block border-right pt-0 mt-0">
+                <span class="description-percentage" [ngStyle]="{'color':perfilVista._colorTextoSeminario.toString()}">
+                  {{perfilVista._porcentajeSeminario}} &nbsp; %
+                </span>
+                <p> <Label class="description-header mb-0">SEMINARIOS</Label></p>
+                <div style="margin-left:5px;margin-right: 8px;">
+                  <atomo-app-barra-progreso
+                    [barraProgresoComponentData]="perfilVista._barraProgresoComponentDataSeminario">
+                  </atomo-app-barra-progreso>
                 </div>
-                <!-- /.description-block -->
-
-
-
               </div>
-              <!-- /.description-block -->
             </div>
           </div>
-          <!-- /.row -->
-
-
         </div>
 
 
-
-
-
-
-
-        <!-- *******************  1   ********************** -->
 
         <div class="">
 
 
           <div class="row">
 
-            <div class="class col-md-12 col-lg-6">
-              <div class="card-header p-2">
-                <ul class="nav nav-pills">
-                  <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Información
-                      General</a></li>
+            <div class="card col-md-12 col-lg-6 card-primary card-outline">
 
-                  <button pButton pRipple type="button" icon="pi pi-user-edit"
-                    class="p-button-rounded p-button-success m-0 p-0"
-                    style="float: right;position: absolute;left:320px;top:0px " *ngIf="mostrarBotonesEdit"></button>
-                </ul>
-              </div><!-- /.card-header -->
               <div class="card-body">
                 <div class="tab-content">
                   <div class="active tab-pane" id="activity">
@@ -432,9 +180,8 @@
                       <div class="user-block">
 
                         <span class="username ml-0">
-                          <a href="#">{{personaEntrante.datoBasicoPersona?.nombres}}
-                            {{personaEntrante.datoBasicoPersona?.apellidos}}</a>
-                          <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
+                          {{personaEntrante.datoBasicoPersona?.nombres}}
+                          {{personaEntrante.datoBasicoPersona?.apellidos}}
                         </span>
                         <span class="description ml-0">Nació el día
                           {{obtenerFecha(personaEntrante.datoBasicoPersona?.fechaNacimiento)}}</span>
@@ -442,30 +189,30 @@
 
 
                       <!-- /.user-block -->
-                      <p> <strong> <a href="#" class="link-black text-sm mr-2 mb-2"><i
-                              class="fas fa-arrow-right mr-1"></i>
-                            Llego a la iglesia el día :
-                          </a></strong>{{obtenerFecha(personaEntrante.datosLlegada?.fechaLlegada)}} </p>
+                      <p> <strong>
+                          <i class="fas fa-arrow-right mr-1"></i>
+                          Llego a la iglesia el día :
+                        </strong>{{obtenerFecha(personaEntrante.datosLlegada?.fechaLlegada)}} </p>
 
 
-                      <p> <strong> <a href="#" class="link-black text-sm mr-2"><i class="fas fa-arrow-right mr-1"></i>La
-                            actividad de llegada fue :
-                          </a></strong> {{personaEntrante.datosLlegada?.actividadLlegada}} </p>
+                      <p> <strong> <i class="fas fa-arrow-right mr-1"></i>La
+                          actividad de llegada fue :
+                        </strong> {{personaEntrante.datosLlegada?.actividadLlegada}} </p>
 
-                      <p> <strong> <a href="#" class="link-black text-sm mr-2"><i class="fas fa-arrow-right mr-1"></i>
-                            Iglesia de Origen: </a></strong>
+                      <p> <strong> <i class="fas fa-arrow-right mr-1"></i>
+                          Iglesia de Origen: </strong>
                         {{personaEntrante.origenPersona?.nombreIglesiaOrigen}}</p>
 
-                      <p> <strong> <a href="#" class="link-black text-sm mr-2"><i class="fas fa-arrow-right mr-1"></i>
-                            Cargo ejercido: </a></strong>
+                      <p> <strong> <i class="fas fa-arrow-right mr-1"></i>
+                          Cargo ejercido: </strong>
                         {{personaEntrante.origenPersona?.cargoEjercido}}</p>
 
-                      <p> <strong> <a href="#" class="link-black text-sm mr-2"><i class="fas fa-arrow-right mr-1"></i>
-                            Tiempo de permanencia: </a></strong>
+                      <p> <strong> <i class="fas fa-arrow-right mr-1"></i>
+                          Tiempo de permanencia: </strong>
                         {{personaEntrante.origenPersona?.tiempoPermanencia}} </p>
 
-                      <p> <strong> <a href="#" class="link-black text-sm mr-2"><i class="fas fa-arrow-right mr-1"></i>
-                            Tiene carta de autorizacion: </a></strong>
+                      <p> <strong> <i class="fas fa-arrow-right mr-1"></i>
+                          Tiene carta de autorizacion:</strong>
                         {{(personaEntrante.origenPersona?.tieneCartaAutorizacion) ? "SI" :  "NO"}}</p>
 
                     </div>
@@ -500,36 +247,27 @@
 
             <!-- *******************  2   ********************** -->
 
-            <div class="class col-md-12 col-lg-6">
-              <div class="card-header p-2">
-                <ul class="nav nav-pills">
-                  <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Información de
-                      Contacto</a></li>
+            <div class="card col-md-12 col-lg-6 card-primary card-outline ">
 
-                  <button pButton pRipple type="button" icon="pi pi-user-edit"
-                    class="p-button-rounded p-button-success m-0 p-0"
-                    style="float: right;position: absolute;left:320px;top:0px " *ngIf="mostrarBotonesEdit"> </button>
-                </ul>
-              </div><!-- /.card-header -->
               <div class="card-body">
                 <div class="tab-content">
                   <div class="active tab-pane" id="activity">
                     <!-- Post -->
                     <div class="post">
 
-                      <p> <strong> <a href="#" class="link-black text-sm mr-2"><i class="fas fa-arrow-right mr-1"></i>
-                            Celular: </a></strong> {{personaEntrante.datoBasicoPersona?.celular}}</p>
+                      <p> <strong> <i class="fas fa-arrow-right mr-1"></i>
+                          Celular: </strong> {{personaEntrante.datoBasicoPersona?.celular}}</p>
 
 
-                      <p> <strong> <a href="#" class="link-black text-sm mr-2"><i class="fas fa-arrow-right mr-1"></i>
-                            Teléfono:
-                          </a></strong>{{personaEntrante.datoBasicoPersona?.telefono}}</p>
+                      <p> <strong> <i class="fas fa-arrow-right mr-1"></i>
+                          Teléfono:
+                        </strong>{{personaEntrante.datoBasicoPersona?.telefono}}</p>
 
-                      <p> <strong> <a href="#" class="link-black text-sm mr-2"><i class="fas fa-arrow-right mr-1"></i>
-                            Dirección: </a></strong>{{personaEntrante.datoBasicoPersona?.direccion}} </p>
+                      <p> <strong> <i class="fas fa-arrow-right mr-1"></i>
+                          Dirección:</strong>{{personaEntrante.datoBasicoPersona?.direccion}} </p>
 
-                      <p> <strong> <a href="#" class="link-black text-sm mr-2"><i class="fas fa-arrow-right mr-1"></i>
-                            Email: </a></strong> {{personaEntrante.datoBasicoPersona?.email}}</p>
+                      <p> <strong> <i class="fas fa-arrow-right mr-1"></i>
+                          Email: </strong> {{personaEntrante.datoBasicoPersona?.email}}</p>
 
 
                     </div>

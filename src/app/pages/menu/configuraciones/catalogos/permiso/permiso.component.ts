@@ -36,7 +36,7 @@ export class PermisoComponent implements OnInit {
     private toastr: ToastrService, private sesion: RuteadorService, private ruteadorService: RuteadorService) {
 
 
-    sesion.existeSessionActiva();
+    sesion.existeUsuarioActivo();
 
   }
 

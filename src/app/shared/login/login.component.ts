@@ -11,7 +11,7 @@ import { PersonaService } from 'src/app/services/persona/persona/persona.service
 import { DatoBasicoPersona, Persona } from 'src/app/dataModels/persona';
 import { DatosPersonaService } from 'src/app/services/persona/datos-persona.service';
 import { IglesiaService } from 'src/app/services/iglesia/iglesia/iglesia.service';
-import { General } from 'src/app/dataModels/staticGeneral';
+import { Sesiones } from 'src/app/shared/general/staticGeneral';
 import { delay } from 'rxjs';
 import { SessionUsuario } from 'src/app/dataModels/sessionUsuario';
 
@@ -108,27 +108,31 @@ export class LoginComponent implements OnInit {
         }
       });*/
 
+      //console.log('))))))))) SE VA A CONSULTAR EL USUARIO');
       //OBTIENE EL USUARIO
       await this.loguinService.obtenerUsuarios().subscribe(async (usuarios) => {
+        //console.log('))))))))) SE CONSULTO EL USUARIO');
         this.f++;
         this.usuarios = usuarios;
         if (this.usuarios.length > 0) {
           //PROCEDER
           this.usuario = this.usuarios[0];
+          this.personaService.establecerCodIglesia(this.usuario.codIglesia!);
 
-          /*
+          //console.log('))))))))) USUARIO TIENE: ' + this.usuario.codIglesia);
+
           const myObjUsuario = JSON.stringify(this.usuario);
-        
+
           localStorage.setItem('usuario', myObjUsuario);
           //this.cargarDatosPersona(this.usuario._idPersona!);
-          await this.personaService.consultarPersona(this.usuario._idPersona!);
+          //await this.personaService.consultarPersona(this.usuario._idPersona!);
 
           //this.datosPersonaService.extraerPersonaDeBase();
           //this.router.navigate(["/dashboard/dashboard"]);*/
 
           //OBTENIENDO INFORMACION DE LA IGLESIA A LA QUE PERTENECE EL USUARIO
           this.iglesiaService.consultarIglesia(this.usuario.codIglesia!);
-          console.log('COD IGLESIA;:  ' + this.usuario.codIglesia);
+          //console.log('))))))))) COD IGLESIA;:  ' + this.usuario.codIglesia);
           await this.iglesiaService
             .obteneriglesia()
             .subscribe(async (iglesias) => {
@@ -142,7 +146,7 @@ export class LoginComponent implements OnInit {
            const myObjUsuario = JSON.stringify(this.usuario);
          
            localStorage.setItem('usuario', myObjUsuario);
-           //this.cargarDatosPersona(this.usuario._idPersona!);
+           //this.cargarDatosPersona(this.usuario._idPersona!);||
            await this.personaService.consultarPersona(this.usuario._idPersona!);
  
            //this.datosPersonaService.extraerPersonaDeBase();
@@ -155,20 +159,27 @@ export class LoginComponent implements OnInit {
               //General.DATOS_SESION
               const myObjSesionUsuario = JSON.stringify(sessionUsuario);
 
-              localStorage.setItem(General.DATOS_SESION, myObjSesionUsuario);
+              localStorage.setItem(Sesiones.DATOS_SESION, myObjSesionUsuario);
               //this.cargarDatosPersona(this.usuario._idPersona!);
               //await this.personaService.consultarPersona(this.usuario._idPersona!);
 
               //this.datosPersonaService.extraerPersonaDeBase();
               //this.router.navigate(["/dashboard/dashboard"]);
+              //console.log('))))))))) SE ALMACENO EL USUARIO');
 
               //}
+
+              //console.log('))))))))) VA A CONSULTAR LA PERSONA');
               await this.personaService.consultarPersona(
                 this.usuario._idPersona!
               );
+
+              //console.log('))))))))) VA A EXTRAER LA PERSONA DE BASE LOCAL');
               this.datosPersonaService.extraerPersonaDeBase();
               //this.router.navigate(['/dashboard/dashboard']);
+
               this.router.navigate(['/inicio/dashboard']);
+                         
             });
         } else {
           this.toastr.error(

@@ -25,7 +25,7 @@ export class TipoPersonaComponent implements OnInit {
     private tipoPersonaService: TipoPersonaService,
     private toastr: ToastrService, private sesion: RuteadorService, private ruteadorService: RuteadorService) {
 
-    sesion.existeSessionActiva();
+    sesion.existeUsuarioActivo();
 
     this.nuevoTipoPersonaForm = this.fbNuevo.group({
       tipo: ["", Validators.required],

@@ -1,6 +1,7 @@
 {
   "hosting": [
     {
+      "target": "Arca",
       "public": "./dist/Arca",
       "ignore": [
         "firebase.json",

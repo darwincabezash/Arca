@@ -5,7 +5,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ChartModule } from 'primeng/chart';
 
 import { ButtonModule } from 'primeng/button';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { EtapaService } from 'src/app/services/catalogos/etapa.service';
 import { PersonaService } from 'src/app/services/persona/persona/persona.service';
 import { Persona } from 'src/app/dataModels/persona';
@@ -14,6 +14,8 @@ import { Escuela } from 'src/app/dataModels/escuela';
 import { SplitterModule } from 'primeng/splitter';
 import { MemoriaService } from 'src/app/services/compartido/memoria.service';
 import { UtilidadesService } from 'src/app/services/compartido/utilidades.service';
+import { Router } from '@angular/router';
+import { Paginas } from 'src/app/shared/general/staticGeneral';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,6 +23,10 @@ import { UtilidadesService } from 'src/app/services/compartido/utilidades.servic
   styleUrls: [],
 })
 export class DashboardComponent implements OnInit {
+  messages: any[] = [];
+  subscription!: Subscription;
+  c = 0;
+
   //COMUN
 
   //::: PERSONAS POR ETAPA
@@ -33,6 +39,7 @@ export class DashboardComponent implements OnInit {
   personasPorEtapa: any;
   adultosPorSexo: any;
   anioActual: number = 0;
+  mesActual: number = 0;
   chartOptions: any;
   edadNull = 0;
 
@@ -61,8 +68,13 @@ export class DashboardComponent implements OnInit {
   codIglesia: String = '';
 
   personasCumpleanioMes: Persona[] = [];
+  clientes$!: Observable<Persona[]>;
+
+  personasSinEscuela = 0;
+  nuevasPersonas = 0;
 
   constructor(
+    private router: Router,
     private sesion: RuteadorService,
     private etapaService: EtapaService,
     private personaService: PersonaService,
@@ -71,7 +83,7 @@ export class DashboardComponent implements OnInit {
     private utilidadesService: UtilidadesService
   ) {
     this.etapaService = new EtapaService();
-    this.personaService = new PersonaService();
+    //this.personaService = new PersonaService();
 
     this.anioActual = new Date().getFullYear();
 
@@ -100,42 +112,77 @@ export class DashboardComponent implements OnInit {
     };
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    //console.log('VOY A ELIMINAR LA IMAGEN ');
+    //this.utilidadesService.eliminarImagenFirebase('');
+    this.router.navigate(["inicio/padre"]);
+
+    this.c++;
+    this.personas = [];
+    //this.memoriaService.sendMessage();
+
     //OBTENGO EL CODIGO DE IGLESIA A PARTIR DE LOS DATOS DE SESION DEL USUARIO
-    this.codIglesia = this.utilidadesService.obtenerCodIglesiaSesion()!;
+    //this.codIglesia = this.utilidadesService.obtenerCodIglesiaSesion()!;
 
     //ESTABLEZCO EL CODIGO DE LA IGLESIA EN EL SERVICIO PARA CONSULTAR POR CODIGO DE IGLESIAS
-    this.personaService.establecerCodIglesia(this.codIglesia);
+    //this.personaService.establecerCodIglesia(this.codIglesia);
 
-    this.sesion.existeSessionActiva();
-    console.log('VOY A CONSULTAR PERDONAS');
+    this.sesion.existeUsuarioActivo();
 
     this.updateChartOptions();
 
     //::: PERSONAS POR ETAPA
-    this.personaService.consultarPersonas();
-    this.personaService.obtenerPersonas$().subscribe((personas) => {
+
+    if (!this.memoriaService.existeLocalPersona()) {
+      this.personaService.consultarPersonas();
+    } else {
+      let personas: any = this.memoriaService.obtenerLocalPersona();
+      if (personas) {
+        this.personas = personas;
+        this.cargarWidgets();
+      }
+    }
+
+    await this.personaService.obtenerPersonas$().subscribe((personas) => {
       this.personas = personas;
-      console.log('VOY A CONSULTAR PERDONAS, TENGO: ' + this.personas.length);
+
       this.memoriaService.guardarLocalPersona(personas);
 
-      this.etapaService.consultarEtapa();
-      this.etapaService.obtenerEtapas$().subscribe((et) => {
-        this.etapas = et;
-        this.generarEtapasString();
-        this.generarCantidadPersonasPorEtapa();
-        this.convertirCantidadPersonaAPorcentajes();
-        this.generarPersonasPorEtapas();
-        this.mostrarCumpleañosMes();
-      });
+      this.cargarWidgets();
+    });
+  }
+
+  cargarWidgets() {
+    this.escuelas = [];
+    this.cantidadEscuelas = 0;
+    this.personasPorEscuelas = [];
+
+    this.etapaService.consultarEtapa();
+    this.etapaService.obtenerEtapas$().subscribe((et) => {
+      this.etapas = et;
+      this.generarEtapasString();
+      this.generarCantidadPersonasPorEtapa();
+      this.convertirCantidadPersonaAPorcentajes();
+      this.generarPersonasPorEtapas();
     });
 
     this.escuelaService.consultarEscuela();
     this.escuelaService.obtenerEscuelas$().subscribe((es) => {
       this.escuelas = es;
       this.cantidadEscuelas = es.length;
-      console.log(es.length);
+
+      this.escuelas.forEach((es) => {
+        let escuelaTemp = new PersonasPorEscuelas();
+        escuelaTemp._id = es._id;
+        escuelaTemp.tipo = es.tipo;
+        escuelaTemp.cantidad = 0;
+        this.personasPorEscuelas.push(escuelaTemp);
+      });
+
+      this.generarCantidadPersonasPorEtapa();
     });
+
+    this.mostrarCumpleañosMes();
   }
 
   //GENERA UN ARREGLO CON LOS NOMBRES DE LAS ETAPAS
@@ -144,20 +191,20 @@ export class DashboardComponent implements OnInit {
     this.etapas.forEach((et) => {
       this.estapasString.push(et.tipo!);
     });
-
-    this.escuelas.forEach((es) => {
-      let escuelaTemp = new PersonasPorEscuelas();
-      escuelaTemp._id = es._id;
-      escuelaTemp.tipo = es.tipo;
-      escuelaTemp.cantidad = 0;
-      this.personasPorEscuelas.push(escuelaTemp);
-    });
   }
 
+  limpiarArrayPersonasPorEscuelas() {
+    this.personasPorEscuelas.forEach((p) => {
+      p.cantidad = 0;
+    });
+  }
   //::: PERSONAS POR ETAPA
 
   //GENERA UN ARREGLO CLASIFICANDO LA CANTIDAD DE PERSONAS POR ETAPA
   generarCantidadPersonasPorEtapa() {
+    this.limpiarArrayPersonasPorEscuelas();
+    this.personasSinEscuela = 0;
+    this.nuevasPersonas = 0;
     let personasEspejo = this.personas;
     this.edadNull = 0;
 
@@ -199,26 +246,24 @@ export class DashboardComponent implements OnInit {
       //SI LA PERSONA TIENE ESCUELAS
       if (p.escuela!.length > 0) {
         //RECORRO LAS ESCUELAS DE LA PERSONA
-        p.escuela!.forEach((escuelaP) => {
-          //console.log("ID_ESUELA: " +escuelaP._id);
 
+        p.escuela!.forEach((escuelaP) => {
           //RECORRO EL ARREGLO DE LAS PERSONAS POR ESCUELAS PARA INCREMENTAR LOS NUMEROS
+
           for (let i = 0; i < this.personasPorEscuelas.length; i++) {
             if (escuelaP.idEscuela === this.personasPorEscuelas[i]._id) {
               this.personasPorEscuelas[i].cantidad!++;
-
               break;
             }
           }
         });
+      } else {
+        this.personasSinEscuela++;
       }
-      //console.log("TOTALES");
       /*for (let i = 0; i < this.personasPorEscuelas.length; i++) {
-        console.log("ESCUELA: " + this.personasPorEscuelas[i].tipo + "  CANTIDAD:  " + this.personasPorEscuelas[i].cantidad);
       }*/
 
       /*
-            console.log("sexo ;:   " + sexoPersona?.length);
       
       
             //VERIFICA SI EL SE ES CORRECTO
@@ -240,6 +285,14 @@ export class DashboardComponent implements OnInit {
             }
       
       */
+
+      if (
+        this.utilidadesService.diasNuevaPersona(
+          p.datoBasicoPersona?.fechaRegistro
+        ) < 31
+      ) {
+        this.nuevasPersonas++;
+      }
     });
 
     //VERIFICA SI EXITIERON EDADES ERRONEAS
@@ -392,59 +445,41 @@ export class DashboardComponent implements OnInit {
     this.personasCumpleanioMes = [];
 
     this.personas.forEach((persona) => {
-      let f1 = this.obtenerFechaNacimintoFormateada(persona.datoBasicoPersona!.fechaNacimiento).toString();
-      let f2 = this.obtenerFechaNacimintoFormateada(new Date()).toString();
-
+      let f1 = this.obtenerFechaNacimintoFormateadaCumpleaño(
+        persona.datoBasicoPersona!.fechaNacimiento
+      ).toString();
+      let f2 = this.obtenerFechaNacimintoFormateadaCumpleaño(
+        new Date()
+      ).toString();
       if (f1 === f2) {
         this.personasCumpleanioMes.push(persona);
-
-        console.log(
-          'DAT 1:' +
-          this.obtenerFechaNacimintoFormateada(
-            persona.datoBasicoPersona!.fechaNacimiento
-          )
-        );
-        console.log(
-          'DAT 2:' + this.obtenerFechaNacimintoFormateada(new Date().toString())
-        );
       }
     });
-    console.log(
-      '!tamaño personas cumple;: ' + this.personasCumpleanioMes.length
-    );
   }
 
   //ESTA FUNCION TAMBIEN SE REPITE EN EL SERVICIO DE PERSONAS, ES MEJOR PONERLA EN UN LUGAR PARA REUSARLA
-  obtenerFechaNacimintoFormateada(_fechaNacimiento: any) {
-    let _fechaCumpleanio: String = '';
+  obtenerFechaNacimintoFormateadaCumpleaño(_fechaNacimiento: any) {
+    let _mesCumplanio: String = '';
     try {
       if (_fechaNacimiento !== undefined) {
-        let _dia = new Date(_fechaNacimiento).toLocaleString('es', {
-          day: 'numeric',
-        });
         let _mes: String = new Date(_fechaNacimiento).toLocaleString('es', {
           month: 'long',
         });
-        let _anio: String = new Date(_fechaNacimiento).toLocaleString('es', {
-          year: 'numeric',
-        });
 
-        _fechaCumpleanio =
-          _dia +
-          ' de ' +
-          _mes[0].toUpperCase() +
-          _mes.slice(1) +
-          (Number(_anio) > 1999 ? ' del ' : ' de ') +
-          _anio;
+        _mesCumplanio = _mes[0].toUpperCase() + _mes.slice(1);
 
-        return _fechaCumpleanio;
+        return _mesCumplanio;
       } else {
-        _fechaCumpleanio = 'No Disponible';
+        _mesCumplanio = 'No Disponible';
       }
     } catch {
-      _fechaCumpleanio = 'No Disponible';
+      _mesCumplanio = 'No Disponible';
     }
-    return _fechaCumpleanio;
+    return _mesCumplanio;
+  }
+
+  clic() {
+    // this.personaService.consultarPersonas();
   }
 }
 

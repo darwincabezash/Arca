@@ -171,6 +171,7 @@
                         </div>
                       </div>
 
+
                       <!--PRIMER NOMBRE-->
 
                       <div class="form-group">
@@ -265,7 +266,7 @@
 
                       <!--SEXO-->
                       <div class="form-group">
-                        <label class="col-form-label">Sexo</label>
+                        <label class="col-form-label">*Sexo</label>
                         <div class="icheck-primary">
                           <input type="radio" id="sexoH" name="sexo" value="H" formControlName="sexo" checked />
                           <label for="sexoH">Hombre</label>
@@ -274,7 +275,10 @@
                           <input type="radio" id="sexoM" name="sexo" value="M" formControlName="sexo" />
                           <label for="sexoM">Mujer</label>
                         </div>
+
+
                       </div>
+                      
 
                       <!--FOTO-->
                       <!--<div class="form-group">
@@ -319,18 +323,17 @@
 
 
 
-                    <button *ngIf="!cargandourlImagen" type="submit"
-                      class="btn btn-success btn-lg-12 btn-sm-12"
+                    <button *ngIf="!cargandourlImagen" type="submit" class="btn btn-success btn-lg-12 btn-sm-12"
                       [disabled]="personaForm.invalid">Guardar
                       Persona</button>
 
-                     <div class="row" *ngIf="cargandourlImagen">
+                    <div class="row" *ngIf="cargandourlImagen">
                       <div class="col-lg-12" style="text-align: center">
                         <p-progressSpinner strokeWidth="5" [style]="{width: '40px', height: '40px'}">
                         </p-progressSpinner>
                       </div>
-                     </div>
-                      
+                    </div>
+
 
 
                   </div>
@@ -404,7 +407,7 @@
                           <div class="text-right mt-0 mb-0 pl-4 ">
                             <h3 class="card-title pt-2">Origen de la persona</h3>
 
-                            <button type="button" class=" align-middle btn-lg" style="background-color: #6c757d; margin:0px;border: 2px white;color:white
+                            <button *ngIf="mostrarBotonEditar" type="button" class=" align-middle btn-lg" style="background-color: #6c757d; margin:0px;border: 2px white;color:white
                                 ;font-size:12px" data-toggle="modal" data-target="#modal-origen">
                               Editar
                             </button>
@@ -469,7 +472,7 @@
                           <div class="text-right mt-0 mb-0 pl-4 ">
                             <h3 class="card-title pt-2">Datos de Llegada</h3>
 
-                            <button type="button" class=" align-middle btn-lg" style="background-color: #6c757d; margin:0px;border: 2px white;color:white
+                            <button *ngIf="mostrarBotonEditar" type="button" class=" align-middle btn-lg" style="background-color: #6c757d; margin:0px;border: 2px white;color:white
                                 ;font-size:12px" data-toggle="modal" data-target="#modal-datos-llegada">
                               Editar
                             </button>
@@ -541,23 +544,26 @@
                           <div class="text-right mt-0 mb-0 pl-4 ">
                             <h3 class="card-title pt-2">Oración de fe</h3>
 
-                            <div style="text-align:right;padding-right:10px;"
-                              *ngIf="!mostrarBotonEditarOracionFeYBautizo">
-                              <h6 class="text-danger align-middle">No disponible sin carta de Autorización</h6>
+                            <div *ngIf="mostrarBotonEditar">
+                              <div style="text-align:right;padding-right:10px;"
+                                *ngIf="!mostrarBotonEditarOracionFeYBautizo">
+                                <h6 class="text-danger align-middle">No disponible sin carta de Autorización</h6>
+                              </div>
                             </div>
 
-                            <button type="button" class=" align-middle btn-lg" style="background-color: #6c757d; margin:0px;border: 2px white;color:white
+                            <div *ngIf="mostrarBotonEditar">
+                              <button type="button" class=" align-middle btn-lg" style="background-color: #6c757d; margin:0px;border: 2px white;color:white
                                 ;font-size:12px" data-toggle="modal" data-target="#modal-oracion-fe"
-                              *ngIf="mostrarBotonEditarOracionFeYBautizo">
-                              Editar
-                            </button>
-
+                                *ngIf="mostrarBotonEditarOracionFeYBautizo">
+                                Editar
+                              </button>
+                            </div>
                           </div>
                         </div>
 
                         <!-- /.card-header -->
                         <div class="card-body" *ngIf="oracionFe.oracionFe">
-                          <strong><i class="fas fa-cross mr-1"></i>Logar de Oración de Fe: {{oracionFe.lugarOracionFe}}
+                          <strong><i class="fas fa-cross mr-1"></i>Lugar de Oración de Fe: {{oracionFe.lugarOracionFe}}
                           </strong>
 
                           <p class="text-muted mt-3">
@@ -606,18 +612,20 @@
                           <div class="text-right mt-0 mb-0 pl-4 ">
                             <h3 class="card-title pt-2">Bautizmo</h3>
 
-                            <div style="text-align:right;padding-right:10px;"
-                              *ngIf="!mostrarBotonEditarOracionFeYBautizo">
-                              <h6 class="text-danger align-middle">No disponible sin carta de Autorización</h6>
+                            <div *ngIf="mostrarBotonEditar">
+                              <div style="text-align:right;padding-right:10px;"
+                                *ngIf="!mostrarBotonEditarOracionFeYBautizo">
+                                <h6 class="text-danger align-middle">No disponible sin carta de Autorización</h6>
+                              </div>
                             </div>
+                            <div *ngIf="mostrarBotonEditar">
 
-
-                            <button type="button" class=" align-middle btn-lg" style="background-color: #6c757d; margin:0px;border: 2px white;color:white
+                              <button type="button" class=" align-middle btn-lg" style="background-color: #6c757d; margin:0px;border: 2px white;color:white
                                 ;font-size:12px" data-toggle="modal" data-target="#modal-bautizmo"
-                              *ngIf="mostrarBotonEditarOracionFeYBautizo">
-                              Editar
-                            </button>
-
+                                *ngIf="mostrarBotonEditarOracionFeYBautizo">
+                                Editar
+                              </button>
+                            </div>
                           </div>
                         </div>
                         <!-- /.card-header -->
@@ -670,7 +678,7 @@
                             <h3 class="card-title pt-2">Procesos</h3>
 
 
-                            <button type="button" class=" align-middle btn-lg" style="background-color: #6c757d; margin:0px;border: 2px white;color:white
+                            <button *ngIf="mostrarBotonEditar" type="button" class=" align-middle btn-lg" style="background-color: #6c757d; margin:0px;border: 2px white;color:white
                                 ;font-size:12px" data-toggle="modal" data-target="#modal-procesos">
                               Editar
                             </button>
@@ -1216,8 +1224,7 @@
 
                                     <a *ngFor="let e of listaEscuelasTodas" class="badge  badge-pill badge-primary"
                                       [ngStyle]="{'background-color': e.color, 'color':e.colorTextoNegro ?
-                                      'black' : 'white'}"
-                                      style="font-size:1rem; margin:3px; cursor: pointer;"
+                                      'black' : 'white'}" style="font-size:1rem; margin:3px; cursor: pointer;"
                                       (click)="marcarEscuelas(e._id!) ">{{e.tipo}}</a>
 
                                   </li>
@@ -1231,11 +1238,9 @@
                                     <li class="list-group-item" style="border-color: #007BFF;">
 
                                       <a *ngFor="let e of listaEscuelasSeleccion"
-                                        class="badge  badge-pill badge-primary"
-                                        [ngStyle]="{'background-color': e.color, 'color':e.colorTextoNegro
+                                        class="badge  badge-pill badge-primary" [ngStyle]="{'background-color': e.color, 'color':e.colorTextoNegro
                                         ?
-                                        'black' : 'white'}"
-                                        style="font-size:1rem; margin:3px; cursor: pointer;"
+                                        'black' : 'white'}" style="font-size:1rem; margin:3px; cursor: pointer;"
                                         (click)="desmarcarEscuelas(e._id!) ">{{e.tipo}}</a>
 
                                     </li>
@@ -1438,7 +1443,7 @@
               </div>
               <!-- /.tab-pane -->
               <div class="tab-pane" id="tab_3">
-               NO DISPONIBLE
+                NO DISPONIBLE
               </div>
               <div class="tab-pane" id="tab_4">
                 NO DISPONIBLE
@@ -1607,8 +1612,8 @@
 
 
                     </div>
-                    <button type="submit" class="btn btn-success btn-lg-12 btn-sm-12"
-                      [disabled]="usuarioForm.invalid" *ngIf="_id_persona_creada">Guardar
+                    <button type="submit" class="btn btn-success btn-lg-12 btn-sm-12" [disabled]="usuarioForm.invalid"
+                      *ngIf="_id_persona_creada">Guardar
                       Usuario</button>
                     <!-- /.card-body -->
 

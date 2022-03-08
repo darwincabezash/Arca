@@ -1,0 +1,22 @@
+*{
+    /*background-color: #000;*/
+}
+
+@media (min-width: 520px){
+    #vista-movil {
+        display: none;
+    }
+    #vista-grande {
+      display: block;
+    }
+}
+
+@media (max-width: 520px){
+    #vista-movil {
+      display: block;
+    }
+    #vista-grande {
+      display: none;
+    }
+}
+

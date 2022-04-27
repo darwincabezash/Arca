@@ -1,7 +1,7 @@
 import { Permiso } from '../../dataModels/permiso';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { GlobalDataService } from '../login/globalDataServices';
+import { GlobalDataService } from '../../global/globalDataServices';
 
 @Injectable({
   providedIn: 'root'

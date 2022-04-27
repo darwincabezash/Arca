@@ -1,4 +1,4 @@
-import { GlobalDataService } from '../login/globalDataServices';
+import { GlobalDataService } from '../../global/globalDataServices';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, concatMapTo } from 'rxjs';
 import { Seminario } from 'src/app/dataModels/seminario';

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { GlobalDataService } from '../login/globalDataServices';
+import { GlobalDataService } from '../../global/globalDataServices';
 
 import firebase from 'firebase/compat/app';
 import "firebase/compat/storage";

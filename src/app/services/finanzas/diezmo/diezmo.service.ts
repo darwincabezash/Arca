@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Persona } from 'src/app/dataModels/persona';
-import { GlobalDataService } from '../../login/globalDataServices';
+import { GlobalDataService } from '../../../global/globalDataServices';
 import { Diezmo } from './../../../dataModels/diezmo';
 
 @Injectable({

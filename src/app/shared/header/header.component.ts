@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserDataService } from 'src/app/services/general/user-data.service';
 import { Sesiones } from 'src/app/shared/general/staticGeneral';
+import * as $ from 'jquery';
+
 
 @Component({
   selector: 'app-header',
@@ -24,9 +26,14 @@ export class HeaderComponent implements OnInit {
   eliminarSession() {
     localStorage.setItem(Sesiones.DATOS_SESION, "");
     localStorage.setItem("persona", "");
+    localStorage.setItem('usuario', "");
+    localStorage.setItem('datos_persona', '');
   }
 
   ngOnInit(): void {
+
+
+
 
     this.userDataService.obtenerNotificacionNuevaPersona$().subscribe(_id => {
       if (_id.length > 0) {

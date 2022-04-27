@@ -34,6 +34,7 @@
               "node_modules/primeng/resources/primeng.min.css"
             ],
             "scripts": [
+              "src/assets/dist/js/adminlte.min.js",
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/chart.js/dist/Chart.js",
               "node_modules/html2canvas/dist/html2canvas.min.js"
@@ -45,13 +46,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "5mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "7mb",
+                  "maximumError": "9mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kb",
-                  "maximumError": "5kb"
+                  "maximumWarning": "7kb",
+                  "maximumError": "9kb"
                 }
               ],
               "fileReplacements": [
@@ -106,7 +107,9 @@
               "src/styles.css",
               "node_modules/ngx-toastr/toastr.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/dist/js/adminlte.min.js"
+            ]
           }
         },
         "deploy": {

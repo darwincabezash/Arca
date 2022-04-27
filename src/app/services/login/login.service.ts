@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Usuario } from 'src/app/dataModels/usuario';
-import { GlobalDataService } from './globalDataServices';
+import { GlobalDataService } from '../../global/globalDataServices';
 
 @Injectable({
   providedIn: 'root'

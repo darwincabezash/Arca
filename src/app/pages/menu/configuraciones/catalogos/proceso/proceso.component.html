@@ -1,5 +1,3 @@
-<!-- Main content -->
-<section class="content" >
 
 
   <div class="error-page" *ngIf="!estadoServidor">
@@ -63,7 +61,7 @@
                            placeholder="Ingresa el proceso" formControlName="tipo">
 
                        </div>
-                       <button type="submit" class="btn btn-success btn-lg-12 btn-sm-12"
+                       <button type="submit" class="btn btn-primary btn-lg-12 btn-sm-12"
                          [disabled]="nuevoTipoProcesoForm.invalid">Guardar Proceso</button>
                      </form>
 
@@ -113,14 +111,14 @@
                        <td>
                           <div class="btn-group" role="group" aria-label="Basic example">
                          <!-- Boton Editar-->
-                         <button type="button" class="btn-xs align-middle" style="margin:0px;border:none;"
+                         <button type="button" class="btn-xs align-middle" style="margin:0px;border:none;background:transparent"
                            (click)="idAEditar(tp._id)" data-toggle="modal" data-target="#modal-editar">
-                           <i class="fas fa-user-edit fa-2x " style="color:#18A2B8;"></i>
+                           <i class="fas fa-user-edit fa-2x text-secondary" ></i>
                          </button>
 
 
                          <!-- Boton Eliminar-->
-                         <button type="button" class="btn-xs align-middle" style="margin-left:5px;border:none;"
+                         <button type="button" class="btn-xs align-middle" style="margin-left:5px;border:none;background-color: transparent;"
                            (click)="idAEliminar(tp._id)" data-toggle="modal" data-target="#modal-eliminar">
 
                            <i class="fas fa-trash fa-2x ml-1 mr-1" style="color:#DC3545;"></i>
@@ -168,10 +166,10 @@
                            </div>
                          </div>
                          <div class="modal-footer justify-content-between">
-                           <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+                           <button type="button" class="btn btn-light" data-dismiss="modal">Salir</button>
 
 
-                           <button class="btn btn-success btn-lg-12 btn-sm-12" (click)="actualizarTipoProceso()"
+                           <button class="btn btn-primary btn-lg-12 btn-sm-12" (click)="actualizarTipoProceso()"
                              data-dismiss="modal">Actualizar Proceso</button>
                          </div>
                        </div>
@@ -231,11 +229,4 @@
 
 
    </div>
-
-
-
-   
-
-</section>
-<!-- /.content -->
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject, concatMapTo } from 'rxjs';
 import { Etapa } from 'src/app/dataModels/etapa';
-import { GlobalDataService } from '../login/globalDataServices';
+import { GlobalDataService } from '../../global/globalDataServices';
 
 @Injectable({
   providedIn: 'root'

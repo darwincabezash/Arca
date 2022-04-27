@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { concatMapTo, Observable, Subject } from 'rxjs';
 import { PublicInfo } from 'src/app/shared/data/publicInfo';
 import { Persona, DatoBasicoPersona, OrigenPersona, DatosLlegada, OracionFe, Bautizmo, ListaEscuela, ListaProceso, ListaGrupo, ListaSeminario } from '../../../dataModels/persona';
-import { GlobalDataService } from '../../login/globalDataServices';
+import { GlobalDataService } from '../../../global/globalDataServices';
 import { Escuela } from 'src/app/dataModels/escuela';
 import { TipoProceso } from 'src/app/dataModels/tipoProceso';
 import { Grupo } from 'src/app/dataModels/grupo';
@@ -109,6 +109,219 @@ export class PersonaService {
               fechaBautizmo
               lugarBautizmo
               responsableBautizmo
+             
+              tipoProcesos {
+                _id
+                tipo
+              }
+              grupos {
+                _id
+                tipo
+                color
+              }
+              seminarios {
+                _id
+                tipo
+                color
+              }
+              fechaRegistro
+            }
+                  }`,
+        }),
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          console.log("RESULTADPO");
+          console.log(result);
+          this.personas = [];
+          //console.log('VINE: ' + result.data.personaIglesia.length);
+          //console.log('TRAE: ' + result);
+          ////console.log( JSON.stringify(result));
+          ////console.log(result.data);
+          result.data.personaIglesia.map((el: any) => {
+            //DATOS BASICOS
+            let datoBasicoPersona: DatoBasicoPersona = new DatoBasicoPersona();
+            datoBasicoPersona.codIglesia = el.codIglesia;
+            datoBasicoPersona.cedula = el.cedula;
+            datoBasicoPersona.primerNombre = el.primerNombre;
+            datoBasicoPersona.segundoNombre = el.segundoNombre;
+            datoBasicoPersona.nombres =
+              el.primerNombre + ' ' + el.segundoNombre;
+            datoBasicoPersona.primerApellido = el.primerApellido;
+            datoBasicoPersona.segundoApellido = el.segundoApellido;
+            datoBasicoPersona.apellidos =
+              el.primerApellido + ' ' + el.segundoApellido;
+            let _fecha = el.fechaNacimiento.toString() + 'T00:00:00';
+            datoBasicoPersona.fechaNacimientoOriginal = el.fechaNacimiento;
+            datoBasicoPersona.fechaNacimiento =
+              el.fechaNacimiento !== undefined &&
+              el.fechaNacimiento !== null &&
+              el.fechaNacimiento !== ''
+                ? new Date(_fecha).toString()
+                : undefined;
+            datoBasicoPersona.fechaNacimientoFormateada =
+              el.fechaNacimiento !== undefined &&
+              el.fechaNacimiento !== null &&
+              el.fechaNacimiento !== ''
+                ? this.obtenerFechaNacimintoFormateada(new Date(_fecha))
+                : undefined;
+            datoBasicoPersona.telefono = el.telefono;
+            datoBasicoPersona.celular = el.celular;
+            datoBasicoPersona.whatsapp = this.obtenerLinkWhatsApp(el.celular);
+            datoBasicoPersona.direccion = el.direccion;
+            datoBasicoPersona.email = el.email;
+            datoBasicoPersona.sexo = el.sexo;
+            datoBasicoPersona.foto = el.foto;
+            datoBasicoPersona.tipoPersona = el.tipoPersona;
+            datoBasicoPersona.fechaRegistro=el.fechaRegistro;
+
+            console.log("*****ME LLEGO FECHA DE REGISTRO:   "+datoBasicoPersona.fechaRegistro);
+            //ORIGEN PERSONA
+            let origenPersona: OrigenPersona = new OrigenPersona();
+            origenPersona.nombreIglesiaOrigen = el.nombreIglesiaOrigen;
+            origenPersona.cargoEjercido = el.cargoEjercido;
+            origenPersona.tiempoPermanencia = el.tiempoPermanencia;
+            origenPersona.tieneCartaAutorizacion = el.tieneCartaAutorizacion;
+
+            //DATOS LLEGADA
+            let datosLlegada: DatosLlegada = new DatosLlegada();
+            datosLlegada.fechaLlegada = el.fechaLlegada;
+            datosLlegada.invitadoPor = el.invitadoPor;
+            datosLlegada.observacionUbicacion = el.observacionUbicacion;
+            datosLlegada.actividadLlegada = el.actividadLlegada;
+
+            //ORACION FE
+            let oracionFe: OracionFe = new OracionFe();
+            oracionFe.oracionFe = el.oracionFe;
+            oracionFe.fechaOracionFe = el.fechaOracionFe;
+            oracionFe.lugarOracionFe = el.lugarOracionFe;
+            oracionFe.responsableOracionFe = el.responsableOracionFe;
+
+            //BAUTIZMO
+            let bautizmo: Bautizmo = new Bautizmo();
+            bautizmo.fechaBautizmo = el.fechaBautizmo;
+            bautizmo.bautizmo = el.bautizmo;
+            bautizmo.lugarBautizmo = el.lugarBautizmo;
+            bautizmo.responsableBautizmo = el.responsableBautizmo;
+
+            //ESCUELAS
+            let escuelas: ListaEscuela[] = [];
+            if (el.escuelas !== undefined) {
+              el.escuelas.forEach((e: Escuela) => {
+                let _escuelaTemp: Escuela = new Escuela();
+                _escuelaTemp._id = e._id;
+                _escuelaTemp.tipo = e.tipo;
+                _escuelaTemp.color = e.color;
+                _escuelaTemp.idEscuela = e.idEscuela;
+                console.log('COLOR TEXTO NEGRO: ' + e.colorTextoNegro);
+                _escuelaTemp.colorTextoNegro = e.colorTextoNegro;
+                escuelas.push(_escuelaTemp);
+              });
+            }
+
+            //PROCEOSOS
+            let procesos: ListaProceso[] = [];
+            el.tipoProcesos.forEach((p: TipoProceso) => {
+              let _procesoTemp: TipoProceso = new TipoProceso();
+              _procesoTemp._id = p._id;
+              _procesoTemp.tipo = p.tipo;
+              procesos.push(_procesoTemp);
+            });
+
+            //GRUPOS
+            let grupos: ListaGrupo[] = [];
+            el.grupos.forEach((g: Grupo) => {
+              let _grupoTemp: Grupo = new Grupo();
+              _grupoTemp._id = g._id;
+              _grupoTemp.tipo = g.tipo;
+              grupos.push(_grupoTemp);
+            });
+
+            //SEMINARIOS
+            let seminarios: ListaSeminario[] = [];
+            el.seminarios.forEach((s: Seminario) => {
+              let _seminarioTemp: Seminario = new Seminario();
+              _seminarioTemp._id = s._id;
+              _seminarioTemp.tipo = s.tipo;
+              _seminarioTemp.color = s.color;
+
+              seminarios.push(_seminarioTemp);
+            });
+
+            let persona = new Persona();
+            persona._id = el._id;
+            persona.datoBasicoPersona = datoBasicoPersona;
+            persona.origenPersona = origenPersona;
+            persona.datosLlegada = datosLlegada;
+            persona.oracionFe = oracionFe;
+            persona.bautizmo = bautizmo;
+            persona.escuela = escuelas;
+            persona.proceso = procesos;
+            persona.grupo = grupos;
+            persona.seminario = seminarios;
+
+            this.personas.push(persona);
+            //console.log(persona.datoBasicoPersona.primerNombre);
+          });
+        });
+
+      this.personas$.next(this.personas);
+      //console.log('A GUARDAR A LAS PERSONAS: ' + this.personas.length);
+    } catch (e) {
+      console.log('ERROR: ' + e);
+    }
+  }
+
+/* METODO ORIGINAL 
+  async consultarPersonas() {
+    console.log(
+      '************* CODIGO DE IGLESIA: ' +
+        this.utilidadesService.obtenerCodIglesiaSesion()!
+    );
+    this.personas = [];
+
+    try {
+      await fetch(this.server, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          query: `query{
+              personaIglesia(input:{
+                codIglesia:"${this.utilidadesService.obtenerCodIglesiaSesion()!}"}){
+              _id
+              codIglesia
+              cedula
+              primerNombre
+              segundoNombre
+              primerApellido
+              segundoApellido
+              fechaNacimiento
+              telefono
+              celular
+              direccion
+              email
+              sexo
+              foto
+              tipoPersona
+              nombreIglesiaOrigen
+              cargoEjercido
+              tiempoPermanencia
+              tieneCartaAutorizacion
+              fechaLlegada
+              invitadoPor
+              observacionUbicacion
+              actividadLlegada
+              oracionFe
+              fechaOracionFe
+              lugarOracionFe
+              responsableOracionFe
+              bautizmo
+              fechaBautizmo
+              lugarBautizmo
+              responsableBautizmo
               escuelas {
                 _id
                 tipo
@@ -137,6 +350,8 @@ export class PersonaService {
       })
         .then((res) => res.json())
         .then((result) => {
+          console.log("RESULTADPO");
+          console.log(result);
           this.personas = [];
           //console.log('VINE: ' + result.data.personaIglesia.length);
           //console.log('TRAE: ' + result);
@@ -273,7 +488,7 @@ export class PersonaService {
       console.log('ERROR: ' + e);
     }
   }
-
+*/
   //CONSULTAR
   async consultarPersona(_id: String): Promise<boolean> {
     let _carga_completa = false;

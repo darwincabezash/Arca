@@ -1,10 +1,10 @@
-<section *ngIf="!mostrarVistaReporte" class="content-header">
+<section *ngIf="!mostrarVistaReporte" class="content-header mb-5">
   <div class="container-fluid">
 
     <!-- downloadPDF() -->
 
 
-    
+
 
 
 
@@ -12,26 +12,25 @@
 
     <div class="d-flex flex-row-reverse">
 
-      <a class="btn btn-primary ml-2" data-toggle="collapse" href="#collapseBusqueda" role="button"
-        style="background-color: #17a2b8;color:white;border-color:#17a2b8;">
+      <a class="btn btn-secondary ml-2" data-toggle="collapse" href="#collapseBusqueda" role="button">
         <i class="fa fa-search"></i>
         Mostrar Búsqueda</a>
 
       <span class="ml-2">
-        <button type="button" class="btn btn-primary" (click)="cambiarAVistaReporte()">
-          <i class="fa fa-file"></i> 
+        <button type="button" class="btn btn-secondary" (click)="cambiarAVistaReporte()">
+          <i class="fa fa-file"></i>
 
           Generar Reporte</button>
 
       </span>
 
       <span class="ml-2">
-        <button type="button" class="btn btn-success" (click)="actualizarPagina()">
-          
+        <button type="button" class="btn btn-secondary" (click)="actualizarPagina()">
+
           <i class="fa fa-retweet"></i>
           Actualizar
         </button>
-          
+
 
       </span>
 
@@ -64,7 +63,9 @@
                         {{personasBusqueda.length}}
                       </div>
 
-                      <h2 class="text-center display-6 pt-1">Búsqueda</h2>
+
+                      <h2 class="h5 mb-4">Búsqueda</h2>
+
                       <div class="row">
                         <div class="col-md-12 ">
                           <form action="simple-results.html">
@@ -222,6 +223,16 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
     <div id="accordionC" class="pt-1">
       <div class="card card-light ml-3 mr-3">
 
@@ -235,7 +246,7 @@
                 <!-- ./card-body -->
                 <div class="card-footer p-0">
                   <div class="row ml-3">
-                    <div class="">
+                    <div class="w-auto">
                       <div class="description-block border-right">
 
                         <span class="input-group-text align-middle" style="border: 0px">
@@ -246,7 +257,7 @@
                       </div>
                       <!-- /.description-block -->
                     </div>
-                    <div class="">
+                    <div class="w-auto">
                       <div class="description-block border-right">
 
                         <span class="input-group-text align-middle" style="border: 0px">
@@ -259,7 +270,7 @@
                       <!-- /.description-block -->
                     </div>
                     <!-- /.col -->
-                    <div class="">
+                    <div class="w-auto">
                       <div class="description-block border-right">
 
                         <span class="input-group-text align-middle" style="border: 0px">
@@ -272,7 +283,7 @@
                       <!-- /.description-block -->
                     </div>
 
-                    <div class="">
+                    <div class="w-auto">
                       <div class="description-block border-right">
 
                         <span class="input-group-text align-middle" style="border: 0px">
@@ -286,7 +297,7 @@
                     </div>
 
 
-                    <div class="">
+                    <div class="w-auto">
                       <div class="description-block border-right">
 
                         <span class="input-group-text align-middle" style="border: 0px">
@@ -299,7 +310,7 @@
                       <!-- /.description-block -->
                     </div>
 
-                    <div class="">
+                    <div class="w-auto">
                       <div class="description-block border-right">
 
                         <span class="input-group-text align-middle" style="border: 0px">
@@ -313,7 +324,7 @@
                     </div>
 
 
-                    <div class="">
+                    <div class="w-auto">
                       <div class="description-block border-right">
 
                         <span class="input-group-text align-middle" style="border: 0px">
@@ -327,7 +338,7 @@
                     </div>
 
 
-                    <div class="">
+                    <div class="w-auto">
                       <div class="description-block border-right">
 
                         <span class="input-group-text align-middle" style="border: 0px">
@@ -341,7 +352,7 @@
                     </div>
 
 
-                    <div class="">
+                    <div class="w-auto">
                       <div class="description-block border-right">
 
                         <span class="input-group-text align-middle" style="border: 0px">
@@ -428,6 +439,7 @@
                 <td class="align-middle font-weight-light" style="padding:5px; color:#495057;"
                   *ngIf="mostrarNombreCompleto" width="200px">
 
+
                   <div class="d-inline"
                     *ngIf="p.datoBasicoPersona?.foto  !== undefined && p.datoBasicoPersona?.foto  !== '' && p.datoBasicoPersona?.foto !== null && p.datoBasicoPersona?.foto !== ' ' ; else elseBlock">
                     <img src="{{p.datoBasicoPersona?.foto}}" alt="Avatar" style="display: inline-block;vertical-align: middle;width: 25px;height: 25px;border-radius: 50%; margin-top:0px;
@@ -451,6 +463,8 @@
 
 
                   </ng-template>
+
+
                   &nbsp;
                   <div class="d-inline">{{p.datoBasicoPersona?.primerNombre}} &nbsp;
                     {{p.datoBasicoPersona?.segundoNombre}}</div>
@@ -506,7 +520,7 @@
                 </td>-->
                 <!-- {{ p.datoBasicoPersona?.fechaNacimiento | date:  'shortDate' }} -->
 
-                <td class="align-middle font-weight-light"
+                <td class="align-middle font-weight-light word-wrap: break-word"
                   style="padding: 0px;width: 12%; margin-right:5px; color:#495057;" *ngIf="mostrarEscuela">
                   <!--  <span class="badge badge-pill bg-success small" style="font-size: 8px; margin-left: 2px;"
                     *ngFor="let pr of p.proceso">{{pr.tipo}}</span>
@@ -558,34 +572,38 @@
 
                 <!-- Content Header (Page header) -->
 
-                <td class="align-middle  text-center" style="padding:5px; border:0px;color:#495057; "
+                <td class="align-middle  text-center" style="padding:5px; border:0px;"
                   *ngIf="mostrarAccion">
 
 
                   <div class="btn-group" role="group" aria-label="Basic example">
 
-                    <!-- VER -->
-                    <button type="button" class="btn-xs align-middle" style="margin-left:5px;border:none;"
-                      (click)="verPerfil(p)" data-toggle="modal" data-target="#modal-eliminar">
+ <!-- ELIMINAR -->
+ <button type="button" class="btn-xs align-middle" style="margin-left:5px;border:none;background-color: transparent;"
+   (click)="idAEliminar(p._id)" data-toggle="modal" data-target="#modal-eliminar">
 
-                      <i class="fas fa-eye fa-2x ml-1 mr-1 text-info"></i>
+   <i class="fas fa-trash fa-2x ml-1 mr-1 text-danger"></i>
 
-                    </button>
+ </button>
+
+                    
 
                     <!-- EDITAR -->
-                    <button type="button" class="btn-xs align-middle" style="margin-left:5px;border:none;"
-                      (click)="editarPersona(p)">
+                    <button type="button" class="btn-xs align-middle"
+                      style="margin-left:5px;border:none;background-color: transparent;" (click)="editarPersona(p)">
                       <i class="fas fa-user-edit fa-2x text-warning"></i>
                     </button>
 
+                    <!-- VER -->
+                    <button type="button" class="btn-xs align-middle"
+                      style="margin-left:5px;border:none; background-color: transparent;" (click)="verPerfil(p)"
+                      data-toggle="modal" data-target="#modal-eliminar">
 
-                    <!-- ELIMINAR -->
-                    <button type="button" class="btn-xs align-middle" style="margin-left:5px;border:none;"
-                      (click)="idAEliminar(p._id)" data-toggle="modal" data-target="#modal-eliminar">
-
-                      <i class="fas fa-trash fa-2x ml-1 mr-1 text-danger"></i>
+                      <i class="fas fa-eye fa-2x ml-1 mr-1 text-primary"></i>
 
                     </button>
+
+                   
 
                   </div>
 
@@ -677,7 +695,23 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <!-- ESTA ES LA TABLA VISIBLE PARA PANTALLAS pequeñas-->
+
+
 
     <div class="row mt-2" id="vista-movil">
       <div class="col-12">
@@ -686,111 +720,342 @@
 
 
         <!-- we are adding the accordion ID so Bootstrap's collapse plugin detects it -->
-        <div id="accordion">
-          <div class="card" *ngFor="let p of personasBusqueda">
-            <div class="card-header">
-              <h4 class="card-title w-100">
-
-                <!-- <a class="d-block w-100" data-toggle="collapse" href="{{'#'+p._id}}">
-                    &nbsp;
-                  </a> -->
+        <div id="accordion1">
 
 
+          <div class="col-12 mb-4 pl-0 pr-0">
+            <div class="card border-0 shadow">
+
+              <div class="card-body py-0">
+                <ul class="list-group list-group-flush" *ngFor="let p of personasBusqueda">
+                  <li class="list-group-item bg-transparent border-bottom py-3 px-0">
+                    <a class="d-block w-100" data-toggle="collapse" href="{{'#x'+p._id}}">
+                      <div class="row align-items-center">
+
+                        <div class="col-auto">
+                          <a href="#" class="avatar-md">
+                            <!-- <img class="rounded" alt="Image placeholder" src="../../../assets/images/H.jpg">-->
+
+                            <img src="{{p.datoBasicoPersona!.foto}}" class="rounded"
+                              onerror="this.src='../../../assets/images/NF.jpeg'">
 
 
-                <div class="row">
-                  <div class="col-2">
-                    <img src="{{p.datoBasicoPersona?.foto}}" alt="Avatar" style="display: inline-block;vertical-align: 
-                      middle;width: 40px;height: 40px;border-radius: 50%; margin-top:0px;margin-left: 20px;
-                                            padding:0px;" onerror="this.src='../../../assets/images/NF.jpeg'">
+                          </a>
+                        </div>
 
-                  </div>
-                  <div class="col-8">
-                    <div class="d-inline">{{p.datoBasicoPersona?.primerNombre?.toUpperCase()}} &nbsp;
-                      {{p.datoBasicoPersona?.segundoNombre?.toUpperCase()}}
+                        <div class="col-auto px-0">
+                          <h4 class="fs-6 text-dark mb-0"><a href="#">
+                              {{p.datoBasicoPersona!.nombres}}
 
-                      <div class="text-muted" style="margin-top:2px; font-size:10px;">
-                        CÉDULA:&nbsp;{{p.datoBasicoPersona?.cedula}}
+                            </a></h4><span class="small">
+                            {{p.datoBasicoPersona!.cedula}}
+
+                          </span>
+                        </div>
+
+                        <div class="col text-end"><span class="fs-6 fw-bolder text-dark">
+                            <i class="fas fa-chevron-down fa-2x text-primary"></i>
+
+                          </span>
+                        </div>
+
                       </div>
 
-                      <a href="{{p.datoBasicoPersona!.whatsapp }}" target="_blank" rel="noopener
-                    noreferrer" style="font-size:10px;">
-                        CELULAR:&nbsp;{{p.datoBasicoPersona?.celular}} </a>
+
+                    </a>
+                    <!-- VER -->
+                    <!--<button type="button" class="btn-xs align-middle" style="border:none;">-->
+
+                    <!--  <a class="d-block w-100" data-toggle="collapse" href="{{'#x'+p._id}}">
+                        <i class="fas fa-chevron-down fa-2x text-secondary"></i>
+                      </a>-->
+
+
+
+                    <!-- </button> -->
+                  </li>
+
+                  <div id="{{'x'+p._id}}" class="collapse" data-parent="#accordion1">
+                    <div class="card-body">
+
+
+
+
+                      <div class="card-body pt-0">
+                        <div class="row">
+                          <div class="col-8">
+
+                            <h2 class="lead"><b>{{p.datoBasicoPersona?.primerNombre}}
+                                {{p.datoBasicoPersona?.primerApellido}}</b></h2>
+
+
+
+                            <ul class="ml-4 mb-0 fa-ul text-muted">
+                              <li class="midium">
+
+                                <p class="text-muted text-sm mb-1">
+                                  <span class="fa-li">
+                                    <i class="fas fa-lg fa-user-clock" style="margin-left:4px;"></i>
+                                  </span>
+                                  <b>&nbsp;Edad: </b>
+                                  {{ obtenerEdad(anioActual, p.datoBasicoPersona?.fechaNacimiento)}}
+                                </p>
+
+                                <p class="text-muted text-sm">
+                                  <span class="fa-li">
+                                    <i class="fas fa-lg fa-birthday-cake"></i>
+                                  </span>
+                                  <b>Cumpleaño: </b>
+                                  {{ obtenerCumpleanios(p.datoBasicoPersona?.fechaNacimiento)}}
+                                </p>
+
+                              </li>
+
+                            </ul>
+
+                          </div>
 
 
 
 
 
-                              <!-- EDITAR -->
-                              <button type="button" class="btn-xs align-middle" style="margin-left:5px;border:none;"
-                                (click)="editarPersona(p)">
-                                <i class="fas fa-user-edit fa-2x text-warning"></i>
-                              </button>
+
+
+
+                          <div class="col-3 text-center">
+
+                            <div
+                              *ngIf="p.datoBasicoPersona?.foto  !== undefined && p.datoBasicoPersona?.foto  !== '' && p.datoBasicoPersona?.foto !== null ; else elseBlock">
+
+
+                              <div class="col-auto">
+                                <div class="avatar-lg">
+                                  <img class="rounded" alt="Image placeholder" src="{{p.datoBasicoPersona?.foto}}"
+                                    onerror="this.src='../../../../assets/images/NF.jpeg'">
+                                </div>
+                              </div>
+
+                            </div>
+                            <ng-template #elseBlock>
+
+                              <div *ngIf="p.datoBasicoPersona?.sexo==='H' ; else elseBlock1">
+
+
+                                <div class="col-auto">
+                                  <div class="avatar-lg">
+                                    <img class="rounded" alt="Image placeholder" src="../../../../assets/images/H.jpg">
+                                  </div>
+                                </div>
+
+                              </div>
+
+                              <ng-template #elseBlock1>
+
+
+                                <div class="col-auto">
+                                  <div class="avatar-lg">
+                                    <img class="rounded" alt="Image placeholder" src="../../../../assets/images/M.jpg">
+                                  </div>
+                                </div>
+
+                              </ng-template>
+
+
+                            </ng-template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                          </div>
+
+                          <div class="row">
+                            <div class="col-12">
+
+
+                              <ul class="ml-10 mb-0 fa-ul text-muted">
+
+                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone mb-1"></i></span>
+                                  Celular:
+                                  {{p.datoBasicoPersona?.celular}}
+                                </li>
+                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-envelope mb-1"></i></span>
+                                  Email:
+                                  {{p.datoBasicoPersona?.email}}
+                                </li>
+                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-map-pin mb-1"></i></span>
+                                  Dirección:
+                                  {{p.datoBasicoPersona?.direccion}}
+                                </li>
+
+
+                              </ul>
+                            </div>
+
+
+
+
+                          </div>
+
+                          <div class="col-12 mt-2">
+
+
+                            <ul class="ml-4 mb-0 fa-ul text-muted">
+                              <li class="midium">
+
+                                <div class="text-muted text-sm mb-1 pt-2" *ngIf="p.escuela?.length">
+                                  <span class="fa-li">
+                                    <i class="fas fa-lg fa-graduation-cap" style="margin-left:4px;"></i>
+                                  </span>
+                                  &nbsp;Escuelas
+                                  <br>
+
+
+
+                                  <div class="progress mt-1"
+                                    style="height:5px;background: #C2C7D0;border-radius: 20px; overflow: visible;position: relative;padding:0px;margin-right: 15px;">
+
+
+                                    <div class="progress-bar"
+                                      style=" background:#4f5962; border-radius: 20px;-webkit-animation:animate-positive 2s; animation: animate-positive 2s;"
+                                      [ngStyle]="{width:obtenerPorcentaje(p.escuela!), 'background-color':
+
+                                obtenerColorFondoBarra(p.escuela!)}">
+                                      <div class="progress-value" style="font-size:10px"></div>
+                                    </div>
+                                  </div>
+
+                                </div>
+
+
+                                <div class="text-muted text-sm mb-1 pt-2" *ngIf="p.proceso?.length">
+                                  <span class="fa-li">
+                                    <i class="fas fa-lg fa-biking" style="margin-left:4px;"></i>
+                                  </span>
+                                  &nbsp;Procesos
+                                  <br>
+
+
+
+                                  <div class="progress mt-1"
+                                    style="height:5px;background: #C2C7D0;border-radius: 20px; overflow: visible;position: relative;padding:0px;margin-right: 15px;">
+
+
+                                    <div class="progress-bar"
+                                      style=" background:#4f5962; border-radius: 20px;-webkit-animation:animate-positive 2s; animation: animate-positive 2s;"
+                                      [ngStyle]="{width:obtenerPorcentaje(p.proceso!), 'background-color':
+
+                                obtenerColorFondoBarra(p.proceso!)}">
+                                      <div class="progress-value" style="font-size:10px"></div>
+                                    </div>
+                                  </div>
+
+
+
+
+
+
+                                </div>
+
+
+                                <div class="text-muted text-sm mb-1 pt-2" *ngIf="p.grupo?.length">
+                                  <span class="fa-li">
+                                    <i class="fas fa-lg fa-users" style="margin-left:4px;"></i>
+                                  </span>
+                                  &nbsp;Grupos
+                                  <br>
+
+                                  <span *ngFor="let g of p.grupo" style="padding-top: 1px; margin: 2px;">
+                                    <span class="badge badge-pill badge-secondary"
+                                      style="font-size: 9px;;">{{g.tipo}}</span>
+                                  </span>
+                                </div>
+
+
+                                <div class="text-muted text-sm mb-1 pt-2" *ngIf="p.seminario?.length">
+                                  <span class="fa-li">
+                                    <i class="fas fa-lg fa-university" style="margin-left:4px;"></i>
+                                  </span>
+                                  &nbsp;Seminarios
+                                  <br>
+
+                                  <span *ngFor="let s of p.seminario" style="padding-top: 1px; margin: 2px;">
+                                    <span class="badge badge-pill badge-secondary"
+                                      [ngStyle]="{'background-color': s.color}"
+                                      style="font-size: 9px;;">{{s.tipo}}</span>
+                                  </span>
+                                </div>
+
+
+
+                              </li>
+
+                            </ul>
+
+                          </div>
+                        </div>
+                      </div>
+
+
+
+
+
+
+<div class="col-12 px-0 text-end">
+  <div class="btn-group">
+     <button class="btn btn-gray-800 bg-transparent border-0">
+       <i class="fas fa-trash fa-2x ml-1 mr-1 text-danger"></i>
+     </button>
+  
+    
+    <button class="btn btn-gray-800 bg-transparent border-0">
+                      <i class="fas fa-user-edit fa-2x text-warning"></i>
+    </button> 
+
+      <button class="btn btn-gray-800 bg-transparent border-0">
+
+        <i class="fas fa-eye fa-2x ml-1 mr-1 text-primary"></i>
+      </button>
+   
+  </div>
+</div>
 
 
 
                     </div>
                   </div>
 
-<div class="col-2">
-
-  <div class="btn-group " role="group" aria-label="Basic example" >
-
-    <!-- VER -->
-    <button type="button" class="btn-xs align-middle" style="border:none;" 
-      >
-
-<a class="d-block w-100" data-toggle="collapse" href="{{'#'+p._id}}">
-  <i class="fas fa-chevron-down fa-2x text-secondary"></i>
-</a>
-
-      
-
-    </button>
-</div>
-
-</div>
+                </ul>
 
 
 
 
-
-
-
-
-                </div>
-
-
-
-
-
-
-              </h4>
-            </div>
-            <div id="{{p._id}}" class="collapse" data-parent="#accordion">
-              <div class="card-body">
-               
-                MAS INFORMACIÓN DE &nbsp; {{p.datoBasicoPersona?.primerNombre}}
               </div>
             </div>
+
+
+
           </div>
-
         </div>
-
-
-
       </div>
     </div>
 
 
-
-
-
-
     <!-- FIN DE LA VISTA DE TABLA PARA PANTALLAS pequeñas-->
-
-
-
 
 
   </div>

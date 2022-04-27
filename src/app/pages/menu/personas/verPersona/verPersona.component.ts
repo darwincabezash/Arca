@@ -69,6 +69,8 @@ export class VerPersonaComponent implements OnInit {
 
   anchoOrientacionReporte = '70%';
 
+  anioActual: number = 0;
+
   constructor(
     private personaService: PersonaService,
     private sesion: RuteadorService,
@@ -100,6 +102,8 @@ export class VerPersonaComponent implements OnInit {
           this.messages = [];
         }
       });
+
+    this.anioActual = new Date().getFullYear();
   }
 
   downloadPDF() {
@@ -606,7 +610,8 @@ export class VerPersonaComponent implements OnInit {
 
   actualizarPagina() {
     //this.actualizarBase();
-this.ngOnInit();  }
+    this.ngOnInit();
+  }
 
   async actualizarBase() {
     this.personaService.consultarPersonas();
@@ -621,5 +626,71 @@ this.ngOnInit();  }
       this.personas = this.memoriaService.obtenerLocalPersona()!;
       console.log('REASIGNO A PERSONAS');
     });
+  }
+
+  obtenerEdad(_añoActual: number, _fechaNacimiento: any) {
+    let fechaN = new Date(_fechaNacimiento);
+    if (_fechaNacimiento !== undefined) {
+      return _añoActual - fechaN.getFullYear() + ' Años';
+    } else {
+      return 'No Disponible';
+    }
+  }
+
+  obtenerCumpleanios(_fechaNacimiento: any) {
+    if (_fechaNacimiento !== undefined) {
+      let _dia = new Date(_fechaNacimiento).toLocaleString('es', {
+        day: 'numeric',
+      });
+      let _mes: String = new Date(_fechaNacimiento).toLocaleString('es', {
+        month: 'long',
+      });
+
+      let _fechaCumpleanio =
+        _dia + ' de ' + _mes[0].toUpperCase() + _mes.slice(1);
+      return _fechaCumpleanio;
+    } else {
+      return 'No Disponible';
+    }
+  }
+
+  obtenerPorcentaje(escuelas: Escuela[]): String {
+    if (escuelas !== undefined) {
+      if (escuelas.length > 0) {
+        let porcentaje = (escuelas.length / this.cantidadEscuelas) * 100;
+        return porcentaje.toString() + '%';
+      }
+    }
+    return '0%';
+  }
+
+  obtenerColorFondoBarra(_escuela: Escuela[]) {
+    let _porcentaje = 0;
+    if (_escuela !== undefined) {
+      if (_escuela.length > 0) {
+        _porcentaje = (_escuela.length / this.cantidadEscuelas) * 100;
+
+        //ROJO
+        if (_porcentaje < 20) {
+          return '#A91A17';
+        }
+
+        //NARANJA
+        if (_porcentaje > 19 && _porcentaje < 46) {
+          return '#E68E25';
+        }
+
+        //AZUL
+        if (_porcentaje > 45 && _porcentaje < 80) {
+          return '#3291CF';
+        }
+
+        //VERDE
+        if (_porcentaje >= 80) {
+          return '#2AC26A';
+        }
+      }
+    }
+    return 0;
   }
 }

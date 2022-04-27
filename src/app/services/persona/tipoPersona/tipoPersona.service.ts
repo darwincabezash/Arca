@@ -1,7 +1,7 @@
 import { TipoPersona } from './../../../dataModels/tipoPersona';
 import { Injectable } from '@angular/core';
 import { concatMapTo, Observable, Subject } from 'rxjs';
-import { GlobalDataService } from '../../login/globalDataServices';
+import { GlobalDataService } from '../../../global/globalDataServices';
 
 @Injectable({
   providedIn: 'root'

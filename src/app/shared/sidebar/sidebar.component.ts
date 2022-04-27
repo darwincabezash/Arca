@@ -6,12 +6,13 @@ import { Sesiones } from 'src/app/shared/general/staticGeneral';
 import { MemoriaService } from 'src/app/services/compartido/memoria.service';
 import { DatosPersonaService } from 'src/app/services/persona/datos-persona.service';
 import { PersonaService } from 'src/app/services/persona/persona/persona.service';
-
+import * as $ from 'jquery';
+//import * as AdminLTE from 'admin-lte';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: [],
+  styleUrls: ['./sidebar.css'],
 })
 export class SidebarComponent implements OnInit {
   totalPersonas: number = 0;
@@ -23,7 +24,7 @@ export class SidebarComponent implements OnInit {
 
   constructor(
     private personaService: PersonaService,
-    private datosPersonaService: DatosPersonaService, 
+    private datosPersonaService: DatosPersonaService,
     private memoriaService: MemoriaService
   ) {
     this.persona = new Persona();
@@ -40,6 +41,45 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+$(document).ready(function () {
+  $('.close-menu').click(function (e) {
+    $('#sidebarMenu').removeClass('show');
+  });
+});
+
+
+    $(document).ready(() => {
+
+
+      /*$('#show-sidebar').click(function (e) {
+        e.preventDefault();
+      });*/
+
+
+
+      /*$('.sidebar-dropdown > a').click(function (e) {
+        e.preventDefault();
+        $('.sidebar-submenu').slideUp(200);
+        if ($(this).parent().hasClass('active')) {
+          $('.sidebar-dropdown').removeClass('active');
+          $(this).parent().removeClass('active');
+        } else {
+          $('.sidebar-dropdown').removeClass('active');
+          $(this).next('.sidebar-submenu').slideDown(200);
+          $(this).parent().addClass('active');
+        }
+      });
+
+      $('#close-sidebar').click(function () {
+        $('.page-wrapper').removeClass('toggled');
+      });
+      $('#show-sidebar').click(function () {
+        $('.page-wrapper').addClass('toggled');
+      });*/
+
+    });
+
     /*var isLoadedBefore = localStorage.getItem('IsLoadedBefore');
     if (isLoadedBefore == 'true') {
       console.log("NO RECARGA");
@@ -51,15 +91,11 @@ export class SidebarComponent implements OnInit {
 window.location.reload();
     }*/
 
- let personas: any = this.memoriaService.obtenerLocalPersona();
+    let personas: any = this.memoriaService.obtenerLocalPersona();
     if (personas) {
       this.totalPersonas = personas.length;
       console.log('###  ' + this.totalPersonas);
- }
-
-
-
-
+    }
   }
 
   extraerPersonaDeBase() {
@@ -78,8 +114,7 @@ window.location.reload();
 
   extraerSesionUsuario() {
     let objSesionUsuario = localStorage.getItem(Sesiones.DATOS_SESION);
-    
-    
+
     if (objSesionUsuario != null) {
       const sessionUsuario = JSON.parse(objSesionUsuario) as SessionUsuario;
       this.usuarioSesion = sessionUsuario;

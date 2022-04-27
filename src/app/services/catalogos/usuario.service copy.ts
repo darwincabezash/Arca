@@ -1,5 +1,5 @@
 import { Usuario } from 'src/app/dataModels/usuario';
-import { GlobalDataService } from '../login/globalDataServices';
+import { GlobalDataService } from '../../global/globalDataServices';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, concatMapTo } from 'rxjs';
 

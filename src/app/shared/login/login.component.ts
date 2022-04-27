@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { RuteadorService } from 'src/app/router/ruteador.service';
-import { GlobalDataService } from 'src/app/services/login/globalDataServices';
+import { GlobalDataService } from 'src/app/global/globalDataServices';
 import { PersonaService } from 'src/app/services/persona/persona/persona.service';
 import { DatoBasicoPersona, Persona } from 'src/app/dataModels/persona';
 import { DatosPersonaService } from 'src/app/services/persona/datos-persona.service';
@@ -170,6 +170,7 @@ export class LoginComponent implements OnInit {
               //}
 
               //console.log('))))))))) VA A CONSULTAR LA PERSONA');
+              console.log("ID DE PERSONA: " + this.usuario._idPersona);
               await this.personaService.consultarPersona(
                 this.usuario._idPersona!
               );
@@ -179,6 +180,8 @@ export class LoginComponent implements OnInit {
               //this.router.navigate(['/dashboard/dashboard']);
 
               this.router.navigate(['/inicio/dashboard']);
+
+              console.log("LLEGO AQUI");
                          
             });
         } else {

@@ -44,19 +44,20 @@ export class DashboardComponent implements OnInit {
   edadNull = 0;
 
   coloresTodos: String[] = [
-    '#19A091',
-    '#DC535B',
-    '#00b1dd',
-    '#DB8031',
-    '#EDAE1B',
-    '#018cca',
-    '#E9D01A',
-    '#3c5da4',
-    '#a0c047',
-    '#a05095',
+    '#BBBEC3',
+    '#10B981',
+    '#BBEAD9',
+    '#30316A',
+    '#E11D48',
+    '#F3C78E',
+    '#D7C5FA',
+    '#FD8E7A',
+    '#4D4AE8',
+    '#EE5050',
     '#ce3874',
     '#00AD6E',
   ];
+  
   coloresSeleccion: String[] = [];
 
   //:::: PERSONAS POR ESCUELAS FINALIZADAS
@@ -115,7 +116,7 @@ export class DashboardComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     //console.log('VOY A ELIMINAR LA IMAGEN ');
     //this.utilidadesService.eliminarImagenFirebase('');
-    this.router.navigate(["inicio/padre"]);
+    //this.router.navigate(["inicio/padre"]);
 
     this.c++;
     this.personas = [];

@@ -1,6 +1,7 @@
 import { Grupo } from '../../dataModels/grupo';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { GlobalDataService } from '../../global/globalDataServices';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +9,7 @@ import { Observable, Subject } from 'rxjs';
 export class GrupoService {
 
 
-  serverLocal: RequestInfo = "http://localhost:3000/graphql";
-  serverPro: RequestInfo = "https://arca-server.vercel.app/graphql";
+  server: RequestInfo = GlobalDataService.getServer();
 
   //GRUPO
   private grupos: Grupo[];
@@ -27,7 +27,7 @@ export class GrupoService {
   async agregarGrupo(grupo: Grupo) {
     try {
 
-      await fetch(this.serverLocal, {
+      await fetch(this.server, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -44,10 +44,9 @@ export class GrupoService {
         })
       })
         .then((res) => res.json())
-        .then((result) => {    
+        .then((result) => {
 
-          this.grupos$.next(this.grupos);
-
+          this.consultarGrupo();
         });
     } catch (e) {
       console.log("ERROR: " + e);
@@ -61,7 +60,7 @@ export class GrupoService {
 
     try {
 
-      await fetch(this.serverLocal, {
+      await fetch(this.server, {
 
         method: 'POST',
         headers: {
@@ -74,6 +73,11 @@ export class GrupoService {
             grupo{
               _id
               tipo
+              permisos{
+                _id
+                idPermiso
+                nombre
+              }
             }
                   }`,
 
@@ -83,13 +87,19 @@ export class GrupoService {
         .then((res) => res.json())
         .then((result) => {
           result.data.grupo.map((tp: any) => {
+
+
             let grupo = new Grupo();
             grupo._id = tp._id;
             grupo.tipo = tp.tipo;
+            grupo.color = "#fff";
+            grupo.permisos = tp.permisos;
             this.grupos.push(grupo);
+
+            this.grupos$.next(this.grupos);
+
           });
         });
-      this.grupos$.next(this.grupos);
 
     } catch (e) {
       console.log("ERROR: " + e);
@@ -100,7 +110,7 @@ export class GrupoService {
   async eliminarGrupo(_id: any) {
     try {
 
-      await fetch(this.serverLocal, {
+      await fetch(this.server, {
 
         method: 'POST',
         headers: {
@@ -120,8 +130,8 @@ export class GrupoService {
       })
         .then((res) => res.json())
         .then((result) => {
+          this.consultarGrupo();
         });
-      this.grupos$.next(this.grupos);
 
     } catch (e) {
       console.log("ERROR: " + e);
@@ -129,10 +139,10 @@ export class GrupoService {
   }
 
   //ACTUALIZAR
-  async actualizarGrupo(_id:any,grupo:Grupo) {
+  async actualizarGrupo(_id: any, grupo: Grupo) {
     try {
 
-      await fetch(this.serverLocal, {
+      await fetch(this.server, {
 
         method: 'POST',
         headers: {
@@ -154,17 +164,80 @@ export class GrupoService {
       })
         .then((res) => res.json())
         .then((result) => {
-          
+          this.consultarGrupo();
         });
-      this.grupos$.next(this.grupos);
 
     } catch (e) {
       console.log("ERROR: " + e);
     }
   }
 
-  obtenerGrupos$(): Observable<Grupo[]> {
-    return this.grupos$.asObservable();
+
+  //ACTUALIZAR
+  async actualizarGrupoPermiso(_id: any, _grupo: Grupo) {
+    try {
+
+
+      let lista = '';
+      _grupo.permisos!.forEach(element => {
+        console.log("estado de permiso: "+element.estado);
+        if(element.estado)
+        {
+        lista+= `{ 
+          idPermiso:"${element.idPermiso}"
+          nombre:"${element.nombre}"
+        },`}
+      });
+
+
+
+      await fetch(this.server, {
+
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          query: `mutation{
+            actualizarGrupo(_id:"${_id}",
+            input:{
+              tipo:"${_grupo.tipo}"
+            
+              permisos:[
+                ${lista}
+              ]
+
+          }){
+              _id
+              tipo
+              permisos{
+                _id
+                idPermiso
+                nombre
+              }
+              
+            }
+          }`
+
+
+        })
+
+  })
+        .then((res) => res.json())
+        .then((result) => {
+          this.consultarGrupo();
+  });
+
+    } catch (e) {
+  console.log("ERROR: " + e);
+}
   }
+
+
+
+obtenerGrupos$(): Observable < Grupo[] > {
+  return this.grupos$.asObservable();
+}
 
 }

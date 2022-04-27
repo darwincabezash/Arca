@@ -1,15 +1,15 @@
 import { TipoProceso } from './../../dataModels/tipoProceso';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { GlobalDataService } from '../../global/globalDataServices';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TipoProcesoService {
 
+  server:RequestInfo=GlobalDataService.getServer();
 
-  serverLocal: RequestInfo = "http://localhost:3000/graphql";
-  serverPro: RequestInfo = "https://arca-server.vercel.app/graphql";
 
   //TIPO PROCESO
   private tipoProcesos: TipoProceso[];
@@ -27,7 +27,7 @@ export class TipoProcesoService {
   async agregarTipoProceso(tipoProceso: TipoProceso) {
     try {
 
-      await fetch(this.serverLocal, {
+      await fetch(this.server, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,8 +45,7 @@ export class TipoProcesoService {
       })
         .then((res) => res.json())
         .then((result) => {    
-
-          this.tipoProcesos$.next(this.tipoProcesos);
+          this.consultarTipoProceso();
 
         });
     } catch (e) {
@@ -61,7 +60,7 @@ export class TipoProcesoService {
 
     try {
 
-      await fetch(this.serverLocal, {
+      await fetch(this.server, {
 
         method: 'POST',
         headers: {
@@ -90,8 +89,10 @@ export class TipoProcesoService {
             tipoProceso.tipo = tp.tipo;
             this.tipoProcesos.push(tipoProceso);
           });
+          this.tipoProcesos$.next(this.tipoProcesos);
+
         });
-      this.tipoProcesos$.next(this.tipoProcesos);
+
 
     } catch (e) {
       console.log("ERROR: " + e);
@@ -102,7 +103,7 @@ export class TipoProcesoService {
   async eliminarTipoProceso(_id: any) {
     try {
 
-      await fetch(this.serverLocal, {
+      await fetch(this.server, {
 
         method: 'POST',
         headers: {
@@ -122,8 +123,9 @@ export class TipoProcesoService {
       })
         .then((res) => res.json())
         .then((result) => {
+          this.consultarTipoProceso();
         });
-      this.tipoProcesos$.next(this.tipoProcesos);
+
 
     } catch (e) {
       console.log("ERROR: " + e);
@@ -134,7 +136,7 @@ export class TipoProcesoService {
   async actualizarTipoProceso(_id:any,tipoProceso:TipoProceso) {
     try {
 
-      await fetch(this.serverLocal, {
+      await fetch(this.server, {
 
         method: 'POST',
         headers: {
@@ -156,13 +158,50 @@ export class TipoProcesoService {
       })
         .then((res) => res.json())
         .then((result) => {
-          
+          this.consultarTipoProceso();
         });
-      this.tipoProcesos$.next(this.tipoProcesos);
 
     } catch (e) {
       console.log("ERROR: " + e);
     }
+  }
+
+
+
+  //CONSULTAR CANTIDAD ESCUELAS
+  async consultarTipoProcesoCantidad(): Promise<number> {
+
+    let cantidadTipoProceso = 0;
+
+    try {
+
+      await fetch(this.server, {
+
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+
+        body: JSON.stringify({
+          query: `{
+            tipoProcesoCantidad
+                  }`,
+
+        })
+
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          cantidadTipoProceso = result.data.tipoProcesoCantidad;
+
+        });
+
+    } catch (e) {
+      console.log("ERROR: " + e);
+      cantidadTipoProceso = 0;
+    }
+    return cantidadTipoProceso;
   }
 
   obtenerTipoProcesos$(): Observable<TipoProceso[]> {

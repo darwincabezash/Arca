@@ -1,230 +1,401 @@
-<!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
-  <!-- Brand Logo -->
-  <a href="../../index3.html" class="brand-link">
-    <img src="./assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-      style="opacity: .8">
-    <span class="brand-text font-weight-light">Arca</span>
-  </a>
+ <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
+   <a class="navbar-brand me-lg-5" href="../../index.html">
+    
 
-  <!-- Sidebar -->
-  <div class="sidebar ">
-    <!-- Sidebar user (optional) -->
-    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-      <div class="image">
-        <img src="./assets/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-      </div>
-      <div class="info">
-        <a href="#" class="d-block">Alexander Pierce</a>
-      </div>
-    </div>
 
-    <!-- SidebarSearch Form -->
-    <div class="form-inline ">
-      <div class="input-group" data-widget="sidebar-search">
-        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-        <div class="input-group-append">
-          <button class="btn btn-sidebar">
-            <i class="fas fa-search fa-fw"></i>
-          </button>
+       <img src="{{persona.datoBasicoPersona!.foto}}" class="rounded"
+         onerror="this.src='../../../assets/images/NF.jpeg'">
+
+         <div  class="d-inline mr-3"></div>
+         <div class="d-inline">
+           <h2 class="h5 mb-3 d-inline text-white">Hola, {{persona.datoBasicoPersona!.primerNombre}}</h2>
+          
+
+       </div>
+
+   </a>
+   <div class="d-flex align-items-center">
+     
+     <button class="navbar-toggler  collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu"
+       aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+       <span class="navbar-toggler-icon"></span>
+     </button>
+   </div>
+ </nav>
+
+ <nav id="sidebarMenu" class="sidebar d-lg-block bg-gray-800 text-white collapse" data-simplebar>
+   <div class="text-center mt-3 mb-2">
+     <a *ngIf="usuarioSesion!.iglesia!.nombreIglesia" href="/inicio/dashboard" class="brand-link"
+       style="padding-left: 10px;">
+       <img src="{{usuarioSesion!.iglesia!.logo}}" alt="AdminLTE Logo" style="vertical-align: middle;width: 25px;height: 25px;border-radius: 50%; margin-top:0px;
+                      padding:0px;" onerror="this.src='../../../assets/images/NF.jpeg'">
+       <span class="brand-text font-weight-light pl-3 h6">
+         {{usuarioSesion!.iglesia!.nombreIglesia}}
+       </span>
+
+
+     </a>
+   </div>
+
+   <div class="sidebar-inner px-4 pt-3">
+     <div class="user-card d-flex align-items-center justify-content-between justify-content-md-center pb-4">
+
+
+
+       <div class="d-flex align-items-center">
+
+         <div class="avatar-lg me-4">
+
+
+
+
+
+
+
+
+           <div>
+
+
+             <div *ngIf="persona.datoBasicoPersona!.foto !== undefined && persona.datoBasicoPersona!.foto !== '' &&
+             persona.datoBasicoPersona!.foto !== null && persona.datoBasicoPersona!.foto !== ' ' ; else elseBlock">
+
+
+               <div class="col-auto">
+                 <div class="avatar-lg">
+                   <img class="rounded" alt="Image placeholder" src="{{persona.datoBasicoPersona!.foto}}">
+                 </div>
+               </div>
+
+
+             </div>
+
+             <ng-template #elseBlock>
+
+               <div *ngIf="persona.datoBasicoPersona!.sexo==='H' ; else elseBlock1">
+
+
+                 <div class="col-auto">
+                   <div class="avatar-lg">
+                     <img class="rounded" alt="Image placeholder" src="../../../assets/images/H.jpg">
+                   </div>
+                 </div>
+
+               </div>
+
+               <ng-template #elseBlock1>
+
+                 <div class="col-auto">
+                   <div class="avatar-lg">
+                     <img class="rounded" alt="Image placeholder" src="../../../assets/images/M.jpg">
+                   </div>
+                 </div>
+
+               </ng-template>
+
+             </ng-template>
+
+           </div>
+
+
+
+
+
+
+         </div>
+         <div style="width:20px"></div>
+         <div class="d-block">
+           <h2 class="h5 mb-3">Hola, {{persona.datoBasicoPersona!.primerNombre}}</h2>
+           <!--<a href="../../pages/examples/sign-in.html" class="btn btn-secondary btn-sm d-inline-flex align-items-center">
+            <svg class="icon icon-xxs me-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+            </svg>
+            Salir
+          </a>
+          -->
+
+         </div>
+       </div>
+
+     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     <ul class="nav flex-column pt-3 pt-md-0">
+       <li class="nav-item">
+         <span class="sidebar-icon">
+         </span>
+         <span class="mt-1 ms-1 sidebar-text"></span>
+       </li>
+
+       <!--DASHBOARD-->
+       <li class="nav-item  active ">
+         <a routerLink="/inicio/dashboard" class="nav-link">
+           <span class="sidebar-icon mr-3">
+             <i class="nav-icon fas fa-tachometer-alt"></i>
+           </span>
+           <span class="sidebar-text close-menu">Dashboard</span>
+
+         </a>
+       </li>
+
+       <!--PERSONAS-->
+       <li class="nav-item">
+         <span class="nav-link  collapsed  d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
+           data-bs-target="#submenu-personas">
+           <span>
+             <span class="sidebar-icon mr-3">
+               <i class="nav-icon fas fa-users"></i>
+             </span>
+             <span class="sidebar-text">Personas</span>
+           </span>
+
+           <span class="link-arrow fa-md">
+             <i class="right fas fa-angle-right fa-md"></i>
+           </span>
+         </span>
+         <div class="multi-level collapse " role="list" id="submenu-personas" aria-expanded="false">
+           <ul class="flex-column nav">
+             <!--REGISTRAR PERSONA-->
+             <li class="nav-item">
+               <a routerLink="/inicio/registrarPersona" class="nav-link">
+                 <span class="sidebar-text close-menu">Registrar Persona</span>
+               </a>
+             </li>
+             <!--VER PERSONAS-->
+             <li class="nav-item">
+               <a routerLink="/inicio/verPersona" class="nav-link">
+                 <span class="sidebar-text close-menu">Ver Personas</span>
+               </a>
+             </li>
+             <!--VER CONTACTOS DE PERSONAS-->
+             <li class="nav-item">
+               <a routerLink="/inicio/contactoPersona" class="nav-link">
+                 <span class="sidebar-text close-menu">Ver Contactos</span>
+               </a>
+             </li>
+           </ul>
+         </div>
+       </li>
+
+
+
+       <!--CONFIGURACIONES-->
+       <li class="nav-item">
+         <span class="nav-link  collapsed  d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
+           data-bs-target="#submenu-configuraciones">
+           <span>
+             <span class="sidebar-icon mr-3">
+               <i class="nav-icon fas fa-wrench"></i>
+             </span>
+             <span class="sidebar-text">Configuraciones</span>
+           </span>
+
+           <span class="link-arrow fa-md">
+             <i class="right fas fa-angle-right fa-md"></i>
+           </span>
+         </span>
+         <div class="submenu collapse ml-4" role="list" id="submenu-configuraciones" aria-expanded="false">
+
+           <span class="nav-link  collapsed  d-flex justify-content-between align-items-center"
+             data-bs-toggle="collapse" data-bs-target="#submenu-configuraciones-catalogos">
+             <span>
+               <span class="sidebar-icon mr-3">
+                 <i class="fas fa-list nav-icon"></i>
+               </span>
+               <span class="sidebar-text">Catálogos</span>
+             </span>
+
+             <span class="link-arrow fa-md">
+               <i class="right fas fa-angle-right fa-md"></i>
+             </span>
+           </span>
+
+           <div class="submenu collapse ml-4" role="list" id="submenu-configuraciones-catalogos" aria-expanded="false">
+             <ul class="flex-column nav">
+               <!--TIPO PERSONA-->
+               <li class="nav-item">
+                 <a routerLink="/inicio/tipoPersona" class="nav-link">
+                   <span class="sidebar-icon ">
+                     <i class="fas fa-user-tag nav-icon"></i>
+                   </span>
+                   <span class="sidebar-text ml-2 close-menu">Tipo de Personas</span>
+                 </a>
+               </li>
+
+               <!--TIPO PROCESO-->
+               <li class="nav-item">
+                 <a routerLink="/inicio/proceso" class="nav-link">
+                   <span class="sidebar-icon ">
+                     <i class="fas fa-tasks nav-icon"></i>
+                   </span>
+                   <span class="sidebar-text ml-2 close-menu">Procesos</span>
+                 </a>
+               </li>
+
+               <!--GRUPO-->
+               <li class="nav-item">
+                 <a routerLink="/inicio/grupo" class="nav-link">
+                   <span class="sidebar-icon ">
+                     <i class="fas fa-street-view nav-icon"></i>
+                   </span>
+                   <span class="sidebar-text ml-2 close-menu">Grupos</span>
+                 </a>
+               </li>
+
+               <!--ESCUELA-->
+               <li class="nav-item">
+                 <a routerLink="/inicio/escuela" class="nav-link">
+                   <span class="sidebar-icon ">
+                     <i class="fas fa-graduation-cap nav-icon"></i>
+                   </span>
+                   <span class="sidebar-text ml-2 close-menu">Escuelas</span>
+                 </a>
+               </li>
+
+               <!--ETAPA-->
+               <li class="nav-item">
+                 <a routerLink="/inicio/etapa" class="nav-link">
+                   <span class="sidebar-icon ">
+                     <i class="fas fa-hiking nav-icon"></i>
+                   </span>
+                   <span class="sidebar-text ml-2 close-menu">Etapas</span>
+                 </a>
+               </li>
+
+               <!--SEMINARIO-->
+               <li class="nav-item">
+                 <a routerLink="/inicio/seminario" class="nav-link">
+                   <span class="sidebar-icon ">
+                     <i class="fas fa-university nav-icon"></i>
+                   </span>
+                   <span class="sidebar-text ml-2 close-menu">Seminarios</span>
+                 </a>
+               </li>
+
+               <!--PERMISO-->
+               <li class="nav-item">
+                 <a routerLink="/inicio/permiso" class="nav-link">
+                   <span class="sidebar-icon ">
+                     <i class="fas fa-hiking nav-icon"></i>
+                   </span>
+                   <span class="sidebar-text ml-2 close-menu">Permisos</span>
+                 </a>
+               </li>
+
+             </ul>
+           </div>
+         </div>
+       </li>
+
+
+
+
+
+
+       <!--<li class="nav-item">
+        <a href="https://demo.themesberg.com/volt-pro/pages/kanban.html" target="_blank"
+          class="nav-link d-flex justify-content-between">
+          <span>
+            <span class="sidebar-icon mr-3">
+              <i class="nav-icon fas fa-users"></i>
+            </span>
+            <span class="sidebar-text">blabla</span>
+          </span>
+          <span>
+            <span class="badge badge-sm bg-secondary ms-1 text-gray-800">Pro</span>
+          </span>
+        </a>
+      </li>-->
+
+
+       <!-- <li class="nav-item">
+        <span class="nav-link  collapsed  d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
+          data-bs-target="#submenu-app">
+          <span>
+            <span class="sidebar-icon mr-3">
+              <i class="nav-icon fas fa-users"></i>
+            </span>
+            <span class="sidebar-text">Lista</span>
+          </span>
+
+          <span class="link-arrow fa-md">
+            <i class="right fas fa-angle-right fa-md"></i>
+          </span>
+        </span>
+        <div class="multi-level collapse " role="list" id="submenu-app" aria-expanded="false">
+          <ul class="flex-column nav">
+            <li class="nav-item">
+              <a class="nav-link" href="../../pages/examples/sign-in.html">
+                <span class="sidebar-text">Sign In</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../../pages/examples/sign-up.html">
+                <span class="sidebar-text">Sign Up</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../../pages/examples/forgot-password.html">
+                <span class="sidebar-text">Forgot password</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../../pages/examples/reset-password.html">
+                <span class="sidebar-text">Reset password</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../../pages/examples/lock.html">
+                <span class="sidebar-text">Lock</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../../pages/examples/404.html">
+                <span class="sidebar-text">404 Not Found</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../../pages/examples/500.html">
+                <span class="sidebar-text">500 Not Found</span>
+              </a>
+            </li>
+          </ul>
         </div>
-      </div>
-    </div>
-
-    <!-- Sidebar Menu -->
-    <nav class="mt-2">
-      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-
-        <!--@@@@@@@@@@@@@@@@@@@  AQUI VA DASHBOARD-->
+      </li>
+      <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
+-->
+     </ul>
+   </div>
+ </nav>
 
 
-        <!--PERSONAS-->
-        <li class="nav-item">
-          <a href="#" class="nav-link">
+ <script>
+   $(document).ready(function () {
+     console.log("ready!");
+     alert("hola");
 
-            <i class="nav-icon fas fa-users"></i>
-            <p>
-              Personas
-              <i class="right fas fa-angle-left"></i>
-              <span class="right badge badge-danger">New</span>
-            </p>
-          </a>
+   });
 
-          <ul class="nav nav-treeview">
-            <!--REGISTRAR PERSONA-->
-            <li class="nav-item">
-              <a routerLink="/dashboard/registrar-persona" class="nav-link">
-                <i class="fas fa-user-plus nav-icon " style="margin-left: 10px;"></i>
-                <p>Registrar Persona</p>
-              </a>
-            </li>
-            <!--VER PERSONAS-->
-            <li class="nav-item">
-              <a routerLink="/dashboard/ver-personas" class="nav-link">
-                <!--<i class="fas fa-user-plus nav-icon"></i>-->
-                <i class="fas fa-list-alt nav-icon" style="margin-left: 10px;"></i>
-                <p>Ver Personas</p>
-                <span class="badge badge-info right">{{totalPersonas}}</span>
-              </a>
-            </li>
-            <!--VER CONTACTOS DE PERSONAS-->
-            <li class="nav-item">
-              <a routerLink="/dashboard/ver-contacto-personas" class="nav-link">
-                <!--<i class="fas fa-user-plus nav-icon"></i>-->
-                <i class="fas fa-list-alt nav-icon " style="margin-left: 10px;"></i>
-                <p>Ver Contactos</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <!--FIN PERSONAS-->
+   $('body,html').click(function (e) {
+     alert("hola");
+     //$('#hide-menu').removeClass('show-menu');
+   });
 
-
-
-        <!--CONFIGURACIONES-->
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-wrench"></i>
-            <p>
-              Configuraciones
-              <i class="right fas fa-angle-left"></i>
-            </p>
-          </a>
-
-          <ul class="nav nav-treeview">
-
-            <li class="nav-item">
-
-              <a href="#" class="nav-link">
-                <i class="fas fa-list nav-icon" style="margin-left: 10px;">
-                </i>
-
-                <p>
-                  Catálogos
-                  <i class="right fas fa-angle-left"></i>
-                </p>
-              </a>
-
-              <ul class="nav nav-treeview">
-
-                <!--TIPO PERSONA-->
-
-                <li class="nav-item">
-                  <a routerLink="/dashboard/tipoPersona" class="nav-link">
-                    <i class="fas fa-user-tag nav-icon " style="margin-left: 20px;"></i>
-                    <p>Tipo de Personas</p>
-                  </a>
-                </li>
-
-                <!--TIPO PROCESO-->
-
-                <li class="nav-item">
-                  <a routerLink="/dashboard/tipoProceso" class="nav-link">
-                    <i class="fas fa-tasks nav-icon " style="margin-left: 20px;"></i>
-                    <p>Tipo de Procesos</p>
-                  </a>
-                </li>
-
-                <!--GRUPO-->
-
-                <li class="nav-item">
-                  <a routerLink="/dashboard/grupo" class="nav-link">
-                    <i class="fas  fa-street-view nav-icon " style="margin-left: 20px;"></i>
-                    <p>Grupos</p>
-                  </a>
-                </li>
-
-                <!--ESCUELA-->
-
-                <li class="nav-item">
-                  <a routerLink="/dashboard/escuela" class="nav-link">
-                    <i class="fas  fa-graduation-cap nav-icon " style="margin-left: 20px;"></i>
-                    <p>Escuelas</p>
-                  </a>
-                </li>
-
-                <!--ETAPA-->
-
-                <li class="nav-item">
-                  <a routerLink="/dashboard/etapa" class="nav-link">
-                    <i class="fas  fa-hiking nav-icon " style="margin-left: 20px;"></i>
-                    <p>Etapas</p>
-                  </a>
-                </li>
-
-
-
-
-              </ul>
-            </li>
-
-          </ul>
-        </li>
-
-
-
-
-
-
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-
-            <i class="nav-icon fas fa-wrench"></i>
-            <p>
-              Configuraciones
-              <i class="right fas fa-angle-left"></i>
-              <span class="right badge badge-danger">New</span>
-            </p>
-          </a>
-
-          <ul class="nav nav-treeview">
-            <!--CATALOGOS-->
-
-
-
-
-
-
-
-
-            <!-- FIN CATALOGOS-->
-
-
-            <li class="nav-item">
-              <a routerLink="/dashboard/registrar-persona" class="nav-link">
-                <i class="fas fa-user-plus nav-icon ml-3"></i>
-                <p>Registrar Persona</p>
-              </a>
-            </li>
-            <!--VER PERSONAS-->
-            <li class="nav-item">
-              <a routerLink="/dashboard/ver-personas" class="nav-link">
-                <!--<i class="fas fa-user-plus nav-icon"></i>-->
-                <i class="fas fa-list-alt nav-icon ml-3"></i>
-                <p>Ver Personas</p>
-                <span class="badge badge-info right">{{totalPersonas}}</span>
-              </a>
-            </li>
-            <!--VER CONTACTOS DE PERSONAS-->
-            <li class="nav-item">
-              <a routerLink="/dashboard/ver-contacto-personas" class="nav-link">
-                <!--<i class="fas fa-user-plus nav-icon"></i>-->
-                <i class="fas fa-list-alt nav-icon ml-3"></i>
-                <p>Ver Contactos</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <!--FIN CONFIGURACIONES-->
-
-        <!--@@@@@@@@@@@@@@@@@@@  AQUI VA EL RESTO DEL CODIGO-->
-
-
-      </ul>
-    </nav>
-    <!-- /.sidebar-menu -->
-  </div>
-  <!-- /.sidebar -->
-</aside>
+ </script>

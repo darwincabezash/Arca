@@ -1,0 +1,403 @@
+<span class="row pt-2 pb-2">
+
+  <div class="col-12" *ngIf="!personaModificada">
+    <div class="text-left mt-0 mb-0 pl-4">
+      <button type="button" class="btn btn-link" aria-label="Left Align" (click)="regresar()"
+        style="background-color: transparent;">
+        <i class="fas fa-arrow-left .bg-primary fa-2x" style="border-width: 0px;"></i>
+      </button>
+    </div>
+  </div>
+
+
+</span>
+
+
+
+<div class="card mt-4">
+  <div class="card-header d-flex p-0">
+    <h3 class="mt-4 mb-2 pl-4">Modificar Persona</h3>
+
+  </div>
+
+  <div class="card-body">
+
+
+
+    <!-- CARD DATOS PERSONALES ------------------------------------------------------------------------>
+    <div class="card ">
+      <div class="card-header" style="background-color: #d2d6de;">
+        <div class="text-right mt-0 mb-0 pl-4 ">
+
+
+          <div class="d-flex align-items-center justify-content-between">
+            <h2 class="fs-5 fw-bold mb-0">Datos Personales</h2>
+            <button type="button" class="align-middle btn-lg btn-primary" style=" margin:0px;
+                                ;font-size:12px" data-toggle="modal" data-target="#modal-datos-personales">
+              Editar
+            </button>
+          </div>
+
+
+
+          <!--<h3 class="card-title pt-2"><i class="fas fa-user-check mr-1 pr-2"></i>Datos Personales</h3>
+
+             <button type="button" class=" align-middle btn-lg btn-primary" style=" margin:0px;border: 2px white;
+                                ;font-size:12px" data-toggle="modal" data-target="#modal-origen"
+                (click)="nuevaPersona()">
+                Nueva Persona
+              </button>
+
+              <button type="button" class=" align-middle btn-lg" style="background-color: #6c757d; margin:0px;border: 2px white;color:white
+                                ;font-size:12px" data-toggle="modal" data-target="#modal-datos-personales">
+                Editar
+              </button>-->
+
+        </div>
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body">
+
+
+
+
+
+
+        <div class="d-inline">
+          <img src="{{personaEntrante.datoBasicoPersona?.foto}}" alt="Avatar" style="display: inline-block;vertical-align: middle;width: 100px;height: 100px;border-radius: 50%; margin-top:0px;
+                                            padding:0px;" onerror="this.src='../../../assets/images/NF.jpeg'">
+
+        </div>
+
+
+
+
+
+        <p class="text-muted mt-3">
+          <i class="fas fa-angle-right mr-1"></i> Cédula: &nbsp;
+          {{personaEntrante.datoBasicoPersona!.cedula}}
+        </p>
+        <p class="text-muted mt-0">
+          <i class="fas fa-angle-right mr-1"></i> Primer Nombre: &nbsp;
+          {{personaEntrante.datoBasicoPersona!.primerNombre}}
+        </p>
+        <p class="text-muted mt-0">
+          <i class="fas fa-angle-right mr-1"></i> Segundo Nombre: &nbsp;
+          {{personaEntrante.datoBasicoPersona!.segundoNombre}}
+        </p>
+        <p class="text-muted mt-0">
+          <i class="fas fa-angle-right mr-1"></i> Primer Apellido: &nbsp;
+          {{personaEntrante.datoBasicoPersona!.primerApellido}}
+        </p>
+        <p class="text-muted mt-0">
+          <i class="fas fa-angle-right mr-1"></i> Segundo Apellido: &nbsp;
+          {{personaEntrante.datoBasicoPersona!.segundoApellido}}
+        </p>
+        <p class="text-muted mt-0">
+          <i class="fas fa-angle-right mr-1"></i> Fecha de Nacimiento: &nbsp;
+          {{personaEntrante.datoBasicoPersona!.fechaNacimientoFormateada}}
+        </p>
+        <p class="text-muted mt-0">
+          <i class="fas fa-angle-right mr-1"></i> Teléfono: &nbsp;
+          {{personaEntrante.datoBasicoPersona!.telefono}}
+        </p>
+        <p class="text-muted mt-0">
+          <i class="fas fa-angle-right mr-1"></i> Celular: &nbsp;
+          {{personaEntrante.datoBasicoPersona!.celular}}
+        </p>
+        <p class="text-muted mt-0">
+          <i class="fas fa-angle-right mr-1"></i> Dirección: &nbsp;
+          {{personaEntrante.datoBasicoPersona!.direccion}}
+        </p>
+        <p class="text-muted mt-0">
+          <i class="fas fa-angle-right mr-1"></i> Email: &nbsp; {{personaEntrante.datoBasicoPersona!.email}}
+        </p>
+        <p class="text-muted mt-0">
+          <i class="fas fa-angle-right mr-1"></i> Sexo: &nbsp;
+          {{personaEntrante.datoBasicoPersona!.sexo==='H' ? "Hombre": (personaEntrante.datoBasicoPersona!.sexo==='M' ? "Mujer" : "" )  }}
+        </p>
+        <hr>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+
+
+
+
+
+
+
+    <!-- Modal Datos Personales  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
+
+    <div class="modal fade" id="modal-datos-personales">
+      <form [formGroup]="personaForm">
+
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Datos Personales</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="card-body">
+
+
+
+
+
+                <!--CEDULA-->
+                <div class="form-group">
+                  <label class="col-form-label">*Cédula</label>
+
+                  <input type="text" class="form-control form-control-lg" id="cedula" placeholder="Ingresa la cédula"
+                    formControlName="cedula" [(ngModel)]="personaEntrante.datoBasicoPersona!.cedula">
+
+                  <div class="text-danger"
+                    *ngIf="personaForm.get('cedula')?.hasError('required') && personaForm.get('cedula')?.touched">
+                    <span>La cédula es <strong>obligatoria</strong></span>
+                  </div>
+                </div>
+
+
+
+
+
+                <!--PRIMER NOMBRE-->
+
+                <div class="form-group">
+                  <label class="col-form-label">*Primer Nombre</label>
+
+                  <input type="text" class="form-control form-control-lg" id="primerNombre"
+                    placeholder="Ingresa el primer nombre" formControlName="primerNombre"
+                    [(ngModel)]="personaEntrante.datoBasicoPersona!.primerNombre">
+
+
+                  <div class="text-danger"
+                    *ngIf="personaForm.get('primerNombre')?.hasError('required') && personaForm.get('primerNombre')?.touched">
+                    <span>El primer nombre es <strong>obligatorio</strong></span>
+                  </div>
+                </div>
+
+                <!--SEGUNDO NOMBRE-->
+                <div class="form-group">
+                  <label class="col-form-label">Segundo Nombre</label>
+                  <input type="text" class="form-control form-control-lg" id="segundoNombre"
+                    placeholder="Ingresa el segundo nombre" formControlName="segundoNombre"
+                    [(ngModel)]="personaEntrante.datoBasicoPersona!.segundoNombre">
+                </div>
+
+
+
+                <!--PRIMER APELLIDO-->
+
+                <div class="form-group">
+                  <label class="col-form-label">*Primer Apellido</label>
+
+                  <input type="text" class="form-control form-control-lg" id="primerApellido"
+                    placeholder="Ingresa el primer apellido" formControlName="primerApellido"
+                    [(ngModel)]="personaEntrante.datoBasicoPersona!.primerApellido">
+
+                  <div class="text-danger"
+                    *ngIf="personaForm.get('primerApellido')?.hasError('required') && personaForm.get('primerApellido')?.touched">
+                    <span>El primer apellido es <strong>obligatorio</strong></span>
+                  </div>
+                </div>
+
+                <!--SEGUNDO APELLIDO-->
+                <div class="form-group">
+                  <label class="col-form-label">Segundo Apellido</label>
+                  <input type="text" class="form-control form-control-lg" id="segundoApellido"
+                    placeholder="Ingresa el segundo apellido" formControlName="segundoApellido"
+                    [(ngModel)]="personaEntrante.datoBasicoPersona!.segundoApellido">
+                </div>
+
+                <!--FECHA DE NACIMIENTO-->
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-6">
+                      <label class="col-form-label ">Feha de Nacimiento Actual</label>
+                      <input type="text" class="form-control form-control-lg"
+                        value="{{personaEntrante.datoBasicoPersona!.fechaNacimientoOriginal}}" disabled>
+                    </div>
+                    <div class="col-6">
+                      <label class="col-form-label pt-2">Cambiar Fecha de Nacimiento</label>
+                      <input type="date" class="form-control form-control-lg" id="fechaNacimiento"
+                        formControlName="fechaNacimiento">
+                    </div>
+
+                  </div>
+                </div>
+
+
+
+
+
+
+
+
+
+                <!--TELÉFONO-->
+                <div class="form-group">
+                  <label class="col-form-label">Teléfono</label>
+                  <input type="text" class="form-control form-control-lg" id="telefono"
+                    placeholder="Ingresa el teléfono" formControlName="telefono"
+                    [(ngModel)]="personaEntrante.datoBasicoPersona!.telefono">
+                </div>
+
+                <!--CELULAR-->
+
+                <div class="form-group">
+                  <label class="col-form-label">Celular</label>
+
+                  <input type="text" class="form-control form-control-lg" id="celular" placeholder="Ingresa el celular"
+                    formControlName="celular" [(ngModel)]="personaEntrante.datoBasicoPersona!.celular">
+
+                </div>
+
+
+
+
+
+                <!--DIRECCIÓN-->
+
+                <div class="form-group">
+                  <label class="col-form-label">Dirección</label>
+
+                  <input type="text" class="form-control form-control-lg" id="email" placeholder="Ingresa la dirección"
+                    formControlName="direccion" [(ngModel)]="personaEntrante.datoBasicoPersona!.direccion">
+                </div>
+
+                <!--EMAIL-->
+
+                <div class="form-group">
+                  <label class="col-form-label">Email</label>
+
+                  <input type="email" class="form-control form-control-lg" id="email" placeholder="Ingresa el email"
+                    formControlName="email" [(ngModel)]="personaEntrante.datoBasicoPersona!.email">
+                </div>
+
+
+
+                <!--SEXO-->
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-7">
+                      <label class="col-form-label mt-1">Sexo Actual</label>
+                    </div>
+                    <div class="col-5">
+                      <label class="col-form-label">Cambiar Sexo</label>
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col-6">
+
+                      <input type="text" class="form-control form-control-lg"
+                        value=" {{(personaEntrante.datoBasicoPersona!.sexo=='H'? 'Hombre':'Mujer')}} " disabled>
+                    </div>
+
+                    <div class="col-3">
+                      <div class="icheck-primary">
+                        <input type="radio" id="sexoH" name="sexo" value="H" formControlName="sexo" />
+                        <label for="sexoH">Hombre</label>
+                      </div>
+                    </div>
+
+
+
+                    <div class="col-3">
+                      <div class="icheck-primary">
+                        <input type="radio" id="sexoM" name="sexo" value="M" formControlName="sexo" />
+                        <label for="sexoM">Mujer</label>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+
+
+
+
+                <div class="d-inline mt-2 mb-">
+                  <img src="{{personaEntrante.datoBasicoPersona?.foto}}" alt="Avatar" style="display: inline-block;vertical-align: middle;width: 100px;height: 100px;border-radius: 50%; margin-top:0px;
+                                            padding:0px;" onerror="this.src='../../../assets/images/NF.jpeg'">
+
+                </div>
+
+
+                <div class="form-group">
+                  <label class="col-form-label">Foto </label>
+
+                  <label class="col-form-label">Selecciona la Foto &nbsp;&nbsp;</label>
+
+
+                  <input type="file" accept=".png, .jpg" (change)="onUpload($event)">
+
+
+                  <p class="text-muted"> Selecciona una foto preferiblemente cuadrada</p>
+
+
+                </div>
+
+
+
+
+              </div>
+
+            </div>
+            <div class="modal-footer justify-content-between">
+              <label for="" *ngIf="cargandourlImagen"> &nbsp;</label>
+              <button *ngIf="!cargandourlImagen" type="button" class="btn btn-default"
+                data-dismiss="modal">Salir</button>
+
+              <button *ngIf="!cargandourlImagen" type="button" class="btn btn-primary" data-dismiss="modal"
+                [disabled]="personaForm.invalid" (click)="actualizarDatosPersonales()">Guardar</button>
+
+              <div class="row" *ngIf="cargandourlImagen">
+                <div class="col-lg-12" style="text-align: center">
+                  <p-progressSpinner strokeWidth="5" [style]="{width: '40px', height: '40px'}">
+                  </p-progressSpinner>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </form>
+    </div>
+    <!-- /.modal-origen -->
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+
+
+
+
+  <!-- AQUI VA EL CODIGO DE: EN CONSTRUCCION, ESTE CODIGO LO TENGO EN LAS NOTAS-->
+
+
+
+
+<button *ngIf="personaModificada" type="submit" class="btn btn-primary btn-lg-12 btn-sm-12 mb-5" (click)="regresar()">Guardar
+  Persona</button>
+
+</div>
+
+

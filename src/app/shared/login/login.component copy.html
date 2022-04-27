@@ -1,0 +1,76 @@
+          <p-progressBar mode="indeterminate" [style]="{'height': '5px','background':'#fff' }" *ngIf="intentandoLogin">
+          </p-progressBar>
+
+<body class="hold-transition login-page" style="background-color: #4f5962;">
+
+  <div class="login-box">
+
+    <!-- /.login-logo -->
+    <div class="card card-outline card-primary">
+      <div class=" text-center">
+
+        <div class="text-center mt-5">
+          <img class="profile-user-img z-depth-2 img-fluid img-circle" src="/../../assets/images/AdminLTELogo.png"
+            alt="User profile picture" style="border: 0px;">
+        </div>
+
+        <h3 class="profile-username text-center">Sendas de Justicia</h3>
+
+
+
+      </div>
+      <div class="card-body">
+        <p class="login-box-msg">Ingersa con tu cuenta</p>
+
+        <form [formGroup]="loginForm" (ngSubmit)="iniciarLogin()">
+
+
+
+          <!--USUARIO-->
+          <div class="input-group mb-3">
+            <input type="text" class="form-control form-control-lg" placeholder="Usuario" id="usuario"
+              placeholder="Ingresa el usuario" formControlName="usuario">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
+              </div>
+            </div>
+          </div>
+
+          <!--CONTRASEÑA-->
+          <div class="input-group mb-3">
+            <input type="password" class="form-control form-control-lg" placeholder="Ingresa la contraseña"
+              id="password" formControlName="password" value="">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+
+
+
+
+          <button type="submit" class="btn btn-block btn-primary btn-lg-12 btn-sm-12"
+            style="margin-top: 30px; margin-bottom:30px;" [disabled]="loginForm.invalid ||
+            intentandoLogin">Ingresar</button>
+
+        </form>
+
+
+
+
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- /.login-box -->
+
+  <!-- jQuery -->
+  <script src="../../plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../../dist/js/adminlte.min.js"></script>
+</body>

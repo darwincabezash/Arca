@@ -1,0 +1,247 @@
+<section class="content" style="background-color: #E1E6EB;">
+  <div class="container-fluid">
+
+
+    <a routerLink="/dashboard/perfil" class="nav-link"> Perfil</a>
+
+
+    <div class="row">
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info ">
+          <div class="inner">
+            <h3>{{personas.length}}</h3>
+
+            <p>Personas</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-person"></i>
+          </div>
+          <!--    <a href="#" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>-->
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-success ">
+          <div class="inner">
+            <h3>{{personasSinEscuela}}</h3>
+
+            <p>Personas sin Escuela</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-stats-bars"></i>
+          </div>
+          <!--    <a href="#" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>-->
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-warning ">
+          <div class="inner">
+            <h3>{{nuevasPersonas}}</h3>
+
+            <p>Nuevas Personas</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-person-add"></i>
+          </div>
+          <!--    <a href="#" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>-->
+        </div>
+      </div>
+
+
+      <!-- ./col -->
+      <!--<div class="col-lg-3 col-6">
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>53<sup style="font-size: 20px">%</sup></h3>
+
+                <p>Bounce Rate</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <div class="col-lg-3 col-6">
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h3>44</h3>
+
+                <p>User Registrations</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-person-add"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <div class="col-lg-3 col-6">
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3>65</h3>
+
+                <p>Unique Visitors</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>-->
+      <!-- ./col -->
+    </div>
+
+
+
+
+    <div class="row">
+
+
+      <div class="col-sm-4">
+        <div class="card bg-light mb-3" style="height: 330px; max-height: 430px">
+          <div class="card-header">Personas por Etapas</div>
+          <div class="card-body">
+            <p-chart type="pie" width="240" max-height="240" [data]="personasPorEtapa" [options]="chartOptions">
+            </p-chart>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="card bg-light mb-3 scroll" style="height: 330px;overflow-y: auto;">
+          <div class="card-header">Personas por Procesos</div>
+          <div class="card-body p-0">
+
+            <div class="card-body p-0">
+              <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" id="custom-content-below-home-tab" data-toggle="pill"
+                    href="#custom-content-below-home" role="tab" aria-controls="custom-content-below-home"
+                    aria-selected="true">Escuelas</a>
+                </li>
+                <!--<li class="nav-item">
+                  <a class="nav-link" id="custom-content-below-profile-tab" data-toggle="pill"
+                    href="#custom-content-below-profile" role="tab" aria-controls="custom-content-below-profile"
+                    aria-selected="false">Otro</a>
+                </li>-->
+                <!--<li class="nav-item">
+                  <a class="nav-link" id="custom-content-below-messages-tab" data-toggle="pill"
+                    href="#custom-content-below-messages" role="tab" aria-controls="custom-content-below-messages"
+                    aria-selected="false">Otro</a>
+                </li>-->
+                <!--<li class="nav-item">
+                  <a class="nav-link" id="custom-content-below-settings-tab" data-toggle="pill"
+                    href="#custom-content-below-settings" role="tab" aria-controls="custom-content-below-settings"
+                    aria-selected="false">Otro</a>
+                </li>-->
+              </ul>
+              <div class="tab-content" id="custom-content-below-tabContent">
+                <div class="tab-pane fade show active" id="custom-content-below-home" role="tabpanel"
+                  aria-labelledby="custom-content-below-home-tab">
+
+
+
+                  <div class="col-12">
+                    <div class="progress-group" *ngFor="let e of personasPorEscuelas">
+                      {{e.tipo}}
+                      <span class="float-right"><b>{{e.cantidad}}</b></span>
+
+
+
+                      <div class="progress mt-1" style="width: 100%;height:5px;background: #C2C7D0;border-radius: 20px; overflow: visible;position:
+                     relative;padding:0px;margin-right: 15px;">
+
+
+                        <div class="progress-bar"
+                          style=" background:#4f5962; border-radius: 20px;-webkit-animation:animate-positive 2s; animation: animate-positive 2s;"
+                          [ngStyle]="{width:obtenerPorcentaje(e.cantidad), 'background-color':obtenerColorFondoBarra(e.cantidad)}">
+                          <div class="progress-value" style="font-size:10px"></div>
+                        </div>
+                      </div>
+
+
+                    </div>
+                    <!-- /.progress-group -->
+
+                  </div>
+
+
+
+                </div>
+                <!--<div class="tab-pane fade" id="custom-content-below-profile" role="tabpanel"
+                  aria-labelledby="custom-content-below-profile-tab">
+                  OTRO
+                </div>-->
+                <!--<div class="tab-pane fade" id="custom-content-below-messages" role="tabpanel"
+                  aria-labelledby="custom-content-below-messages-tab">
+                  OTRO
+                </div>-->
+                <!--<div class="tab-pane fade" id="custom-content-below-settings" role="tabpanel"
+                  aria-labelledby="custom-content-below-settings-tab">
+                  OTRO
+                </div>-->
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- /.col -->
+
+      <div class="col-md-4">
+        <!-- USERS LIST -->
+        <div class="card" style="height: 330px; max-height: 430px">
+          <div class="card-header">
+            <h3 class="card-title">Cumpleaños del Mes</h3>
+
+            <div class="card-tools">
+              <span class="badge badge-danger">Total {{personasCumpleanioMes.length}}</span>
+
+            </div>
+          </div>
+          <!-- /.card-header -->
+
+
+
+
+
+          <div class="card-body p-0">
+            <ul class="users-list clearfix">
+              <li *ngFor="let p of personasCumpleanioMes">
+
+
+
+                <img src="{{p.datoBasicoPersona!.foto}}" alt="User Image"
+                  onerror="this.src='../../../assets/images/NF.jpeg'"
+                  style="border-radius: 50%;width: 50px;height:50px;">
+                <a class="users-list-name" href="#" style="font-size:15px">{{p.datoBasicoPersona!.nombres}}</a>
+              </li>
+
+            </ul>
+            <!-- /.users-list -->
+          </div>
+
+        </div>
+        <!--/.card -->
+      </div>
+      <!-- /.col -->
+
+    </div>
+
+
+
+
+
+
+
+  </div>
+
+</section>

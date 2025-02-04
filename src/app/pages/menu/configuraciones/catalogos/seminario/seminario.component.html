@@ -1,0 +1,327 @@
+
+    <div class="row mt-4">
+      <div class="col-12">
+
+
+        <div class="card">
+          <div class="card-header d-flex p-0">
+            <h3 class="mt-4 mb-2 pl-4">Catálogo Seminarios</h3>
+
+          </div><!-- /.card-header -->
+          <div class="card-body">
+            <div class="tab-content">
+              <div class="tab-pane active" id="tab_1">
+
+                <!-- general form elements -->
+                <div class="card card-primary">
+                  <div class="card-header">
+                    <h3 class="card-title"><span class="text-light">Registra los seminarios que vas a usar en el sistema
+                        Ej. ..... , Etc.</span></h3>
+
+                  </div>
+                  <!-- /.card-header -->
+                  <!-- form start -->
+
+                  <div class="card-body">
+
+
+                    <form [formGroup]="nuevoSeminarioForm" (ngSubmit)="agregarSeminario()">
+
+                      <!--TIPO-->
+                      <div class="row">
+                        <div class="col-sm-12 col-md-8">
+                          <!-- text input -->
+                          <div class="form-group">
+                            <label class="col-form-label">*Seminario</label>
+
+                            <input type="text" class="form-control form-control-lg" id="tipo"
+                              placeholder="Ingresa el seminario" formControlName="tipo">
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                          <div class="form-group">
+                            <label class="col-form-label">*Color</label>
+
+
+
+                            <button type="button" class="btn btn-light btn-lg-12 btn-sm-12 form-control form-control-lg"
+                              data-toggle="modal" data-target="#modal-seleccionarColor"
+                              [ngStyle]="{'background-color': colorBoton}"><b> Seleccionar Color</b></button>
+
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <button type="submit" class="btn btn-primary btn-lg-12 btn-sm-12"
+                        [disabled]="nuevoSeminarioForm.invalid">Guardar Seminario</button>
+
+                    </form>
+
+                  </div>
+                  <!-- /.card-body -->
+
+                </div>
+                <!-- /.card -->
+
+              </div>
+
+            </div>
+            <!-- /.tab-content -->
+
+
+            <div class="text-right mt-0 mb-0 pl-4">
+              <button type="button" class="btn btn-link" aria-label="Left Align" (click)="refrescarSeminario()"
+                style="background-color: transparent;">
+                <i class="fas fa-sync-alt .bg-primary fa-2x" style="border-width: 0px;"></i>
+              </button>
+            </div>
+
+          </div><!-- /.card-body -->
+          <div class="row">
+            <div class="col-12">
+              <!-- Custom Tabs -->
+              <div class="card ml-3 mr-3">
+
+                <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+
+                  <thead>
+                    <tr>
+                      <th class="text-center">LISTA DE ESCUELAS </th>
+                      <th class="text-center" style="text-align:center;width:100px;">COLOR
+                      <th class="text-center" style="text-align:center;width:100px;">ACCIÓN
+                      </th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+
+                    <!-- <tr *ngIf="let tp of grupo"> -->
+
+                    <tr *ngFor="let tp of seminario">
+
+                      <td class="align-middle">{{tp.tipo}}</td>
+                      <td class="align-middle text-center">
+
+                        <span class="badge badge-pill badge-primary"
+                          [ngStyle]="{'background-color':tp.color,'padding-left':'10px','padding-right':'10px','padding-top':'5px','padding-bottom':'5px'}">&nbsp;&nbsp;&nbsp;</span>
+                      </td>
+
+                      <td>
+                         <div class="btn-group" role="group" aria-label="Basic example">
+                        <!-- Boton Editar-->
+                        <button type="button" class="btn-xs align-middle" style="margin:0px;border:none;background-color: transparent"
+                          (click)="idAEditar(tp._id)" data-toggle="modal" data-target="#modal-editar">
+                          <i class="fas fa-user-edit fa-2x text-secondary"></i>
+                        </button>
+
+
+                        <!-- Boton Eliminar-->
+                        <button type="button" class="btn-xs align-middle" style="margin-left:5px;border:none;background-color: transparent;"
+                          (click)="idAEliminar(tp._id)" data-toggle="modal" data-target="#modal-eliminar">
+
+                          <i class="fas fa-trash fa-2x ml-1 mr-1" style="color:#DC3545;"></i>
+
+                        </button>
+                        </div>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+
+
+                <!-- Modal Editar 1-->
+
+
+                <div class="modal fade" id="modal-editar">
+                  <div class="modal-dialog">
+                    <form [formGroup]="actualizarSeminarioForm">
+
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title">Editar seminario</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+
+
+                          <div class="card-body">
+
+                            <!--TIPO-->
+                            <div class="form-group">
+                              <label class="col-form-label">*Seminario</label>
+
+                              <input type="text" class="form-control form-control-lg text-left" id="tipoEditar"
+                                placeholder="Ingresa el seminario" formControlName="tipoEditar"
+                                value="{{_idEditar?.tipo}}">
+
+                              <label class="col-form-label">*Color</label>
+                              <button type="button"
+                                class="btn btn-light btn-lg-12 btn-sm-12 form-control form-control-lg"
+                                data-toggle="modal" data-target="#modal-seleccionarColor"
+                                [ngStyle]="{'background-color': colorBoton}"><b> Seleccionar Color</b></button>
+
+                            </div>
+
+
+                          </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+
+
+                          <button class="btn btn-primary btn-lg-12 btn-sm-12" data-dismiss="modal"
+                            (click)="actualizarSeminario()">Actualizar
+                            Seminario</button>
+                        </div>
+                      </div>
+
+
+                    </form>
+
+
+                    <!-- /.modal-content -->
+                  </div>
+                  <!-- /.modal-dialog -->
+                </div>
+
+
+                <!-- Modal Eliminar 2-->
+
+
+                <div class="modal fade" id="modal-eliminar">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title">Eliminar seminario</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="card-body">
+
+                          <p>El seminario <b> {{_idEliminar?.tipo}}</b> será eliminado, ¿Desea
+                            continuar?</p>
+                        </div>
+
+                      </div>
+                      <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"
+                          (click)="eliminarSeminario()">Si, Eliminar</button>
+                      </div>
+                    </div>
+                    <!-- /.modal-content -->
+                  </div>
+                  <!-- /.modal-dialog -->
+                </div>
+
+
+                <!-- Modal 3 Seleccionar Color-->
+
+
+                <div class="modal fade" id="modal-seleccionarColor">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title">Seleccionar color</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="card-body">
+                          <ul class="list-group">
+                            <li class="list-group-item">
+
+                              <!-- Info Boxes Style 2 -->
+                              <div class="info-box mb-5 " [ngStyle]="{'background-color': colorBoton}">
+                                <span class="info-box-icon"></span>
+
+                                <div class="info-box-content">
+                                  <span class="info-box-text"> &nbsp;</span>
+                                  <span class="info-box-number">&nbsp;</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                              </div>
+
+
+
+
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:1rem; margin:3px; background-color: #E6B0AA; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#E6B0AA') ">Nivel 1</a>
+
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:1rem; margin:3px; background-color: #CD6155; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#CD6155') ">Nivel 2</a>
+
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:1rem; margin:3px; background-color: #A93226; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#A93226') ">Nivel 3</a>
+
+                            </li>
+                            <li class="list-group-item">
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:1rem; margin:3px; background-color: #ABB2B9; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#ABB2B9') ">Nivel 1</a>
+
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:1rem; margin:3px; background-color: #566573; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#566573') ">Nivel 2</a>
+
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:1rem; margin:3px; background-color: #273746; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#273746') ">Nivel 3</a>
+
+
+                            </li>
+                            <li class="list-group-item">
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:1rem; margin:3px; background-color: #D7BDE2; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#D7BDE2') ">Nivel 1</a>
+
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:1rem; margin:3px; background-color: #AF7AC5; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#AF7AC5') ">Nivel 2</a>
+
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:1rem; margin:3px; background-color: #884EA0; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#884EA0') ">Nivel 3</a>
+
+
+                            </li>
+
+                          </ul>
+                        </div>
+
+                      </div>
+                      <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Listo</button>
+                      </div>
+                    </div>
+                    <!-- /.modal-content -->
+                  </div>
+                  <!-- /.modal-dialog -->
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+        <!-- ./card -->
+
+
+      </div>
+      <!-- /.col -->
+
+    </div>
+    <!-- /.row -->
+

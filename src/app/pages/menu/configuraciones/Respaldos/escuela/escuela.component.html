@@ -1,0 +1,530 @@
+<section class="content">
+  <div class="container-fluid">
+
+    <div class="row mt-4">
+      <div class="col-12">
+
+
+        <div class="card">
+          <div class="card-header d-flex p-0">
+            <h3 class="mt-4 mb-2 pl-4">Catálogo Escuelas</h3>
+
+          </div><!-- /.card-header -->
+          <div class="card-body">
+            <div class="tab-content">
+              <div class="tab-pane active" id="tab_1">
+
+                <!-- general form elements -->
+                <div class="card card-primary">
+                  <div class="card-header">
+                    <h3 class="card-title"><span class="text-light">Registra las escuelas que vas a usar en el sistema
+                        Ej. Educación1, Educación2, Educación3, Etc.</span></h3>
+
+                  </div>
+                  <!-- /.card-header -->
+                  <!-- form start -->
+
+                  <div class="card-body">
+
+
+                    <form [formGroup]="nuevaEscuelaForm" (ngSubmit)="agregarEscuela()">
+
+                      <!--TIPO-->
+                      <div class="row">
+                        <div class="col-sm-12 col-md-8">
+                          <!-- text input -->
+                          <div class="form-group">
+                            <label class="col-form-label">*Escuela</label>
+
+                            <input type="text" class="form-control form-control-lg" id="tipo"
+                              placeholder="Ingresa la escuela" formControlName="tipo">
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                          <div class="form-group">
+                            <label class="col-form-label" >*Color</label>
+
+
+
+                            <button type="button" class="btn btn-light btn-lg-12 btn-sm-12 form-control form-control-lg"
+                              data-toggle="modal" data-target="#modal-seleccionarColor"
+                              [ngStyle]="{'background-color': colorBoton,'color': usarColorNegroEnSeleccionColor ?
+                              'black' : 'white'}"><b> Seleccionar Color</b></button>
+
+
+
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <button type="submit" class="btn btn-success btn-lg-12 btn-sm-12"
+                        [disabled]="nuevaEscuelaForm.invalid">Guardar Escuela</button>
+
+                    </form>
+
+                  </div>
+                  <!-- /.card-body -->
+
+                </div>
+                <!-- /.card -->
+
+              </div>
+
+            </div>
+            <!-- /.tab-content -->
+
+
+            <div class="text-right mt-0 mb-0 pl-4">
+              <button type="button" class="btn btn-link" aria-label="Left Align" (click)="refrescarEscuela()"
+                style="background-color: transparent;">
+                <i class="fas fa-sync-alt .bg-primary fa-2x" style="border-width: 0px;"></i>
+              </button>
+            </div>
+
+          </div><!-- /.card-body -->
+          <div class="row">
+            <div class="col-12">
+              <!-- Custom Tabs -->
+              <div class="card ml-3 mr-3">
+
+                <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+
+                  <thead>
+                    <tr>
+                      <th class="text-center">LISTA DE ESCUELAS </th>
+                      <th class="text-center" style="text-align:center;width:100px;">COLOR
+                      <th class="text-center" style="text-align:center;width:100px;">ACCIÓN
+                      </th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+
+                    <!-- <tr *ngIf="let tp of grupo"> -->
+
+                    <tr *ngFor="let tp of escuela">
+
+                      <td class="align-middle">{{tp.tipo}}</td>
+                      <td class="align-middle text-center" >
+
+                        <span class="badge badge-pill badge-primary"
+                          [ngStyle]="{'background-color':tp.color, color : tp.colorTextoNegro ?
+                          'black' : 'white',
+                          'padding-left':'10px','padding-right':'10px','padding-top':'5px','padding-bottom':'5px','width':'60px'}"> 
+
+texto
+                        </span>
+                      </td>
+
+                      <td>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                          <!-- Boton Editar-->
+                          <button type="button" class="btn-xs align-middle" style="margin:0px;border:none;"
+                            (click)="idAEditar(tp._id)" data-toggle="modal" data-target="#modal-editar">
+                            <i class="fas fa-user-edit fa-2x " style="color:#18A2B8;"></i>
+                          </button>
+
+
+                          <!-- Boton Eliminar-->
+                          <button type="button" class="btn-xs align-middle" style="margin-left:5px;border:none;"
+                            (click)="idAEliminar(tp._id)" data-toggle="modal" data-target="#modal-eliminar">
+
+                            <i class="fas fa-trash fa-2x ml-1 mr-1" style="color:#DC3545;"></i>
+
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+
+
+                <!-- Modal Editar 1-->
+
+
+                <div class="modal fade" id="modal-editar">
+                  <div class="modal-dialog">
+                    <form [formGroup]="actualizarEscuelaForm">
+
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title">Editar escuela</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+
+
+                          <div class="card-body">
+
+                            <!--TIPO-->
+                            <div class="form-group">
+                              <label class="col-form-label">*Escuela</label>
+
+                              <input type="text" class="form-control form-control-lg text-left" id="tipoEditar"
+                                placeholder="Ingresa la escuela" formControlName="tipoEditar"
+                                value="{{_idEditar?.tipo}}">
+
+                              <label class="col-form-label">*Color</label>
+                              <button type="button"
+                                class="btn btn-light btn-lg-12 btn-sm-12 form-control form-control-lg"
+                                data-toggle="modal" data-target="#modal-seleccionarColor"
+                                [ngStyle]="{'background-color': colorBoton, 'color': usarColorNegroEnSeleccionColor ?
+                                'black' : 'white'}"><b> Seleccionar Color</b></button>
+
+                            </div>
+
+
+                          </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+
+
+                          <button class="btn btn-success btn-lg-12 btn-sm-12" data-dismiss="modal"
+                            (click)="actualizarEscuela()">Actualizar
+                            Escuela</button>
+                        </div>
+                      </div>
+
+
+                    </form>
+
+
+                    <!-- /.modal-content -->
+                  </div>
+                  <!-- /.modal-dialog -->
+                </div>
+
+
+                <!-- Modal Eliminar 2-->
+
+
+                <div class="modal fade" id="modal-eliminar">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title">Eliminar escuela</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="card-body">
+
+                          <p>La escuela <b> {{_idEliminar?.tipo}}</b> será eliminada, ¿Desea
+                            continuar?</p>
+                        </div>
+
+                      </div>
+                      <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"
+                          (click)="eliminarEscuela()">Si, Eliminar</button>
+                      </div>
+                    </div>
+                    <!-- /.modal-content -->
+                  </div>
+                  <!-- /.modal-dialog -->
+                </div>
+
+
+                <!-- Modal 3 Seleccionar Color-->
+
+
+                <div class="modal fade " id="modal-seleccionarColor">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title">Seleccionar color</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="card-body" style="padding:0px;">
+                          <ul class="list-group">
+                            <li class="list-group-item">
+
+
+                              <div class="form-check pl-0">
+                                <input (change)="onChangeUsarColorNegroEnSeleccionColor($event)"
+                                  [checked]="usarColorNegroEnSeleccionColor"
+                                  type="checkbox" />
+                                &nbsp;&nbsp; <label class="form-check-label">
+                                  Usar el texto en color negro</label>
+                              </div>
+
+
+                              <div class="card card-lg pt-2">
+
+                                <div class="card-body"
+                                  [ngStyle]="{'background-color': colorBoton,'text-align':'center' }">
+
+                                  <h1 class="display-4 align-middle" style="color:white;"
+                                    *ngIf="!usarColorNegroEnSeleccionColor">Nivel</h1>
+
+                                  <h1 class="display-4 align-middle" style="color:black;"
+                                    *ngIf="usarColorNegroEnSeleccionColor">Nivel</h1>
+
+                                </div>
+                              </div>
+
+
+
+
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #FFCDD2; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#FFCDD2') ">Nivel 1</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #EF9A9A; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#EF9A9A') ">Nivel 2</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #E57373; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#E57373') ">Nivel 3</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #EF5350; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#EF5350') ">Nivel 4</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #F44336; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#F44336') ">Nivel 5</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #E53935; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#E53935') ">Nivel 6</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #D32F2F; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#D32F2F') ">Nivel 7</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #C62828; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#C62828') ">Nivel 8</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #B71C1C; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#B71C1C') ">Nivel 9</a>
+
+                            </li>
+                            <li class="list-group-item">
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #CFD8DC; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#CFD8DC') ">Nivel 1</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #B0BEC5; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#B0BEC5') ">Nivel 2</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #90A4AE; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#90A4AE') ">Nivel 3</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #78909C; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#78909C') ">Nivel 4</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #607D8B; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#607D8B') ">Nivel 5</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #546E7A; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#546E7A') ">Nivel 6</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #455A64; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#455A64') ">Nivel 7</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #37474F; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#37474F') ">Nivel 8</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #263238; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#263238') ">Nivel 9</a>
+
+
+                            </li>
+                            <li class="list-group-item">
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #D1C4E9; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#D1C4E9') ">Nivel 1</a>
+
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #B39DDB; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#B39DDB') ">Nivel 2</a>
+
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #9575CD; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#9575CD') ">Nivel 3</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #7E57C2; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#7E57C2') ">Nivel 4</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #673AB7; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#673AB7') ">Nivel 5</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #5E35B1; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#5E35B1') ">Nivel 6</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #512DA8; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#512DA8') ">Nivel 7</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #4527A0; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#4527A0') ">Nivel 8</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #311B92; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#311B92') ">Nivel 9</a>
+                            </li>
+
+                            <li class="list-group-item">
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #FFE0B2; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#FFE0B2') ">Nivel 1</a>
+
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #FFCC80; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#FFCC80') ">Nivel 2</a>
+
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #FFB74D; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#FFB74D') ">Nivel 3</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #FFA726; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#FFA726') ">Nivel 4</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #FF9800; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#FF9800') ">Nivel 5</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #FB8C00; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#FB8C00') ">Nivel 6</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #F57C00; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#F57C00') ">Nivel 7</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #EF6C00; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#EF6C00') ">Nivel 8</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #E65100; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#E65100') ">Nivel 9</a>
+                            </li>
+
+                            <li class="list-group-item">
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #B3E5FC; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#B3E5FC') ">Nivel 1</a>
+
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #81D4FA; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#81D4FA') ">Nivel 2</a>
+
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #4FC3F7; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#4FC3F7') ">Nivel 3</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #29B6F6; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#29B6F6') ">Nivel 4</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #03A9F4; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#03A9F4') ">Nivel 5</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #03A9F4; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#03A9F4') ">Nivel 6</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #0288D1; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#0288D1') ">Nivel 7</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #0277BD; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#0277BD') ">Nivel 8</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #01579B; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#01579B') ">Nivel 9</a>
+                            </li>
+
+                            <li class="list-group-item">
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #F0F4C3; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#F0F4C3') ">Nivel 1</a>
+
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #E6EE9C; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#E6EE9C') ">Nivel 2</a>
+
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #DCE775; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#DCE775') ">Nivel 3</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #D4E157; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#D4E157') ">Nivel 4</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #CDDC39; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#CDDC39') ">Nivel 5</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #CDDC39; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#CDDC39') ">Nivel 6</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #AFB42B; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#AFB42B') ">Nivel 7</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #9E9D24; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#9E9D24') ">Nivel 8</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #827717; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#827717') ">Nivel 9</a>
+                            </li>
+
+
+                            <li class="list-group-item">
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #C8E6C9; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#C8E6C9') ">Nivel 1</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #A5D6A7; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#A5D6A7') ">Nivel 2</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #81C784; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#81C784') ">Nivel 3</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #66BB6A; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#66BB6A') ">Nivel 4</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #4CAF50; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#4CAF50') ">Nivel 5</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #43A047; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#43A047') ">Nivel 6</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #388E3C; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#388E3C') ">Nivel 7</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #2E7D32; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#2E7D32') ">Nivel 8</a>
+                              <a class="badge  badge-pill badge-primary"
+                                style="font-size:10px; margin:3px; background-color: #1B5E20; cursor: pointer;"
+                                (click)="cargarEditarColor($event,'#1B5E20') ">Nivel 9</a>
+                            </li>
+
+
+                          </ul>
+                        </div>
+
+                      </div>
+                      <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Listo</button>
+                      </div>
+                    </div>
+                    <!-- /.modal-content -->
+                  </div>
+                  <!-- /.modal-dialog -->
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+        <!-- ./card -->
+
+
+      </div>
+      <!-- /.col -->
+
+    </div>
+    <!-- /.row -->
+
+
+  </div>
+</section>

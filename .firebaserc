@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "arca-a695d"
+  },
+  "targets": {
+    "arca-a695d": {
+      "hosting": {
+        "Arca": [
+          "arca-a695d"
+        ]
+      }
+    }
   }
 }

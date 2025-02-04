@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Component, OnInit } from '@angular/core';
+import { UserDataService } from './services/general/user-data.service';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +9,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Arca';
-  
+  login?:any;
+
+  constructor(private service:UserDataService) { 
+
+  }
+
+
+  ngOnInit(): void {
+
+  }
 }

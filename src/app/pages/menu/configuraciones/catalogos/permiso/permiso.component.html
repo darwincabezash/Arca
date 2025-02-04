@@ -1,0 +1,391 @@
+
+        <div class="row mt-4">
+            <div class="col-12">
+
+
+                    <!-- Custom Tabs -->
+                    <div class="card">
+                        <div class="card-header d-flex p-0">
+                            <h3 class="mt-4 mb-2 pl-4">Catálogo Grupos</h3>
+
+                        </div><!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab_1">
+
+                                    <!-- general form elements -->
+                                    <div class="card card-primary">
+                                        <div class="card-header">
+                                            <h3 class="card-title"><span class="text-light">Registra los grupos que vas
+                                                    a usar en el sistema Ej. Damas, Caballeros, Alabanza, Etc.</span>
+                                            </h3>
+
+                                        </div>
+
+                                        <div class="text-right mt-0 mb-0 pl-4">
+                                            <button type="button" class="btn btn-link" aria-label="Left Align"
+                                                (click)="refrescarGrupo()"
+                                                style="background-color: transparent;">
+                                                <i class="fas fa-sync-alt .bg-primary fa-2x" 
+                                                    style="border-width: 0px;"></i>
+                                            </button>
+                                        </div>
+                                        <!-- /.card-header -->
+                                        <!-- form start -->
+
+                                        <div class="card-body">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            <div class="class row">
+                                                <div class="class col-lg-6 col-md-6 col-sm-12">
+
+
+
+
+                                                    <div class="card-body">
+                                                        <div class="tab-content">
+                                                            <div class="tab-pane active" id="tab_1">
+
+                                                                <!-- general form elements -->
+                                                                <div class="card card-primary">
+                                                                    <div class="card-header">
+                                                                        <h3 class="card-title"><span class="text-light"
+                                                                                style="vertical-align: middle;font-size: 18px;">Grupos</span>
+                                                                        </h3>
+
+                                                                        <button type="button"
+                                                                            class="btn-xs align-middle"
+                                                                            style="margin:0px;border:none;background-color: transparent"
+                                                                            data-toggle="modal"
+                                                                            data-target="#modal-ver-permisos">
+
+                                                                            <i class="fas bg-primary fa-2x"
+                                                                                style="color:transparent; border-width: 0px;"></i>
+                                                                        </button>
+
+                                                                    </div>
+                                                                    <!-- /.card-header -->
+                                                                    <!-- form start -->
+
+                                                                    <div class="card-body">
+
+
+
+
+
+
+                                                                        <div class="list-group"
+                                                                            *ngFor="let g of grupos">
+                                                                            <div class="class row">
+
+                                                                                <button type="button"
+                                                                                    class="list-group-item list-group-item-action"
+                                                                                    (click)="seleccionarGrupo(g._id)"
+                                                                                    [ngStyle]="{'background-color':g.color,'color':g.colorTexto}">{{g.tipo}}</button>
+
+                                                                            </div>
+
+
+
+                                                                        </div>
+
+
+
+
+
+
+                                                                    </div>
+                                                                    <!-- /.card-body -->
+
+                                                                </div>
+                                                                <!-- /.card -->
+
+                                                            </div>
+
+                                                        </div>
+                                                        <!-- /.tab-content -->
+
+                                                    </div><!-- /.card-body -->
+
+                                                </div>
+
+                                                <div class="class col-lg-6 col-md-6 col-sm-12">
+                                                    <div class="card-body">
+                                                        <div class="tab-content">
+                                                            <div class="tab-pane active" id="tab_1">
+
+                                                                <!-- general form elements -->
+                                                                <div class="card card-primary">
+                                                                    <div class="card-header">
+                                                                        <h3 class="card-title"><span class="text-light"
+                                                                                style="vertical-align: middle;font-size: 18px;">Permisos Asignados</span>
+                                                                        </h3>
+
+
+                                                                        <div class="text-right mt-0 mb-0 pl-4">
+
+                                                                            <button type="button"
+                                                                                class="btn-xs align-middle"
+                                                                                style="margin:0px;border:none;background-color: transparent"
+                                                                                data-toggle="modal"
+                                                                                data-target="#modal-ver-permisos"
+                                                                                (click)="generarPermisosPopUp()">
+
+                                                                                <i class="fas fa-plus-square bg-primary fa-2x"
+                                                                                    style="color:white; border-width: 0px;"></i>
+                                                                            </button>
+
+                                                                        </div>
+
+
+
+
+
+
+
+                                                                    </div>
+                                                                    <!-- /.card-header -->
+                                                                    <!-- form start -->
+
+                                                                    <div class="card-body">
+
+
+
+
+
+
+                                                                        <div
+                                                                            *ngFor="let p of permisosGrupoSeleccionado">
+
+
+                                                                            <li
+                                                                                class="list-group-item d-flex justify-content-between align-items-center">
+                                                                                {{p.nombre}}
+                                                                                <i class="fas fa-check"></i>
+                                                                            </li>
+
+                                                                        </div>
+
+
+
+
+
+                                                                    </div>
+                                                                    <!-- /.card-body -->
+
+                                                                </div>
+                                                                <!-- /.card -->
+
+                                                            </div>
+
+                                                        </div>
+                                                        <!-- /.tab-content -->
+
+                                                    </div><!-- /.card-body -->
+
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+
+
+                                            <!-- Modal Permisos -->
+
+
+                                            <div class="modal fade" id="modal-ver-permisos">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">Asignar Permisos
+                                                            </h4>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+
+
+                                                            <div class="card-body">
+
+                                                                <div class="card-body">
+                                                                    <div class="tab-content">
+                                                                        <div class="tab-pane active" id="tab_1">
+
+                                                                            <!-- general form elements -->
+                                                                            <div class="card card-primary">
+                                                                                <div class="card-header"
+                                                                                    style="background-color: #4b545c;">
+                                                                                    <h3 class="card-title"><span
+                                                                                            class="text-light"
+                                                                                            style="vertical-align: middle;font-size: 18px;">Grupo:
+                                                                                            {{grupoSeleccionado.tipo}}</span>
+                                                                                    </h3>
+                                                                                </div>
+                                                                                <div class="card-body">
+
+
+
+
+
+
+
+                                                                                   
+
+
+                                                                                    <div *ngFor="let p of permisosPopUp">
+
+                                                                                    <div class="form-check pl-0">
+                                                                                        <input id="{{p._id}}"
+                                                                                        #chk
+                                                                                            class="form-check-input"
+                                                                                            type="checkbox"
+                                                                                            data-toggle="toggle"
+                                                                                            [checked]="p.estado"
+                                                                                            (change)="actualizarPermisoPopUp(p._id!,chk.checked)"
+                                                                                            >
+                                                                                        <label for="{{p._id}}"
+                                                                                            class="form-check-label">{{p.nombre}} </label>
+
+                                                                                        </div>
+
+
+                                                                                    </div>
+                                                                                </div>
+
+
+
+
+
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+
+
+
+
+
+
+                                                        
+
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer justify-content-between">
+                                                            <button type="button" class="btn btn-default"
+                                                                data-dismiss="modal">Salir</button>
+
+
+                                                            <button class="btn btn-success btn-lg-12 btn-sm-12"
+                                                                data-dismiss="modal"
+                                                                (click)="actualizarPermisoGrupo()">Guardar Cambios</button>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.modal-content -->
+                                                </div>
+                                                <!-- /.modal-dialog -->
+                                            </div>
+
+
+
+
+
+
+                                        </div>
+                                        <!-- /.card-body -->
+
+                                    </div>
+                                    <!-- /.card -->
+
+                                </div>
+
+                            </div>
+                            <!-- /.tab-content -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        </div><!-- /.card-body -->
+                        <div class="row">
+                            <div class="col-12">
+                                <!-- Custom Tabs -->
+                                <div class="card ml-3 mr-3">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- ./card -->
+
+
+            </div>
+            <!-- /.col -->
+
+        </div>
+        <!-- /.row -->

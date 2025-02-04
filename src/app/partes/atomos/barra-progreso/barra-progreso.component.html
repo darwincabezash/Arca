@@ -1,0 +1,11 @@
+<div class="progress" style="overflow: visible;position: relative;"
+                                 [ngStyle]="{'background-color':barraProgresoComponentData.colorFondoBarra,height:barraProgresoComponentData.altura,
+                                 'border-radius':barraProgresoComponentData.radio}">
+  <div class="progress-bar"
+    style=" background:#4f5962; border-radius: 20px;-webkit-animation:animate-positive 2s; animation: animate-positive 2s;"
+    [ngStyle]="{width:barraProgresoComponentData.porcentajeBarra+'%',
+                    'background-color':barraProgresoComponentData.colorRellenoBarra}">
+    <div class="progress-value" [ngStyle]="{'font-size':barraProgresoComponentData.fontSize}">
+    </div>
+  </div>
+</div>
